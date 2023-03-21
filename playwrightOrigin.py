@@ -55,20 +55,23 @@ def run(playwright):
     hrefs = []
     chromium = playwright.chromium # or "firefox" or "webkit".
     browser = chromium.launch()
-    page = browser.new_page()
+    #nastavlen context za robots.txt
+    context = browser.new_context(user_agent="fri-ieps-TEST")
+    page = context.new_page()
     page.goto(site)
+    #počaka da se naloži stran
     page.wait_for_load_state('networkidle')
 
     links = page.query_selector_all('a')
 
     #Playwright in Python to get all links from a website and save complete links with http  
     for link in links:
-        href = link.get_attribute('href')
-        if href and not href.startswith('mailto:') and not href.startswith('tel:'):
-            if href.startswith('http'):
-                hrefs.append(href)
+        raw_links = link.get_attribute('href')
+        if raw_links and not raw_links.startswith('mailto:') and not raw_links.startswith('tel:'):
+            if raw_links.startswith('http'):
+                hrefs.append(raw_links)
             else:
-                hrefs.append(site + href)
+                hrefs.append(site + raw_links)
     print(hrefs)
     # other actions...
     browser.close()
