@@ -14,6 +14,7 @@ CREATE TABLE crawldb.site (
 	id                   serial  NOT NULL,
 	"domain"             varchar(500)  ,
 	robots_content       text  ,
+	crawl_delay			real,
 	sitemap_content      text  ,
 	CONSTRAINT pk_site_id PRIMARY KEY ( id )
  );
