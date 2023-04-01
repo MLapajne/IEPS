@@ -1,14 +1,12 @@
-import asyncio
 import time
-
 import requests
 from bs4 import BeautifulSoup
 from playwright.async_api import async_playwright
 
-from classes import Site
+from classes import Site, Page
 import urllib.robotparser
 import datetime
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlunsplit, urlsplit
 from playwright.sync_api import Playwright, sync_playwright, Error
 from urllib.parse import urlparse, urlunparse
 
@@ -43,11 +41,17 @@ def get_urls(page_url):
         soup = BeautifulSoup(page.content(), 'html.parser')
         for link in soup.find_all('a'):
             raw_link = link.get('href')
-            if raw_link and GOV_DOMAIN in raw_link.split('?')[0]:
+            if raw_link is not None and not raw_link.startswith('mailto:') and not raw_link.startswith(
+                    'tel:') and 'Mailto' not in raw_link and raw_link not in INITIAL_SEED:
                 if raw_link.startswith('http') or raw_link.startswith('https'):
-                    links.append(raw_link)
+                    canonicalized_url = canonicalize_url(raw_link)
+                    if GOV_DOMAIN in canonicalized_url and canonicalized_url not in links and canonicalized_url not in INITIAL_SEED:
+                        links.append(canonicalized_url)
                 else:
-                    links.append(page_url + raw_link)
+                    full_link = page_url + raw_link
+                    canonicalized_url = canonicalize_url(full_link)
+                    if GOV_DOMAIN in canonicalized_url and canonicalized_url not in links and canonicalized_url not in INITIAL_SEED:
+                        links.append(canonicalized_url)
 
         return links
 
@@ -95,28 +99,18 @@ def parse_sitemap(url_sitemap):
             urlset = soup.select('url')
             if urlset is not None:
                 for element in soup.select('loc'):
-                    if GOV_DOMAIN in element.text:
+                    if request_success(element.text) and GOV_DOMAIN in element.text:
                         urlss.append(element.text)
+                    else:
+                        print('404')
 
     return urlss
 
 
-def normalize_url(url):
+def canonicalize_url(url):
     if url.endswith('/'):
         url = url[:-1]
-
-    if url.startswith('http://www.'):
-        url = 'http://' + url[11:]
-    elif url.startswith('https://www.'):
-        url = 'https://' + url[12:]
-
-    return url
-
-
-def clean_url(url):
-    if url.endswith('/'):
-        url = url[:-1]
-    scheme, netloc, path, params, query, fragment = urlparse(url)
+    scheme, netloc, path, query, fragment = urlsplit(url)
     if not scheme:
         scheme = 'http'
     elif scheme == 'http' or scheme == 'https':
@@ -125,49 +119,42 @@ def clean_url(url):
         return None
     netloc = netloc.replace('www.', '')
     path = path.replace('www.', '')
+    if path.endswith('/'):
+        path = path[:-1]
+    query = ''
     fragment = ''
-    return urlunparse((scheme, netloc, path, params, query, fragment))
+    return urlunsplit((scheme, netloc, path, query, fragment))
 
 
 def add_urls_to_frontier(links):
     for url in links:
-        url = normalize_url(url)
+        url = canonicalize_url(url)
 
         if len(url) > 1 and url not in FRONTIER and url not in INITIAL_SEED:
             FRONTIER.append(url)
 
 
-def get_page_metadata(page_url):
-    if is_binary_file(page_url):
-        current_timestamp = time.time()
-        current_datetime = datetime.datetime.fromtimestamp(current_timestamp)
-        return {
-            "url": page_url,
-            "html_content": None,
-            "page_type_code": 'BINARY',
-            "accessed_time": current_datetime.strftime("%Y-%m-%d %H:%M:%S")
-        }
+def get_html_content(page_url):
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch()
         page = browser.new_page()
 
         try:
-            response = page.goto(page_url)
-            response_headers = response.headers
-            content_type = response_headers.get("content-type")
-            # return URL, PAGE_TYPE_CODE, HTML_CONTENT, HTTP_STATUS_CODE, ACCESSED_TIME
-            if 'html' in content_type:
-                content_type = 'HTML'
-            # return (page_url, response.status, content_type)
-            current_timestamp = time.time()
-            current_datetime = datetime.datetime.fromtimestamp(current_timestamp)
-            return {"url": page_url,
-                    "html_content": page.content(),
-                    "page_type_code": content_type,
-                    "accessed_time": current_datetime.strftime("%Y-%m-%d %H:%M:%S")
-                    }
+            page.goto(page_url)
+            return page.content()
         except Error as e:
             return {"message": "Error accessing the page"}
+
+
+def get_base_url(url):
+    parsed_url = urlparse(url)
+
+    base_url = parsed_url.scheme + '://' + parsed_url.netloc
+
+    if base_url.endswith('/'):
+        base_url = base_url[:-1]
+
+    return base_url
 
 
 def is_binary_file(url: str):
@@ -193,6 +180,26 @@ def is_binary_file(url: str):
         return False
 
 
+def get_page_type_code(url):
+    return 'BINARY' if url.endswith('.pdf') or url.endswith('.doc') or url.endswith('.docx') or url.endswith(
+        '.ppt') or url.endswith('.pptx') else 'HTML'
+
+
+def get_http_status_code(url):
+    with sync_playwright() as playwright:
+        try:
+            browser = playwright.chromium.launch()
+            page = browser.new_page()
+            response = page.goto(url)
+            http_status = response.status
+            browser.close()
+            return http_status
+        except requests.exceptions.SSLError:
+            return 400  # Bad Request
+        except Exception as e:
+            return 500
+
+
 def request_success(url):
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch()
@@ -204,94 +211,103 @@ def request_success(url):
         except Error as e:
             return False
 
-"""
-# crawl initial seed
-for curr_url in INITIAL_SEED:
-    robots_url = curr_url + '/robots.txt'
-    # TODO store disallowed pages
-    # has_robots = has_robots_file(curr_url + "/robots.txt")
-    urls = get_urls(curr_url)
-    add_urls_to_frontier(urls)
 
+def page_allowed(url):
+    domain_url = get_domain(url)
     rp = urllib.robotparser.RobotFileParser()
-    rp.set_url(robots_url)
+    rp.set_url('https://' + domain_url + '/robots.txt')
     rp.read()
-    delay = rp.crawl_delay(GROUP_NAME)
+    return rp.can_fetch(GROUP_NAME, url)
 
-    # COMMENT THIS
 
-    sitemaps = rp.site_maps()
-    sitemap_content = []
-    if sitemaps is not None:
-        for sitemap_url in sitemaps:
-            if request_success(sitemap_url):
-                parsed_site_maps = parse_sitemap(sitemap_url)
-                sitemap_content.extend(parsed_site_maps)
+def insert_pages_into_frontier(pages):
+    for page in pages:
+        page_entry = Page(page, get_domain(page))
+        FRONTIER.append(page_entry)
+        # TODO insert_page_into_frontier(domain, url)
 
-        add_urls_to_frontier(sitemap_content)
 
-print(FRONTIER)
-print(len(FRONTIER))
-"""
+def get_page_metadata(page_url):
+    page_type_code = get_page_type_code(page_url)
 
-TEMP_FRONTIER = ['https://gov.si/zbirke/projekti-in-programi/ukrepi-za-omilitev-draginje/ukrepi-za-omilitev-draginje'
-                 '-za-ranljive-skupine-in-druzine/#e170096', 'https://spot.gov.si',
-                 'https://e-uprava.gov.si/drzava-in-druzba/e-demokracija.html',
-                 'https://spot.gov.si/spot/sicas/uporabnik/prijava.evem',
-                 'https://spot.gov.si/spot/cert/uporabnik/prijava.evem',
-                 'https://spot.gov.si/sl/portal-in-tocke-spot/o-portalu-spot/portal-spot-skozi-stevilke/dodaj-tema'
-                 '-230120121530', 'http://gov.si', 'https://stopbirokraciji.gov.si',
-                 'https://ipi.eprostor.gov.si/jv', 'https://prostor3.gov.si/javni-arhiv/login.jsp?jezik=sl',
-                 'https://ipi.eprostor.gov.si/ov', 'https://ipi.eprostor.gov.si/rv', 'https://prostor-s.gov.si/preg',
-                 'https://ipi.eprostor.gov.si/jgp', 'https://egp.gu.gov.si/egp', 'https://eprostor.gov.si/ETN-JV',
-                 'https://etn.gu.gov.si/ETN4', 'https://eprostor.gov.si/EV_EMV',
-                 'https://e-uprava.gov.si/javne-evidence/katastrski-postopki.html',
-                 'https://kataster.eprostor.gov.si/kn', 'https://prostor3.gov.si/ozkgji/index.jsp',
-                 'https://gis.gov.si/ezkn', 'https://eprostor.gov.si/imps/srv/slv/catalog.search#/home',
-                 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/geodetski-podatki/potrdilo-iz-zbirk'
-                 '-geodetskih-podatkov.html',
-                 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/parcele/dolocitev-obmocja-stavbne-pravice'
-                 '-in-obmocja-sluznosti.html',
-                 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/nepremicnine-stavbe/dolocitev'
-                 '-prestevilcenje-ukinitev-hisne-stevilke.html',
-                 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/nepremicnine-stavbe/izbris-stavbe-dela'
-                 '-stavbe.html', 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/parcele/izracun-povrsine'
-                                 '.html', 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/parcele/izravnava'
-                                          '-meje.html',
-                 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/parcele/lokacijska-izboljsava.html',
-                 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/nepremicnine-stavbe/izdaja-mnenja-o'
-                 '-lastnostih-nepremicnin.html',
-                 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/parcele/nova-izmera.html',
-                 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/parcele/oznacitev-meje-parcele.html',
-                 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/parcele/parcelacija.html',
-                 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/parcele/pogodbena-komasacija.html',
-                 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/nepremicnine-stavbe/prizidava-prostora.html'
-                 '', 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/parcele/sprememba-bonitete-zemljisca0'
-                     '.html', 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/nepremicnine-stavbe/spremembe'
-                              '-podatkov-o-stavbi-in-delih-stavbe-ki-se-spreminjajo-z-zahtevo-brez-elaborata.html',
-                 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/nepremicnine-stavbe/sprememba-sestavine'
-                 '-dela-stavbe.html', 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/parcele/ureditev-meje'
-                                      '-parcele.html',
-                 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/nepremicnine-stavbe/uskladitev-podatkov-v'
-                 '-katastru-nepremicnin.html',
-                 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/nepremicnine-stavbe/vpis-sprememb-podatkov'
-                 '-o-stavbi-in-delu-stavbe.html',
-                 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/nepremicnine-stavbe/vpis-stavbe-in-delov'
-                 '-stavb.html', 'https://e-uprava.gov.si/podrocja/nepremicnine-in-okolje/nepremicnine-stavbe'
-                                '/zdruzitev-in-delitev-stavbe-ali-dela-stavbe.html',
-                 'https://gov.si/zbirke/storitve/dolocitev-spremenjenih-mej-obcin',
-                 'https://gov.si/zbirke/storitve/informacije-s-podrocja-mnozicnega-vrednotenja',
-                 'https://gov.si/zbirke/storitve/spreminjanje-podatkov-registra-prostorskih-enot',
-                 'https://gov.si/zbirke/storitve/upravna-komasacija',
-                 'https://gov.si/zbirke/storitve/vpis-podatkov-v-kataster-nepremicnin-na-podlagi-pravnomocnih-sodnih'
-                 '-odlocb-ali-drugih-aktov-s-katerimi-se-konca-postopek-alternativnega-resevanja-sporov',
-                 'https://gov.si/zbirke/storitve/vpis-upravljavca-v-kataster-nepremicnin',
-                 'https://e-prostor.gov.si/rss.aplikacije',
-                 'https://arhiv.mm.gov.si/gurs/JV_video_jan2023/JV_predstavitveni_video_1080p.mp4',
-                 'https://si-trust.gov.si/sl/si-pass',
-                 'https://e-uprava.gov.si/pomoc-kontakt/pomoc-pri-uporabi.html', 'https://e-prostor.gov.si/projekt']
+    current_timestamp = time.time()
+    current_datetime = datetime.datetime.fromtimestamp(current_timestamp)
+    time_stamp = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
 
-# print(parse_sitemap('https://www.e-prostor.gov.si/sitemap.xml'))
-# print(parse_sitemap('https://www.gov.si/sitemap.xml'))
-# print(parse_sitemap('https://e-uprava.gov.si/sitemaps/sitemap.xml'))
-print(clean_url('https://www.freecodecamp.org/news/how-to-consume-rest-apis-in-react/'))
+    html_content = ''
+
+    http_status_code = get_http_status_code(page_url)
+
+    if page_type_code == 'HTML':
+        html_content = get_html_content(page_url)
+
+    return Page(page.url, get_domain(page_url), page_type_code, html_content, '', http_status_code,
+                    time_stamp)
+
+i = 0
+frontier_index = 0
+while True:
+    if i < len(INITIAL_SEED):
+        curr_url = INITIAL_SEED[i]
+        robots_url = curr_url + '/robots.txt'
+        print('Current url: ', curr_url)
+        domain = get_domain(curr_url)
+        pages = get_urls(curr_url)
+
+        if has_robots_file(robots_url):
+            rp = urllib.robotparser.RobotFileParser()
+            rp.set_url(robots_url)
+            rp.read()
+            delay = rp.crawl_delay(GROUP_NAME)
+            robots_content = get_robots_content(robots_url)
+
+            crawl_delay = rp.crawl_delay(GROUP_NAME)
+            if crawl_delay is None:
+                crawl_delay = 0
+                """
+                sitemaps = rp.site_maps()
+                sitemap_content = []
+                if sitemaps is not None:
+                    for sitemap_url in sitemaps:
+                        if request_success(sitemap_url):
+                            parsed_site_maps = parse_sitemap(sitemap_url)
+                            sitemap_content.extend(parsed_site_maps)
+                """
+            # TODO save Site to db
+            site = Site(domain, robots_content, '', crawl_delay)  # TODO add sitemaps
+        else:
+            # TODO save Site to db
+            site = Site(domain, '', '', 0)
+
+        insert_pages_into_frontier(pages)
+    else:
+        print('Start crawling frontier')
+        # dobimo stran iz frontirja, dobimo content in nastavimo na HTML v db, DOBIMO LINKE in jih damo v frontier
+        page = FRONTIER[frontier_index]
+        print(page.url)
+        domain = get_domain(page.url)
+        if has_robots_file('https://' + get_domain(page.url) + '/robots.txt'):
+            print('ROBOTS')
+            if page_allowed(page.url):
+
+                page_obj = get_page_metadata(page.url)
+                # TODO update page in db
+                print(page_obj.get_data())
+                urls = get_urls(page.url)
+                # TODO save urls to FRONTIER
+                insert_pages_into_frontier(urls)
+
+        else:
+            print('NO ROBOTS')
+            page_obj = get_page_metadata(page.url)
+            if page_obj.http_status_code != 500:
+                print(page_obj.get_data())
+                urls = get_urls(page.url)
+                insert_pages_into_frontier(urls)
+
+        frontier_index += 1
+        print(len(FRONTIER))
+    i += 1
+
+
+
