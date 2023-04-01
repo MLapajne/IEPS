@@ -19,18 +19,27 @@ import psycopg2
 GOV_DOMAIN = '.gov.si'
 GROUP_NAME = "fri-wier-SET_GROUP_NAME"
 INITIAL_SEED = ['https://gov.si', 'https://evem.gov.si',
-                'https://e-uprava.gov.si', 'https://www.e-prostor.gov.si']
+                'https://e-uprava.gov.si', 'https://e-prostor.gov.si']
+DOMAINS = ['gov.si', 'evem.gov.si', 'e-uprava.gov.si', 'e-prostor.gov.si']
 # INITIAL_SEED = ['https://www.e-prostor.gov.si']
 
 FRONTIER = []
+
+"""
+            sitemaps = rp.site_maps()
+            sitemap_content = []
+            if sitemaps is not None:
+                for sitemap_url in sitemaps:
+                    if request_success(sitemap_url):
+                        parsed_site_maps = parse_sitemap(sitemap_url)
+                        sitemap_content.extend(parsed_site_maps)
+            """
 
 #####
 # DB utility functions
 #####
 
 # insert page into frontier
-
-
 def db_insert_page_into_frontier(domain, url):
     cur = conn.cursor()
 
@@ -48,6 +57,7 @@ def db_insert_page_into_frontier(domain, url):
         cur.execute("SELECT id FROM crawldb.site WHERE domain= %s", (domain,))
 
         site_id_result = cur.fetchone()
+        # check if there is no entry for this domain
         if(site_id_result is None):
             # print("No domain stored with this url. Inserting domain.")
             site_id = db_insert_site_data(domain, '', 0, '')
@@ -61,8 +71,6 @@ def db_insert_page_into_frontier(domain, url):
     cur.close()
 
 # insert data into site table
-
-
 def db_insert_site_data(domain, robots_content, crawl_delay, sitemap_content):
     cur = conn.cursor()
     cur.execute("INSERT into crawldb.site (domain, robots_content, crawl_delay, sitemap_content) \
@@ -73,8 +81,6 @@ def db_insert_site_data(domain, robots_content, crawl_delay, sitemap_content):
     return new_site_id
 
 # when page is crawled, update table 'page' with obtained data
-
-
 def db_update_page_data(url, page_type_code, html_content, content_hash, http_status_code, accessed_time):
     print("updating {}".format(url))
     cur = conn.cursor()
@@ -105,7 +111,7 @@ def db_update_page_data(url, page_type_code, html_content, content_hash, http_st
 
     # if there are no duplicates
     else:
-        print("\nInserting values into page as {}".format(page_type_code))
+        # print("\nInserting values into page as {}".format(page_type_code))
         cur.execute("UPDATE crawldb.page SET page_type_code= %s, html_content= %s, content_hash = %s, http_status_code= %s, accessed_time= %s \
                 WHERE url= %s", (page_type_code, html_content, content_hash, http_status_code, accessed_time, url))
         print(cur.statusmessage)
@@ -113,8 +119,6 @@ def db_update_page_data(url, page_type_code, html_content, content_hash, http_st
     cur.close()
 
 # get url of the first page in frontier
-
-
 def db_get_first_page_from_frontier():
     cur = conn.cursor()
 
@@ -194,16 +198,18 @@ def get_domain(url):
     return domain
 
 
-def get_robots_content(robots_url):
+def get_robots_content(robots):
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
-        response = page.goto(robots_url)
+        response = page.goto(robots)
 
         if response.ok:
             content = page.content()
             soup = BeautifulSoup(content, 'html.parser')
             pre = soup.find('pre')
+            if pre is None:
+                return ''
             return pre.text
         return ''
 
@@ -380,6 +386,23 @@ def get_page_metadata(page_url):
                 time_stamp)
 
 
+def get_robots_content_and_delay(page_url):  # TODO dodat za sitemape
+    robots = 'https://' + get_domain(page_url) + '/robots.txt'
+    if has_robots_file(robots):
+        rp = urllib.robotparser.RobotFileParser()
+        rp.set_url(robots)
+        rp.read()
+        robots_content1 = get_robots_content(robots)
+        crawl_delay1 = rp.crawl_delay(GROUP_NAME)
+        if crawl_delay1 is None:
+            crawl_delay1 = 0
+
+        return robots_content1, crawl_delay1
+
+    else:
+        return '', 0
+
+
 # start DB connection
 conn = psycopg2.connect(host="localhost", user="user",
                         password="SecretPassword")
@@ -391,35 +414,15 @@ while True:
     if i < len(INITIAL_SEED):
         curr_url = INITIAL_SEED[i]
         robots_url = curr_url + '/robots.txt'
-        print('Current url: ', curr_url)
         domain = get_domain(curr_url)
         pages = get_urls(curr_url)
 
-        if has_robots_file(robots_url):
-            rp = urllib.robotparser.RobotFileParser()
-            rp.set_url(robots_url)
-            rp.read()
-            delay = rp.crawl_delay(GROUP_NAME)
-            robots_content = get_robots_content(robots_url)
+        robots_content, crawl_delay = get_robots_content_and_delay(curr_url)
 
-            crawl_delay = rp.crawl_delay(GROUP_NAME)
-            if crawl_delay is None:
-                crawl_delay = 0
-                """
-                sitemaps = rp.site_maps()
-                sitemap_content = []
-                if sitemaps is not None:
-                    for sitemap_url in sitemaps:
-                        if request_success(sitemap_url):
-                            parsed_site_maps = parse_sitemap(sitemap_url)
-                            sitemap_content.extend(parsed_site_maps)
-                """
-
+        if robots_content != '':
             site = Site(domain, robots_content, '',
                         crawl_delay)  # TODO add sitemaps
-
         else:
-
             site = Site(domain, '', '', 0)
 
         db_insert_site_data(site.domain, site.robots_content,
@@ -427,18 +430,28 @@ while True:
 
         insert_pages_into_frontier(pages)
     else:
-        print('Started crawling frontier')
+        print('\nStarted crawling frontier')
         # page = FRONTIER[frontier_index]
 
         page = db_get_first_page_from_frontier()
         print(page.url)
 
         domain = get_domain(page.url)
-        if has_robots_file('https://' + get_domain(page.url) + '/robots.txt'):
+        if domain not in DOMAINS:  # check if we have a new domain (Site)
+            print('NEW DOMAIN', domain)
+            robots_content, crawl_delay = get_robots_content_and_delay(
+                page.url)
+            site = Site(domain, robots_content, '', crawl_delay)
+
+            db_insert_site_data(site.domain, site.robots_content,
+                                site.crawl_delay, site.sitemap_content)
+            DOMAINS.append(domain)
+
+        if has_robots_file('https://' + domain + '/robots.txt'):
             if page_allowed(page.url):
                 page_obj = get_page_metadata(page.url)
 
-                # outputs a random string to simulate hash value
+                # outputs a random string to simulate hash value - this is just for testing
                 hash_test = ''.join(random.choices(string.ascii_lowercase +
                                                    string.digits, k=10))
 
@@ -450,13 +463,13 @@ while True:
                 insert_pages_into_frontier(urls)
 
                 # TODO save images to db (to se ni narjeno)
-                #images = get_image_sources(page.url)
+                # images = get_image_sources(page.url)
 
         else:
             page_obj = get_page_metadata(page.url)
             if page_obj.http_status_code != 500:
 
-                # outputs a random string to simulate hash value
+                # outputs a random string to simulate hash value - this is just for testing
                 hash_test = ''.join(random.choices(string.ascii_lowercase +
                                                    string.digits, k=10))
 
@@ -477,5 +490,5 @@ while True:
         # print(len(FRONTIER))
     i += 1
 
-# close DB connection
+# close DB connection - NOTE this is unreachable at the moment
 conn.close()
