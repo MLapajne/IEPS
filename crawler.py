@@ -18,8 +18,7 @@ import psycopg2
 
 GOV_DOMAIN = '.gov.si'
 GROUP_NAME = "fri-wier-SET_GROUP_NAME"
-INITIAL_SEED = ['https://gov.si', 'https://evem.gov.si',
-                'https://e-uprava.gov.si', 'https://e-prostor.gov.si']
+INITIAL_SEED = ['https://gov.si', 'https://evem.gov.si', 'https://e-uprava.gov.si', 'https://e-prostor.gov.si']
 DOMAINS = ['gov.si', 'evem.gov.si', 'e-uprava.gov.si', 'e-prostor.gov.si']
 # INITIAL_SEED = ['https://www.e-prostor.gov.si']
 
@@ -362,6 +361,7 @@ def insert_pages_into_frontier(pages):
         db_insert_page_into_frontier(page_entry.domain, page_entry.url)
 
 
+
 def insert_images_into_frontier(images):
     for image in images:
         image = Image()
@@ -422,6 +422,8 @@ while True:
         if robots_content != '':
             site = Site(domain, robots_content, '',
                         crawl_delay)  # TODO add sitemaps
+            # TODO save Site to db
+            site = Site(domain, robots_content, '', crawl_delay)  # TODO add sitemaps
         else:
             site = Site(domain, '', '', 0)
 
