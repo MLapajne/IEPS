@@ -31,3 +31,17 @@ class Page:
                 'accessed_time': self.accessed_time,
                 'domain': self.domain
                 }
+
+class Image:
+    def __init__(self, filename, content_type, data, accessed_time):
+        self.filename = filename
+        self.content_type = content_type
+        self.data = data
+        self.accessed_time = accessed_time
+
+    def get_data(self):
+        return {'filename': self.filename,
+                'content_type': self.content_type,
+                'data': self.data,
+                'accessed_time': self.accessed_time,
+                }
