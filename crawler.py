@@ -10,12 +10,124 @@ from urllib.parse import urlparse, urlunsplit, urlsplit
 from playwright.sync_api import Playwright, sync_playwright, Error
 from urllib.parse import urlparse, urlunparse
 
+# NOTE for testing hash, delete later
+import string
+import random
+
+import psycopg2
+
 GOV_DOMAIN = '.gov.si'
 GROUP_NAME = "fri-wier-SET_GROUP_NAME"
-INITIAL_SEED = ['https://gov.si', 'https://evem.gov.si', 'https://e-uprava.gov.si', 'https://www.e-prostor.gov.si']
+INITIAL_SEED = ['https://gov.si', 'https://evem.gov.si',
+                'https://e-uprava.gov.si', 'https://www.e-prostor.gov.si']
 # INITIAL_SEED = ['https://www.e-prostor.gov.si']
 
 FRONTIER = []
+
+#####
+# DB utility functions
+#####
+
+# insert page into frontier
+
+
+def db_insert_page_into_frontier(domain, url):
+    cur = conn.cursor()
+
+    # check if there is already an existing url in the database or frontier
+    cur.execute("SELECT id FROM crawldb.page WHERE url = %s", (url,))
+    id_of_original = cur.fetchone()
+
+    if (id_of_original is not None):
+        # if url is already in db/frontier, ignore it
+        # print("Existing url already in database/frontier")
+        cur.close()
+        return
+    else:
+        # get id of domain url
+        cur.execute("SELECT id FROM crawldb.site WHERE domain= %s", (domain,))
+
+        site_id_result = cur.fetchone()
+        if(site_id_result is None):
+            # print("No domain stored with this url. Inserting domain.")
+            site_id = db_insert_site_data(domain, '', 0, '')
+        else:
+            site_id = site_id_result[0]
+
+        cur.execute(
+            "INSERT into crawldb.page (site_id, url, page_type_code) VALUES (%s, %s, 'FRONTIER')", (site_id, url))
+        # print(cur.statusmessage)
+
+    cur.close()
+
+# insert data into site table
+
+
+def db_insert_site_data(domain, robots_content, crawl_delay, sitemap_content):
+    cur = conn.cursor()
+    cur.execute("INSERT into crawldb.site (domain, robots_content, crawl_delay, sitemap_content) \
+                 VALUES (%s, %s, %s, %s) RETURNING id", (domain, robots_content, crawl_delay, sitemap_content))
+    # print(cur.statusmessage)
+    new_site_id = cur.fetchone()[0]
+    cur.close()
+    return new_site_id
+
+# when page is crawled, update table 'page' with obtained data
+
+
+def db_update_page_data(url, page_type_code, html_content, content_hash, http_status_code, accessed_time):
+    print("updating {}".format(url))
+    cur = conn.cursor()
+
+    # check if there is a duplicate of content_hash
+    cur.execute("SELECT id FROM crawldb.page WHERE content_hash = %s AND html_content IS NOT NULL",
+                (content_hash,))  # NOTE will we store the hash of duplicates or is there no need?
+    original_site = cur.fetchone()
+
+    # if duplicate exists
+    if original_site is not None:
+        page_type_code = 'DUPLICATE'
+        original_site_id = original_site[0]
+
+        # duplicates should have empty html_content column
+        cur.execute("UPDATE crawldb.page SET page_type_code= %s, content_hash = %s, http_status_code= %s, accessed_time= %s \
+                     WHERE url= %s RETURNING id", ('DUPLICATE', content_hash, http_status_code, accessed_time, url))
+        print(cur.statusmessage)
+
+        # NOTE - this can cause an error if the page hasn't been inserted yet
+        id_of_updated_row = cur.fetchone()[0]
+
+        # create link from duplicate pointing to 'original' page
+        # column names: from_page -> id of duplicate, to_page -> id of original
+        cur.execute("INSERT INTO crawldb.link (from_page, to_page) VALUES (%s, %s)",
+                    (id_of_updated_row, original_site_id))
+        # print(cur.statusmessage)
+
+    # if there are no duplicates
+    else:
+        print("\nInserting values into page as {}".format(page_type_code))
+        cur.execute("UPDATE crawldb.page SET page_type_code= %s, html_content= %s, content_hash = %s, http_status_code= %s, accessed_time= %s \
+                WHERE url= %s", (page_type_code, html_content, content_hash, http_status_code, accessed_time, url))
+        print(cur.statusmessage)
+
+    cur.close()
+
+# get url of the first page in frontier
+
+
+def db_get_first_page_from_frontier():
+    cur = conn.cursor()
+
+    cur.execute(
+        "SELECT url FROM crawldb.page WHERE page_type_code = 'FRONTIER' ORDER BY id ASC LIMIT 1")
+    page_url = cur.fetchone()[0]
+
+    print("FROM FRONTIER: " + page_url)
+
+    page = Page(page_url, get_domain(page_url))
+    cur.close()
+
+    return page
 
 
 def has_robots_file(robots_url):
@@ -76,7 +188,8 @@ def get_domain(url):
     parsed_url = urlparse(url)
     domain = parsed_url.netloc
     if "www." in domain:
-        domain = domain.replace("www.", "")  # remove the "www." prefix if it exists
+        # remove the "www." prefix if it exists
+        domain = domain.replace("www.", "")
 
     return domain
 
@@ -239,13 +352,15 @@ def page_allowed(url):
 def insert_pages_into_frontier(pages):
     for page in pages:
         page_entry = Page(page, get_domain(page))
-        FRONTIER.append(page_entry)
-        # TODO insert_page_into_frontier(domain, url)
+        # FRONTIER.append(page_entry)
+        db_insert_page_into_frontier(page_entry.domain, page_entry.url)
+
 
 def insert_images_into_frontier(images):
     for image in images:
         image = Image()
         # TODO save image to db
+
 
 def get_page_metadata(page_url):
     page_type_code = get_page_type_code(page_url)
@@ -264,6 +379,11 @@ def get_page_metadata(page_url):
     return Page(page.url, get_domain(page_url), page_type_code, html_content, '', http_status_code,
                 time_stamp)
 
+
+# start DB connection
+conn = psycopg2.connect(host="localhost", user="user",
+                        password="SecretPassword")
+conn.autocommit = True
 
 i = 0
 frontier_index = 0
@@ -294,41 +414,68 @@ while True:
                             parsed_site_maps = parse_sitemap(sitemap_url)
                             sitemap_content.extend(parsed_site_maps)
                 """
-            # TODO save Site to db
-            site = Site(domain, robots_content, '', crawl_delay)  # TODO add sitemaps
+
+            site = Site(domain, robots_content, '',
+                        crawl_delay)  # TODO add sitemaps
+
         else:
-            # TODO save Site to db
+
             site = Site(domain, '', '', 0)
+
+        db_insert_site_data(site.domain, site.robots_content,
+                            site.crawl_delay, site.sitemap_content)
 
         insert_pages_into_frontier(pages)
     else:
         print('Started crawling frontier')
-        page = FRONTIER[frontier_index]  # TODO tukej je treba zamenjat da dobimo iz baze
+        # page = FRONTIER[frontier_index]
+
+        page = db_get_first_page_from_frontier()
         print(page.url)
+
         domain = get_domain(page.url)
         if has_robots_file('https://' + get_domain(page.url) + '/robots.txt'):
             if page_allowed(page.url):
                 page_obj = get_page_metadata(page.url)
-                # TODO update page in db
-                print(page_obj.get_data())
+
+                # outputs a random string to simulate hash value
+                hash_test = ''.join(random.choices(string.ascii_lowercase +
+                                                   string.digits, k=10))
+
+                db_update_page_data(page_obj.url, page_obj.page_type_code, page_obj.html_content,
+                                    hash_test, page_obj.http_status_code, page_obj.accessed_time)
+                # print(page_obj.get_data())
+
                 urls = get_urls(page.url)
-                # TODO save urls to FRONTIER
                 insert_pages_into_frontier(urls)
+
                 # TODO save images to db (to se ni narjeno)
                 #images = get_image_sources(page.url)
 
         else:
             page_obj = get_page_metadata(page.url)
             if page_obj.http_status_code != 500:
-                # TODO update page in db
-                print(page_obj.get_data())
+
+                # outputs a random string to simulate hash value
+                hash_test = ''.join(random.choices(string.ascii_lowercase +
+                                                   string.digits, k=10))
+
+                db_update_page_data(page_obj.url, page_obj.page_type_code, page_obj.html_content,
+                                    hash_test, page_obj.http_status_code, page_obj.accessed_time)
+
+                # print(page_obj.get_data())
                 urls = get_urls(page.url)
-                # TODO save urls to FRONTIER
                 insert_pages_into_frontier(urls)
+
                 # TODO save images to db
                 images = get_image_sources(page.url)
+            else:
+                db_update_page_data(page_obj.url, page_obj.page_type_code, '',
+                                    '', page_obj.http_status_code, page_obj.accessed_time)
 
         frontier_index += 1
-        print(len(FRONTIER))
+        # print(len(FRONTIER))
     i += 1
 
+# close DB connection
+conn.close()
