@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from playwright.async_api import async_playwright
 
-from classes import Site, Page
+from classes import Site, Page, Image
 import urllib.robotparser
 import datetime
 from urllib.parse import urlparse, urlunsplit, urlsplit
@@ -16,7 +16,6 @@ INITIAL_SEED = ['https://gov.si', 'https://evem.gov.si', 'https://e-uprava.gov.s
 # INITIAL_SEED = ['https://www.e-prostor.gov.si']
 
 FRONTIER = []
-disallowed_pages = []
 
 
 def has_robots_file(robots_url):
@@ -54,6 +53,23 @@ def get_urls(page_url):
                         links.append(canonicalized_url)
 
         return links
+
+
+def get_image_sources(url):
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+
+        page = browser.new_page()
+        page.goto(url)
+
+        content = page.content()
+        browser.close()
+
+        soup = BeautifulSoup(content, 'html.parser')
+
+        image_sources = [img['src'] for img in soup.find_all('img')]
+
+        return image_sources
 
 
 def get_domain(url):
@@ -226,6 +242,10 @@ def insert_pages_into_frontier(pages):
         FRONTIER.append(page_entry)
         # TODO insert_page_into_frontier(domain, url)
 
+def insert_images_into_frontier(images):
+    for image in images:
+        image = Image()
+        # TODO save image to db
 
 def get_page_metadata(page_url):
     page_type_code = get_page_type_code(page_url)
@@ -242,7 +262,8 @@ def get_page_metadata(page_url):
         html_content = get_html_content(page_url)
 
     return Page(page.url, get_domain(page_url), page_type_code, html_content, '', http_status_code,
-                    time_stamp)
+                time_stamp)
+
 
 i = 0
 frontier_index = 0
@@ -281,33 +302,33 @@ while True:
 
         insert_pages_into_frontier(pages)
     else:
-        print('Start crawling frontier')
-        # dobimo stran iz frontirja, dobimo content in nastavimo na HTML v db, DOBIMO LINKE in jih damo v frontier
-        page = FRONTIER[frontier_index]
+        print('Started crawling frontier')
+        page = FRONTIER[frontier_index]  # TODO tukej je treba zamenjat da dobimo iz baze
         print(page.url)
         domain = get_domain(page.url)
         if has_robots_file('https://' + get_domain(page.url) + '/robots.txt'):
-            print('ROBOTS')
             if page_allowed(page.url):
-
                 page_obj = get_page_metadata(page.url)
                 # TODO update page in db
                 print(page_obj.get_data())
                 urls = get_urls(page.url)
                 # TODO save urls to FRONTIER
                 insert_pages_into_frontier(urls)
+                # TODO save images to db (to se ni narjeno)
+                #images = get_image_sources(page.url)
 
         else:
-            print('NO ROBOTS')
             page_obj = get_page_metadata(page.url)
             if page_obj.http_status_code != 500:
+                # TODO update page in db
                 print(page_obj.get_data())
                 urls = get_urls(page.url)
+                # TODO save urls to FRONTIER
                 insert_pages_into_frontier(urls)
+                # TODO save images to db
+                images = get_image_sources(page.url)
 
         frontier_index += 1
         print(len(FRONTIER))
     i += 1
-
-
 
