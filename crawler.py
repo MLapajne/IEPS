@@ -12,10 +12,21 @@ from urllib.parse import urlparse, urlunparse
 
 GOV_DOMAIN = '.gov.si'
 GROUP_NAME = "fri-wier-SET_GROUP_NAME"
-INITIAL_SEED = ['https://gov.si', 'https://evem.gov.si', 'https://e-uprava.gov.si', 'https://www.e-prostor.gov.si']
+INITIAL_SEED = ['https://gov.si', 'https://evem.gov.si', 'https://e-uprava.gov.si', 'https://e-prostor.gov.si']
+DOMAINS = ['gov.si', 'evem.gov.si', 'e-uprava.gov.si', 'e-prostor.gov.si']
 # INITIAL_SEED = ['https://www.e-prostor.gov.si']
 
 FRONTIER = []
+
+"""
+            sitemaps = rp.site_maps()
+            sitemap_content = []
+            if sitemaps is not None:
+                for sitemap_url in sitemaps:
+                    if request_success(sitemap_url):
+                        parsed_site_maps = parse_sitemap(sitemap_url)
+                        sitemap_content.extend(parsed_site_maps)
+            """
 
 
 def has_robots_file(robots_url):
@@ -81,16 +92,18 @@ def get_domain(url):
     return domain
 
 
-def get_robots_content(robots_url):
+def get_robots_content(robots):
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
-        response = page.goto(robots_url)
+        response = page.goto(robots)
 
         if response.ok:
             content = page.content()
             soup = BeautifulSoup(content, 'html.parser')
             pre = soup.find('pre')
+            if pre is None:
+                return ''
             return pre.text
         return ''
 
@@ -242,10 +255,12 @@ def insert_pages_into_frontier(pages):
         FRONTIER.append(page_entry)
         # TODO insert_page_into_frontier(domain, url)
 
+
 def insert_images_into_frontier(images):
     for image in images:
         image = Image()
         # TODO save image to db
+
 
 def get_page_metadata(page_url):
     page_type_code = get_page_type_code(page_url)
@@ -265,35 +280,36 @@ def get_page_metadata(page_url):
                 time_stamp)
 
 
+def get_robots_content_and_delay(page_url):  # TODO dodat za sitemape
+    robots = 'https://' + get_domain(page_url) + '/robots.txt'
+    if has_robots_file(robots):
+        rp = urllib.robotparser.RobotFileParser()
+        rp.set_url(robots)
+        rp.read()
+        robots_content1 = get_robots_content(robots)
+        crawl_delay1 = rp.crawl_delay(GROUP_NAME)
+        if crawl_delay1 is None:
+            crawl_delay1 = 0
+
+        return robots_content1, crawl_delay1
+
+    else:
+        return '', 0
+
+
+
 i = 0
 frontier_index = 0
 while True:
     if i < len(INITIAL_SEED):
         curr_url = INITIAL_SEED[i]
         robots_url = curr_url + '/robots.txt'
-        print('Current url: ', curr_url)
         domain = get_domain(curr_url)
         pages = get_urls(curr_url)
 
-        if has_robots_file(robots_url):
-            rp = urllib.robotparser.RobotFileParser()
-            rp.set_url(robots_url)
-            rp.read()
-            delay = rp.crawl_delay(GROUP_NAME)
-            robots_content = get_robots_content(robots_url)
+        robots_content, crawl_delay = get_robots_content_and_delay(curr_url)
 
-            crawl_delay = rp.crawl_delay(GROUP_NAME)
-            if crawl_delay is None:
-                crawl_delay = 0
-                """
-                sitemaps = rp.site_maps()
-                sitemap_content = []
-                if sitemaps is not None:
-                    for sitemap_url in sitemaps:
-                        if request_success(sitemap_url):
-                            parsed_site_maps = parse_sitemap(sitemap_url)
-                            sitemap_content.extend(parsed_site_maps)
-                """
+        if robots_content != '':
             # TODO save Site to db
             site = Site(domain, robots_content, '', crawl_delay)  # TODO add sitemaps
         else:
@@ -304,9 +320,15 @@ while True:
     else:
         print('Started crawling frontier')
         page = FRONTIER[frontier_index]  # TODO tukej je treba zamenjat da dobimo iz baze
-        print(page.url)
         domain = get_domain(page.url)
-        if has_robots_file('https://' + get_domain(page.url) + '/robots.txt'):
+        if domain not in DOMAINS:  # check if we have a new domain (Site)
+            print('NEW DOMAIN', domain)
+            robots_content, crawl_delay = get_robots_content_and_delay(page.url)
+            site = Site(domain, robots_content, '', crawl_delay)
+            # TODO tudi tukej treba insertat v db
+            DOMAINS.append(domain)
+
+        if has_robots_file('https://' + domain + '/robots.txt'):
             if page_allowed(page.url):
                 page_obj = get_page_metadata(page.url)
                 # TODO update page in db
@@ -315,7 +337,7 @@ while True:
                 # TODO save urls to FRONTIER
                 insert_pages_into_frontier(urls)
                 # TODO save images to db (to se ni narjeno)
-                #images = get_image_sources(page.url)
+                # images = get_image_sources(page.url)
 
         else:
             page_obj = get_page_metadata(page.url)
@@ -331,4 +353,3 @@ while True:
         frontier_index += 1
         print(len(FRONTIER))
     i += 1
-
