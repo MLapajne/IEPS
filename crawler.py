@@ -1,5 +1,8 @@
+import hashlib
 import time
+import mimetypes
 import requests
+import os
 from bs4 import BeautifulSoup
 from playwright.async_api import async_playwright
 
@@ -14,7 +17,11 @@ GOV_DOMAIN = '.gov.si'
 GROUP_NAME = "fri-wier-SET_GROUP_NAME"
 INITIAL_SEED = ['https://gov.si', 'https://evem.gov.si', 'https://e-uprava.gov.si', 'https://e-prostor.gov.si']
 DOMAINS = ['gov.si', 'evem.gov.si', 'e-uprava.gov.si', 'e-prostor.gov.si']
-# INITIAL_SEED = ['https://www.e-prostor.gov.si']
+IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg']
+LAST_CRAWL_TIMES = {domain: 0 for domain in DOMAINS}
+
+
+mimetypes.init()
 
 FRONTIER = []
 
@@ -28,6 +35,8 @@ FRONTIER = []
                         sitemap_content.extend(parsed_site_maps)
             """
 
+def hash_html(html_content):
+    return hashlib.md5(html_content.encode('utf-8')).hexdigest()
 
 def has_robots_file(robots_url):
     with sync_playwright() as p:
@@ -171,8 +180,8 @@ def get_html_content(page_url):
         try:
             page.goto(page_url)
             return page.content()
-        except Error as e:
-            return {"message": "Error accessing the page"}
+        except Error:
+            return "<html><head></head><body></body></html>"
 
 
 def get_base_url(url):
@@ -256,9 +265,9 @@ def insert_pages_into_frontier(pages):
         # TODO insert_page_into_frontier(domain, url)
 
 
-def insert_images_into_frontier(images):
+def insert_image_data(images):
     for image in images:
-        image = Image()
+        img_obj = get_image_metadata(image)
         # TODO save image to db
 
 
@@ -276,8 +285,36 @@ def get_page_metadata(page_url):
     if page_type_code == 'HTML':
         html_content = get_html_content(page_url)
 
-    return Page(page.url, get_domain(page_url), page_type_code, html_content, '', http_status_code,
+    content_hash = hash_html(html_content)
+
+    return Page(page_url, get_domain(page_url), page_type_code, html_content, content_hash, http_status_code,
                 time_stamp)
+
+
+def get_image_filename(url):
+    filename = os.path.basename(url)
+    return filename
+
+
+def get_image_type(image_url):
+    image_parse = image_url.split('.')
+    if len(image_parse) == 1:
+        return ''
+    return image_url.split('.')[len(image_parse)-1]
+
+
+def get_image_metadata(image_url):
+    filename = get_image_filename(image_url)
+    current_timestamp = time.time()
+    current_datetime = datetime.datetime.fromtimestamp(current_timestamp)
+    time_stamp = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+
+    file_extension = '.' + get_image_type(image_url)
+    content_type = ''
+    if file_extension in IMAGE_EXTENSIONS:
+        content_type = mimetypes.types_map[file_extension]
+
+    return Image(filename, content_type, '', time_stamp)
 
 
 def get_robots_content_and_delay(page_url):  # TODO dodat za sitemape
@@ -288,6 +325,7 @@ def get_robots_content_and_delay(page_url):  # TODO dodat za sitemape
         rp.read()
         robots_content1 = get_robots_content(robots)
         crawl_delay1 = rp.crawl_delay(GROUP_NAME)
+        print(crawl_delay1)
         if crawl_delay1 is None:
             crawl_delay1 = 0
 
@@ -295,6 +333,7 @@ def get_robots_content_and_delay(page_url):  # TODO dodat za sitemape
 
     else:
         return '', 0
+
 
 
 
@@ -322,34 +361,57 @@ while True:
         page = FRONTIER[frontier_index]  # TODO tukej je treba zamenjat da dobimo iz baze
         domain = get_domain(page.url)
         if domain not in DOMAINS:  # check if we have a new domain (Site)
-            print('NEW DOMAIN', domain)
             robots_content, crawl_delay = get_robots_content_and_delay(page.url)
             site = Site(domain, robots_content, '', crawl_delay)
             # TODO tudi tukej treba insertat v db
             DOMAINS.append(domain)
+            LAST_CRAWL_TIMES[domain] = 0
 
         if has_robots_file('https://' + domain + '/robots.txt'):
             if page_allowed(page.url):
+                _, crawl_delay = get_robots_content_and_delay(page.url)
+                if crawl_delay != 0:
+                    print('CRAWL DELAY: ', crawl_delay)
+                    time.sleep(crawl_delay)
+                else:
+                    domain = get_domain(page.url)
+                    last_crawl_time = LAST_CRAWL_TIMES[domain]
+                    print('last_crawl_time: ', last_crawl_time)
+                    time_since_last_crawl = time.time() - last_crawl_time
+                    print('time_since_last_crawl: ', time_since_last_crawl)
+                    if time_since_last_crawl < 5:
+                        print('HAVE TO WAIT: ', 5 - time_since_last_crawl)
+                        time.sleep(5 - time_since_last_crawl)
+
+                    LAST_CRAWL_TIMES[domain] = time.time()
+
                 page_obj = get_page_metadata(page.url)
-                # TODO update page in db
-                print(page_obj.get_data())
                 urls = get_urls(page.url)
-                # TODO save urls to FRONTIER
                 insert_pages_into_frontier(urls)
-                # TODO save images to db (to se ni narjeno)
-                # images = get_image_sources(page.url)
+
+                # TODO save images to db
+                images = get_image_sources(page.url)
+                insert_image_data(images)
 
         else:
+            domain = get_domain(page.url)
+            last_crawl_time = LAST_CRAWL_TIMES[domain]
+            time_since_last_crawl = time.time() - last_crawl_time
+            if time_since_last_crawl < 5:
+                print('HAVE TO WAIT: ', 5 - time_since_last_crawl)
+                time.sleep(5 - time_since_last_crawl)
+
+            LAST_CRAWL_TIMES[domain] = time.time()
+
             page_obj = get_page_metadata(page.url)
             if page_obj.http_status_code != 500:
-                # TODO update page in db
-                print(page_obj.get_data())
                 urls = get_urls(page.url)
-                # TODO save urls to FRONTIER
                 insert_pages_into_frontier(urls)
                 # TODO save images to db
                 images = get_image_sources(page.url)
+                insert_image_data(images)
 
         frontier_index += 1
         print(len(FRONTIER))
     i += 1
+

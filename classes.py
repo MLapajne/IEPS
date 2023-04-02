@@ -13,7 +13,8 @@ class Site:
 
 
 class Page:
-    def __init__(self, url, domain, page_type_code='FRONTIER', html_content=None, content_hash='', http_status_code=100, accessed_time=''):
+    def __init__(self, url, domain, page_type_code='FRONTIER', html_content=None, content_hash='', http_status_code=100,
+                 accessed_time=''):
         self.page_type_code = page_type_code
         self.url = url
         self.html_content = html_content
@@ -31,6 +32,7 @@ class Page:
                 'accessed_time': self.accessed_time,
                 'domain': self.domain
                 }
+
 
 class Image:
     def __init__(self, filename, content_type, data, accessed_time):
