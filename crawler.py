@@ -16,7 +16,7 @@ from urllib.parse import urlparse, urlunparse
 
 mimetypes.init()
 
-# TODO: fix robots.txt ssl error, Timeout error, onclick, threading
+# TODO: Timeout error, onclick, threading
 
 GOV_DOMAIN = '.gov.si'
 GROUP_NAME = "fri-wier-SET_GROUP_NAME"
@@ -377,13 +377,15 @@ while True:
         page = FRONTIER[frontier_index]
         domain = get_domain(page.url)
         if domain not in DOMAINS:  # check if we have a new domain (Site)
-            print('NEW DOMAIN: ', domain)
             robots_content, crawl_delay, sitemaps = get_robots_content_data(page.url, True) # dej to na False ce noces cakat na sitemape
             site = Site(domain, robots_content, ' '.join(sitemaps), crawl_delay)
             # TODO save sitemaps to frontier
             # TODO tudi tukej treba insertat v db (to nism ziher ce si ze naredu)
             DOMAINS.append(domain)
+            ip = socket.gethostbyname(domain)
+            IPS.append(socket.gethostbyname(domain))
             LAST_CRAWL_TIMES_DOMAINS[domain] = 0
+            LAST_CRAWL_TIMES_IPS[ip] = 0
 
         if has_robots_file('https://' + domain + '/robots.txt'):
             if page_allowed(page.url):
