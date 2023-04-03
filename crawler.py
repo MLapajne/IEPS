@@ -2,6 +2,7 @@ import hashlib
 import time
 import mimetypes
 import requests
+import socket
 import os
 from bs4 import BeautifulSoup
 from playwright.async_api import async_playwright
@@ -13,15 +14,19 @@ from urllib.parse import urlparse, urlunsplit, urlsplit
 from playwright.sync_api import Playwright, sync_playwright, Error
 from urllib.parse import urlparse, urlunparse
 
+mimetypes.init()
+
+# TODO: add ips, add sitemaps, fix robots.txt ssl error, Timeout error, onclick, threading
+
 GOV_DOMAIN = '.gov.si'
 GROUP_NAME = "fri-wier-SET_GROUP_NAME"
 INITIAL_SEED = ['https://gov.si', 'https://evem.gov.si', 'https://e-uprava.gov.si', 'https://e-prostor.gov.si']
 DOMAINS = ['gov.si', 'evem.gov.si', 'e-uprava.gov.si', 'e-prostor.gov.si']
+IPS = ['84.39.211.243', '84.39.222.27', '84.39.223.247', '84.39.211.222']
+
 IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg']
-LAST_CRAWL_TIMES = {domain: 0 for domain in DOMAINS}
-
-
-mimetypes.init()
+LAST_CRAWL_TIMES_DOMAINS = {domain: 0 for domain in DOMAINS}
+LAST_CRAWL_TIMES_IPS = {ip: 0 for ip in IPS}
 
 FRONTIER = []
 
@@ -35,8 +40,10 @@ FRONTIER = []
                         sitemap_content.extend(parsed_site_maps)
             """
 
+
 def hash_html(html_content):
     return hashlib.md5(html_content.encode('utf-8')).hexdigest()
+
 
 def has_robots_file(robots_url):
     with sync_playwright() as p:
@@ -195,29 +202,6 @@ def get_base_url(url):
     return base_url
 
 
-def is_binary_file(url: str):
-    response = requests.get(url)
-    content_type = response.headers.get("content-type")
-
-    if response.status_code == 200:
-        if "application/pdf" in content_type and response.content[:4] == b"%PDF":
-            return True
-        elif "application/msword" in content_type or "application/vnd.openxmlformats-officedocument.wordprocessingml.document" in content_type:
-            if response.content[:4] == b"\xD0\xCF\x11\xE0" or response.content[:4] == b"\x50\x4B\x03\x04":
-                return True
-            else:
-                return False
-        elif "application/vnd.ms-powerpoint" in content_type or "application/vnd.openxmlformats-officedocument.presentationml.presentation" in content_type:
-            if response.content[:4] == b"\xD0\xCF\x11\xE0" or response.content[:4] == b"\x50\x4B\x03\x04":
-                return True
-            else:
-                return False
-        else:
-            return False
-    else:
-        return False
-
-
 def get_page_type_code(url):
     return 'BINARY' if url.endswith('.pdf') or url.endswith('.doc') or url.endswith('.docx') or url.endswith(
         '.ppt') or url.endswith('.pptx') else 'HTML'
@@ -300,7 +284,7 @@ def get_image_type(image_url):
     image_parse = image_url.split('.')
     if len(image_parse) == 1:
         return ''
-    return image_url.split('.')[len(image_parse)-1]
+    return image_url.split('.')[len(image_parse) - 1]
 
 
 def get_image_metadata(image_url):
@@ -325,7 +309,6 @@ def get_robots_content_and_delay(page_url):  # TODO dodat za sitemape
         rp.read()
         robots_content1 = get_robots_content(robots)
         crawl_delay1 = rp.crawl_delay(GROUP_NAME)
-        print(crawl_delay1)
         if crawl_delay1 is None:
             crawl_delay1 = 0
 
@@ -335,6 +318,26 @@ def get_robots_content_and_delay(page_url):  # TODO dodat za sitemape
         return '', 0
 
 
+def wait_for_access(page_url):
+    domain = get_domain(page_url)
+    print(domain)
+    ip = socket.gethostbyname(domain)
+    last_crawl_time = LAST_CRAWL_TIMES_DOMAINS[domain]
+    time_since_last_crawl = time.time() - last_crawl_time
+    print('time_since_last_crawl: ', time_since_last_crawl)
+    if time_since_last_crawl < 5:
+        print('WAIT FOR DOMAIN')
+        time.sleep(5 - time_since_last_crawl)
+        return
+    else:
+        last_crawl_time = LAST_CRAWL_TIMES_IPS[ip]
+        time_since_last_crawl = time.time() - last_crawl_time
+        if time_since_last_crawl < 5:
+            print('WAIT FOR IP')
+            time.sleep(5 - time_since_last_crawl)
+
+    LAST_CRAWL_TIMES_DOMAINS[domain] = time.time()
+    LAST_CRAWL_TIMES_IPS[ip] = time.time()
 
 
 i = 0
@@ -365,25 +368,15 @@ while True:
             site = Site(domain, robots_content, '', crawl_delay)
             # TODO tudi tukej treba insertat v db
             DOMAINS.append(domain)
-            LAST_CRAWL_TIMES[domain] = 0
+            LAST_CRAWL_TIMES_DOMAINS[domain] = 0
 
         if has_robots_file('https://' + domain + '/robots.txt'):
             if page_allowed(page.url):
                 _, crawl_delay = get_robots_content_and_delay(page.url)
-                if crawl_delay != 0:
-                    print('CRAWL DELAY: ', crawl_delay)
+                if crawl_delay != 0:  # check if there is crawl_delay in robots.txt
                     time.sleep(crawl_delay)
-                else:
-                    domain = get_domain(page.url)
-                    last_crawl_time = LAST_CRAWL_TIMES[domain]
-                    print('last_crawl_time: ', last_crawl_time)
-                    time_since_last_crawl = time.time() - last_crawl_time
-                    print('time_since_last_crawl: ', time_since_last_crawl)
-                    if time_since_last_crawl < 5:
-                        print('HAVE TO WAIT: ', 5 - time_since_last_crawl)
-                        time.sleep(5 - time_since_last_crawl)
-
-                    LAST_CRAWL_TIMES[domain] = time.time()
+                else:  # if there is no crawl_delay, check if we have to wait before accessing a domain or IP
+                    wait_for_access(page.url)
 
                 page_obj = get_page_metadata(page.url)
                 urls = get_urls(page.url)
@@ -394,14 +387,7 @@ while True:
                 insert_image_data(images)
 
         else:
-            domain = get_domain(page.url)
-            last_crawl_time = LAST_CRAWL_TIMES[domain]
-            time_since_last_crawl = time.time() - last_crawl_time
-            if time_since_last_crawl < 5:
-                print('HAVE TO WAIT: ', 5 - time_since_last_crawl)
-                time.sleep(5 - time_since_last_crawl)
-
-            LAST_CRAWL_TIMES[domain] = time.time()
+            wait_for_access(page.url)
 
             page_obj = get_page_metadata(page.url)
             if page_obj.http_status_code != 500:
@@ -414,4 +400,3 @@ while True:
         frontier_index += 1
         print(len(FRONTIER))
     i += 1
-
