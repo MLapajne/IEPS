@@ -16,7 +16,7 @@ from urllib.parse import urlparse, urlunparse
 
 mimetypes.init()
 
-# TODO: add ips, add sitemaps, fix robots.txt ssl error, Timeout error, onclick, threading
+# TODO: fix robots.txt ssl error, Timeout error, onclick, threading
 
 GOV_DOMAIN = '.gov.si'
 GROUP_NAME = "fri-wier-SET_GROUP_NAME"
@@ -31,14 +31,14 @@ LAST_CRAWL_TIMES_IPS = {ip: 0 for ip in IPS}
 FRONTIER = []
 
 """
-            sitemaps = rp.site_maps()
-            sitemap_content = []
-            if sitemaps is not None:
-                for sitemap_url in sitemaps:
-                    if request_success(sitemap_url):
-                        parsed_site_maps = parse_sitemap(sitemap_url)
-                        sitemap_content.extend(parsed_site_maps)
-            """
+    sitemaps = rp.site_maps()
+    sitemap_content = []
+    if sitemaps is not None:
+        for sitemap_url in sitemaps:
+            if request_success(sitemap_url):
+                parsed_site_maps = parse_sitemap(sitemap_url)
+                sitemap_content.extend(parsed_site_maps)
+"""
 
 
 def hash_html(html_content):
@@ -47,14 +47,17 @@ def hash_html(html_content):
 
 def has_robots_file(robots_url):
     with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page()
-        # content = page.content()
-        response = page.goto(robots_url)
+        try:
+            browser = p.chromium.launch()
+            page = browser.new_page()
+            response = page.goto(robots_url)
 
-        if response.status == 200:
-            return True
-        else:
+            if response.status == 200:
+                return True
+            else:
+                return False
+
+        except requests.exceptions.SSLError:
             return False
 
 
@@ -94,7 +97,12 @@ def get_image_sources(url):
 
         soup = BeautifulSoup(content, 'html.parser')
 
-        image_sources = [img['src'] for img in soup.find_all('img')]
+        image_sources = []
+        for img in soup.find_all('img'):
+            try:
+                image_sources.append(img['src'])
+            except KeyError:
+                pass
 
         return image_sources
 
@@ -133,10 +141,9 @@ def parse_sitemap(url_sitemap):
     response = requests.get(url_sitemap)
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, 'xml')
-        sitemaps = soup.select("sitemap")
-        if sitemaps:
+        site_maps = soup.select("sitemap")
+        if site_maps:
             for sitemap in soup.select("loc"):
-                # Extract the URLs from the sitemap
                 loc = sitemap.text
                 urlss.extend(parse_sitemap(loc))
 
@@ -144,10 +151,8 @@ def parse_sitemap(url_sitemap):
             urlset = soup.select('url')
             if urlset is not None:
                 for element in soup.select('loc'):
-                    if request_success(element.text) and GOV_DOMAIN in element.text:
+                    if GOV_DOMAIN in element.text:
                         urlss.append(element.text)
-                    else:
-                        print('404')
 
     return urlss
 
@@ -301,7 +306,7 @@ def get_image_metadata(image_url):
     return Image(filename, content_type, '', time_stamp)
 
 
-def get_robots_content_and_delay(page_url):  # TODO dodat za sitemape
+def get_robots_content_data(page_url, parse_sitemaps):  # TODO dodat za sitemape
     robots = 'https://' + get_domain(page_url) + '/robots.txt'
     if has_robots_file(robots):
         rp = urllib.robotparser.RobotFileParser()
@@ -309,31 +314,39 @@ def get_robots_content_and_delay(page_url):  # TODO dodat za sitemape
         rp.read()
         robots_content1 = get_robots_content(robots)
         crawl_delay1 = rp.crawl_delay(GROUP_NAME)
+
         if crawl_delay1 is None:
             crawl_delay1 = 0
 
-        return robots_content1, crawl_delay1
+        site_maps = rp.site_maps()
+        if parse_sitemaps:
+            sitemap_content = []
+            if site_maps is not None:
+                for sitemap_url in site_maps:
+                    if request_success(sitemap_url):
+                        parsed_site_maps = parse_sitemap(sitemap_url)
+                        sitemap_content.extend(parsed_site_maps)
+
+            return robots_content1, crawl_delay1, sitemap_content
+
+        return robots_content1, crawl_delay1, ''
 
     else:
-        return '', 0
+        return '', 0, ''
 
 
 def wait_for_access(page_url):
     domain = get_domain(page_url)
-    print(domain)
     ip = socket.gethostbyname(domain)
     last_crawl_time = LAST_CRAWL_TIMES_DOMAINS[domain]
     time_since_last_crawl = time.time() - last_crawl_time
-    print('time_since_last_crawl: ', time_since_last_crawl)
     if time_since_last_crawl < 5:
-        print('WAIT FOR DOMAIN')
         time.sleep(5 - time_since_last_crawl)
         return
     else:
         last_crawl_time = LAST_CRAWL_TIMES_IPS[ip]
         time_since_last_crawl = time.time() - last_crawl_time
         if time_since_last_crawl < 5:
-            print('WAIT FOR IP')
             time.sleep(5 - time_since_last_crawl)
 
     LAST_CRAWL_TIMES_DOMAINS[domain] = time.time()
@@ -345,34 +358,36 @@ frontier_index = 0
 while True:
     if i < len(INITIAL_SEED):
         curr_url = INITIAL_SEED[i]
+        print(curr_url)
         robots_url = curr_url + '/robots.txt'
         domain = get_domain(curr_url)
         pages = get_urls(curr_url)
 
-        robots_content, crawl_delay = get_robots_content_and_delay(curr_url)
+        robots_content, crawl_delay, sitemaps = get_robots_content_data(curr_url, True) # dej to na False ce noces cakat na sitemape
+        # TODO save sitemaps to frontier
 
         if robots_content != '':
-            # TODO save Site to db
-            site = Site(domain, robots_content, '', crawl_delay)  # TODO add sitemaps
+            site = Site(domain, robots_content, ' '.join(sitemaps), crawl_delay)
         else:
-            # TODO save Site to db
             site = Site(domain, '', '', 0)
 
         insert_pages_into_frontier(pages)
     else:
         print('Started crawling frontier')
-        page = FRONTIER[frontier_index]  # TODO tukej je treba zamenjat da dobimo iz baze
+        page = FRONTIER[frontier_index]
         domain = get_domain(page.url)
         if domain not in DOMAINS:  # check if we have a new domain (Site)
-            robots_content, crawl_delay = get_robots_content_and_delay(page.url)
-            site = Site(domain, robots_content, '', crawl_delay)
-            # TODO tudi tukej treba insertat v db
+            print('NEW DOMAIN: ', domain)
+            robots_content, crawl_delay, sitemaps = get_robots_content_data(page.url, True) # dej to na False ce noces cakat na sitemape
+            site = Site(domain, robots_content, ' '.join(sitemaps), crawl_delay)
+            # TODO save sitemaps to frontier
+            # TODO tudi tukej treba insertat v db (to nism ziher ce si ze naredu)
             DOMAINS.append(domain)
             LAST_CRAWL_TIMES_DOMAINS[domain] = 0
 
         if has_robots_file('https://' + domain + '/robots.txt'):
             if page_allowed(page.url):
-                _, crawl_delay = get_robots_content_and_delay(page.url)
+                _, crawl_delay, _ = get_robots_content_data(page.url, False)
                 if crawl_delay != 0:  # check if there is crawl_delay in robots.txt
                     time.sleep(crawl_delay)
                 else:  # if there is no crawl_delay, check if we have to wait before accessing a domain or IP
@@ -382,7 +397,6 @@ while True:
                 urls = get_urls(page.url)
                 insert_pages_into_frontier(urls)
 
-                # TODO save images to db
                 images = get_image_sources(page.url)
                 insert_image_data(images)
 
@@ -393,10 +407,11 @@ while True:
             if page_obj.http_status_code != 500:
                 urls = get_urls(page.url)
                 insert_pages_into_frontier(urls)
-                # TODO save images to db
+
                 images = get_image_sources(page.url)
                 insert_image_data(images)
 
         frontier_index += 1
         print(len(FRONTIER))
     i += 1
+
