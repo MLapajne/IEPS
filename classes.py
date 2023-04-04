@@ -33,6 +33,7 @@ class Page:
                 'domain': self.domain
                 }
 
+
 class Image:
     def __init__(self, filename, content_type, data, accessed_time):
         self.filename = filename
