@@ -466,6 +466,12 @@ def insert_pages_into_frontier(pages):
             
             DOMAINS.append(page_entry.domain)
 
+            DOMAINS.append(page_entry.domain)
+            ip = socket.gethostbyname(page_entry.domain)
+            IPS.append(socket.gethostbyname(page_entry.domain))
+            LAST_CRAWL_TIMES_DOMAINS[page_entry.domain] = 0
+            LAST_CRAWL_TIMES_IPS[ip] = 0
+
         # FRONTIER.append(page_entry)
         db_insert_page_into_frontier(page_entry.domain, page_entry.url)
 
@@ -562,6 +568,8 @@ try:
     conn.autocommit = True
 except Exception as e:
     print("Unable to connect to database: ", e)
+
+
 def wait_for_access(page_url):
     domain = get_domain(page_url)
     ip = socket.gethostbyname(domain)
@@ -604,6 +612,7 @@ while True:
         # NOTE should we do this here?
         db_insert_site_data(site.domain, site.robots_content,
                             site.crawl_delay, site.sitemap_content)
+        DOMAINS.append(site.domain)
 
         insert_pages_into_frontier(pages)
     else:
@@ -620,6 +629,11 @@ while True:
             site = Site(domain, robots_content, ' '.join(sitemaps), crawl_delay)
             # TODO save sitemaps to frontier
             # TODO tudi tukej treba insertat v db (to nism ziher ce si ze naredu)
+            # NOTE this is temporary
+            db_insert_site_data(site.domain, site.robots_content,
+                            site.crawl_delay, site.sitemap_content)
+
+
             DOMAINS.append(domain)
             ip = socket.gethostbyname(domain)
             IPS.append(socket.gethostbyname(domain))
