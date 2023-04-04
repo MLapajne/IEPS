@@ -387,7 +387,7 @@ while True:
         pages = get_urls(curr_url)
 
         robots_content, crawl_delay, sitemaps = get_robots_content_data(curr_url,
-                                                                        False)  # dej to na False ce noces cakat na sitemape
+                                                                        True)  # dej to na False ce noces cakat na sitemape
         # TODO save sitemaps to frontier
 
         if robots_content != '':
@@ -402,7 +402,7 @@ while True:
         domain = get_domain(page.url)
         if domain not in DOMAINS:  # check if we have a new domain (Site)
             robots_content, crawl_delay, sitemaps = get_robots_content_data(page.url,
-                                                                            False)  # dej to na False ce noces cakat na sitemape
+                                                                            True)  # dej to na False ce noces cakat na sitemape
             site = Site(domain, robots_content, ' '.join(sitemaps), crawl_delay)
             # TODO save sitemaps to frontier
             # TODO tudi tukej treba insertat v db (to nism ziher ce si ze naredu)
