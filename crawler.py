@@ -1,4 +1,5 @@
 import hashlib
+from ssl import SSLError
 import time
 import mimetypes
 import requests
@@ -27,7 +28,8 @@ import psycopg2
 GOV_DOMAIN = '.gov.si'
 GROUP_NAME = "fri-wier-SET_GROUP_NAME"
 INITIAL_SEED = ['https://gov.si', 'https://evem.gov.si', 'https://e-uprava.gov.si', 'https://e-prostor.gov.si']
-DOMAINS = ['gov.si', 'evem.gov.si', 'e-uprava.gov.si', 'e-prostor.gov.si']
+# DOMAINS = ['gov.si', 'evem.gov.si', 'e-uprava.gov.si', 'e-prostor.gov.si']
+DOMAINS = []
 IPS = ['84.39.211.243', '84.39.222.27', '84.39.223.247', '84.39.211.222']
 
 IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg']
@@ -197,25 +199,47 @@ def db_get_first_page_from_frontier():
                 cur.close()
     return page
 
+def db_insert_image_data(url, filename, content_type, accessed_time):
+    cur = None
+    try:
+        cur = conn.cursor()
+
+        cur.execute("SELECT id FROM crawldb.page WHERE url = %s", (url,))
+        
+        # NOTE - this can cause an error if the page hasn't been inserted yet
+        page_id = cur.fetchone()[0]
+
+        cur.execute("INSERT INTO crawldb.image (page_id, filename, content_type, accessed_time) VALUES (%s, %s, %s, %s)", (page_id, filename, content_type, accessed_time))
+        
+        cur.close()
+    except Exception as e:
+        print("Error while inserting image data: ", e)
+    finally:
+        if cur is not None:
+            cur.close()
 
 def hash_html(html_content):
     return hashlib.md5(html_content.encode('utf-8')).hexdigest()
 
 
 def has_robots_file(robots_url):
-    with sync_playwright() as p:
-        try:
-            browser = p.chromium.launch()
-            page = browser.new_page()
-            response = page.goto(robots_url)
+    try:
+        with sync_playwright() as p:
+            try:
+                browser = p.chromium.launch()
+                page = browser.new_page()
+                response = page.goto(robots_url)
 
-            if response.status == 200:
-                return True
-            else:
+                if response.status == 200:
+                    return True
+                else:
+                    return False
+
+            except SSLError:
                 return False
-
-        except requests.exceptions.SSLError:
-            return False
+    except Exception as e:
+        print("has_robots_file exception: ", e)
+        return False
 
 
 def get_urls(page_url):
@@ -454,18 +478,13 @@ def insert_pages_into_frontier(pages):
 
         if page_entry.domain not in DOMAINS:  # check if we have a new domain (Site)
             print('NEW DOMAIN', page_entry.domain)
-            # robots_content, crawl_delay = get_robots_content_and_delay(
-            #     page_entry.url)
-            site = Site(page_entry.domain, "robots_content", '', 0)
+            robots_content, crawl_delay, sitemaps = get_robots_content_data(page_entry.url,
+                                                                            False)  # dej to na False ce noces cakat na sitemape
+            site = Site(page_entry.domain, robots_content, ' '.join(sitemaps), crawl_delay)
 
-            # db_insert_site_data(site.domain, site.robots_content,
-            #                     site.crawl_delay, site.sitemap_content)
-
-            db_insert_site_data(site.domain, "site.robots_content",
-                                0, site.sitemap_content)
+            db_insert_site_data(site.domain, site.robots_content,
+                                site.crawl_delay, site.sitemap_content)
             
-            DOMAINS.append(page_entry.domain)
-
             DOMAINS.append(page_entry.domain)
             ip = socket.gethostbyname(page_entry.domain)
             IPS.append(socket.gethostbyname(page_entry.domain))
@@ -477,10 +496,12 @@ def insert_pages_into_frontier(pages):
 
 
 
-def insert_image_data(images):
+def insert_image_data(images, url):
     for image in images:
         img_obj = get_image_metadata(image)
         # TODO save image to db
+        db_insert_image_data(url, img_obj.filename, img_obj.content_type, img_obj.accessed_time)
+
 
 
 def get_page_metadata(page_url):
@@ -613,6 +634,10 @@ while True:
         db_insert_site_data(site.domain, site.robots_content,
                             site.crawl_delay, site.sitemap_content)
         DOMAINS.append(site.domain)
+        ip = socket.gethostbyname(site.domain)
+        IPS.append(socket.gethostbyname(site.domain))
+        LAST_CRAWL_TIMES_DOMAINS[site.domain] = 0
+        LAST_CRAWL_TIMES_IPS[ip] = 0
 
         insert_pages_into_frontier(pages)
     else:
@@ -660,7 +685,7 @@ while True:
 
 
                 images = get_image_sources(page.url)
-                insert_image_data(images)
+                insert_image_data(images, page.url)
 
         else:
             wait_for_access(page.url)
@@ -677,7 +702,7 @@ while True:
 
 
                 images = get_image_sources(page.url)
-                insert_image_data(images)
+                insert_image_data(images, page.url)
             else:
                 db_update_page_data(page_obj.url, page_obj.page_type_code, '',
                                     '', page_obj.http_status_code, page_obj.accessed_time, page_obj.data_type_code)
