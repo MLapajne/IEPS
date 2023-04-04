@@ -16,7 +16,7 @@ from urllib.parse import urlparse, urlunparse
 
 mimetypes.init()
 
-# TODO: Timeout error, threading
+# TODO: Timeout error, threading, dodat domeno pri onclick
 
 GOV_DOMAIN = '.gov.si'
 GROUP_NAME = "fri-wier-SET_GROUP_NAME"
@@ -69,7 +69,7 @@ def get_urls(page_url):
         page.goto(page_url)
         content = page.content()
         soup = BeautifulSoup(content, 'html.parser')
-        onclick_urls = get_onclick_links(content)
+        onclick_urls = get_onclick_links(content, page_url)
         for link in soup.find_all('a'):
             raw_link = link.get('href')
             if raw_link is not None and not raw_link.startswith('mailto:') and not raw_link.startswith(
@@ -87,7 +87,7 @@ def get_urls(page_url):
         return onclick_urls
 
 
-def get_onclick_links(text):
+def get_onclick_links(text, page_url):
     urls = []
 
     soup = BeautifulSoup(text, 'html.parser')
@@ -103,8 +103,15 @@ def get_onclick_links(text):
                 url_end_index = parameter.find("'", url_start_index)
                 if url_start_index != -1 or url_end_index != -1:
                     url = parameter[url_start_index:url_end_index]
-                    if url and GOV_DOMAIN in url:
-                        urls.append(canonicalize_url(url))
+                    if url.startswith('http') or url.startswith('https'):
+                        canonicalized_url = canonicalize_url(url)
+                        if GOV_DOMAIN in canonicalized_url and canonicalized_url not in urls and canonicalized_url not in INITIAL_SEED:
+                            urls.append(canonicalized_url)
+                    else:
+                        full_link = page_url + url
+                        canonicalized_url = canonicalize_url(full_link)
+                        if GOV_DOMAIN in canonicalized_url and canonicalized_url not in urls and canonicalized_url not in INITIAL_SEED:
+                            urls.append(canonicalized_url)
     return urls
 
 
@@ -387,7 +394,7 @@ while True:
         pages = get_urls(curr_url)
 
         robots_content, crawl_delay, sitemaps = get_robots_content_data(curr_url,
-                                                                        True)  # dej to na False ce noces cakat na sitemape
+                                                                        False)  # dej to na False ce noces cakat na sitemape
         # TODO save sitemaps to frontier
 
         if robots_content != '':
@@ -402,7 +409,7 @@ while True:
         domain = get_domain(page.url)
         if domain not in DOMAINS:  # check if we have a new domain (Site)
             robots_content, crawl_delay, sitemaps = get_robots_content_data(page.url,
-                                                                            True)  # dej to na False ce noces cakat na sitemape
+                                                                            False)  # dej to na False ce noces cakat na sitemape
             site = Site(domain, robots_content, ' '.join(sitemaps), crawl_delay)
             # TODO save sitemaps to frontier
             # TODO tudi tukej treba insertat v db (to nism ziher ce si ze naredu)
