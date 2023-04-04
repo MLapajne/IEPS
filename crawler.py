@@ -16,7 +16,7 @@ from urllib.parse import urlparse, urlunparse
 
 mimetypes.init()
 
-# TODO: Timeout error, onclick, threading
+# TODO: Timeout error, threading
 
 GOV_DOMAIN = '.gov.si'
 GROUP_NAME = "fri-wier-SET_GROUP_NAME"
@@ -62,27 +62,50 @@ def has_robots_file(robots_url):
 
 
 def get_urls(page_url):
-    links = []
+    onclick_urls = []
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
         page.goto(page_url)
-        soup = BeautifulSoup(page.content(), 'html.parser')
+        content = page.content()
+        soup = BeautifulSoup(content, 'html.parser')
+        onclick_urls = get_onclick_links(content)
         for link in soup.find_all('a'):
             raw_link = link.get('href')
             if raw_link is not None and not raw_link.startswith('mailto:') and not raw_link.startswith(
                     'tel:') and 'Mailto' not in raw_link and raw_link not in INITIAL_SEED:
                 if raw_link.startswith('http') or raw_link.startswith('https'):
                     canonicalized_url = canonicalize_url(raw_link)
-                    if GOV_DOMAIN in canonicalized_url and canonicalized_url not in links and canonicalized_url not in INITIAL_SEED:
-                        links.append(canonicalized_url)
+                    if GOV_DOMAIN in canonicalized_url and canonicalized_url not in onclick_urls and canonicalized_url not in INITIAL_SEED:
+                        onclick_urls.append(canonicalized_url)
                 else:
                     full_link = page_url + raw_link
                     canonicalized_url = canonicalize_url(full_link)
-                    if GOV_DOMAIN in canonicalized_url and canonicalized_url not in links and canonicalized_url not in INITIAL_SEED:
-                        links.append(canonicalized_url)
+                    if GOV_DOMAIN in canonicalized_url and canonicalized_url not in onclick_urls and canonicalized_url not in INITIAL_SEED:
+                        onclick_urls.append(canonicalized_url)
 
-        return links
+        return onclick_urls
+
+
+def get_onclick_links(text):
+    urls = []
+
+    soup = BeautifulSoup(text, 'html.parser')
+
+    for script in soup(["script", "style"]):
+        script.extract()
+    for el in soup.select("[onClick], [onclick]"):
+        url = None
+        if el.has_attr("onclick") or el.has_attr("onClick"):
+            parameter = el.get("onclick", '') + el.get("onClick", '')
+            if "location.href" in parameter or "document.location" in parameter:
+                url_start_index = parameter.find("'") + 1
+                url_end_index = parameter.find("'", url_start_index)
+                if url_start_index != -1 or url_end_index != -1:
+                    url = parameter[url_start_index:url_end_index]
+                    if url and GOV_DOMAIN in url:
+                        urls.append(canonicalize_url(url))
+    return urls
 
 
 def get_image_sources(url):
@@ -363,7 +386,8 @@ while True:
         domain = get_domain(curr_url)
         pages = get_urls(curr_url)
 
-        robots_content, crawl_delay, sitemaps = get_robots_content_data(curr_url, True) # dej to na False ce noces cakat na sitemape
+        robots_content, crawl_delay, sitemaps = get_robots_content_data(curr_url,
+                                                                        False)  # dej to na False ce noces cakat na sitemape
         # TODO save sitemaps to frontier
 
         if robots_content != '':
@@ -377,7 +401,8 @@ while True:
         page = FRONTIER[frontier_index]
         domain = get_domain(page.url)
         if domain not in DOMAINS:  # check if we have a new domain (Site)
-            robots_content, crawl_delay, sitemaps = get_robots_content_data(page.url, True) # dej to na False ce noces cakat na sitemape
+            robots_content, crawl_delay, sitemaps = get_robots_content_data(page.url,
+                                                                            False)  # dej to na False ce noces cakat na sitemape
             site = Site(domain, robots_content, ' '.join(sitemaps), crawl_delay)
             # TODO save sitemaps to frontier
             # TODO tudi tukej treba insertat v db (to nism ziher ce si ze naredu)
@@ -414,6 +439,5 @@ while True:
                 insert_image_data(images)
 
         frontier_index += 1
-        print(len(FRONTIER))
     i += 1
 
