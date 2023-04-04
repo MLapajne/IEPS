@@ -372,6 +372,19 @@ def get_page_type_code(url):
     return 'BINARY' if url.endswith('.pdf') or url.endswith('.doc') or url.endswith('.docx') or url.endswith(
         '.ppt') or url.endswith('.pptx') else 'HTML'
 
+def get_data_type_code(url):
+    if url.endswith('.pdf'):
+        return 'PDF'
+    elif url.endswith('.doc'):
+        return 'DOC'
+    elif url.endswith('.docx'):
+        return 'DOCX'
+    elif url.endswith('.ppt'):
+        return 'PPT'
+    elif url.endswith('.pptx'):
+        return 'PPTX'
+    return None # TODO error handling?
+
 
 def get_http_status_code(url):
     with sync_playwright() as playwright:
@@ -445,14 +458,18 @@ def get_page_metadata(page_url):
     time_stamp = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
 
     html_content = ''
+    data_type_code = ''
 
     http_status_code = get_http_status_code(page_url)
 
     if page_type_code == 'HTML':
         html_content = get_html_content(page_url)
 
+    if page_type_code == 'BINARY':
+        data_type_code = get_data_type_code(page_url)
+
     return Page(page.url, get_domain(page_url), page_type_code, html_content, '', http_status_code,
-                time_stamp)
+                time_stamp, data_type_code)
 
 
 def get_robots_content_and_delay(page_url):  # TODO dodat za sitemape
@@ -522,7 +539,7 @@ while True:
                                                    string.digits, k=10))
 
                 db_update_page_data(page_obj.url, page_obj.page_type_code, page_obj.html_content,
-                                    hash_test, page_obj.http_status_code, page_obj.accessed_time)
+                                    hash_test, page_obj.http_status_code, page_obj.accessed_time, page_obj.data_type_code)
                 # print(page_obj.get_data())
 
                 urls = get_urls(page.url)
@@ -540,7 +557,7 @@ while True:
                                                    string.digits, k=10))
 
                 db_update_page_data(page_obj.url, page_obj.page_type_code, page_obj.html_content,
-                                    hash_test, page_obj.http_status_code, page_obj.accessed_time)
+                                    hash_test, page_obj.http_status_code, page_obj.accessed_time, page_obj.data_type_code)
 
                 # print(page_obj.get_data())
                 urls = get_urls(page.url)
@@ -550,7 +567,7 @@ while True:
                 images = get_image_sources(page.url)
             else:
                 db_update_page_data(page_obj.url, page_obj.page_type_code, '',
-                                    '', page_obj.http_status_code, page_obj.accessed_time)
+                                    '', page_obj.http_status_code, page_obj.accessed_time, page_obj.data_type_code)
 
         frontier_index += 1
         # print(len(FRONTIER))

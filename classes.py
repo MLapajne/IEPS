@@ -13,7 +13,7 @@ class Site:
 
 
 class Page:
-    def __init__(self, url, domain, page_type_code='FRONTIER', html_content=None, content_hash='', http_status_code=100, accessed_time=''):
+    def __init__(self, url, domain, page_type_code='FRONTIER', html_content=None, content_hash='', http_status_code=100, accessed_time='', data_type_code=''):
         self.page_type_code = page_type_code
         self.url = url
         self.html_content = html_content
@@ -21,6 +21,7 @@ class Page:
         self.http_status_code = http_status_code
         self.accessed_time = accessed_time
         self.domain = domain
+        self.data_type_code = data_type_code
 
     def get_data(self):
         return {'page_type_code': self.page_type_code,
