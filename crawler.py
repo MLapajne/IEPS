@@ -19,7 +19,8 @@ import psycopg2
 GOV_DOMAIN = '.gov.si'
 GROUP_NAME = "fri-wier-SET_GROUP_NAME"
 INITIAL_SEED = ['https://gov.si', 'https://evem.gov.si', 'https://e-uprava.gov.si', 'https://e-prostor.gov.si']
-DOMAINS = ['gov.si', 'evem.gov.si', 'e-uprava.gov.si', 'e-prostor.gov.si']
+# DOMAINS = ['gov.si', 'evem.gov.si', 'e-uprava.gov.si', 'e-prostor.gov.si']
+DOMAINS = []
 # INITIAL_SEED = ['https://www.e-prostor.gov.si']
 
 FRONTIER = []
@@ -40,96 +41,149 @@ FRONTIER = []
 
 # insert page into frontier
 def db_insert_page_into_frontier(domain, url):
-    cur = conn.cursor()
+    cur = None
+    try:
+        cur = conn.cursor()
 
-    # check if there is already an existing url in the database or frontier
-    cur.execute("SELECT id FROM crawldb.page WHERE url = %s", (url,))
-    id_of_original = cur.fetchone()
+        # check if there is already an existing url in the database or frontier
+        cur.execute("SELECT id FROM crawldb.page WHERE url = %s", (url,))
+        id_of_original = cur.fetchone()
 
-    if (id_of_original is not None):
         # if url is already in db/frontier, ignore it
-        # print("Existing url already in database/frontier")
-        cur.close()
-        return
-    else:
-        # get id of domain url
-        cur.execute("SELECT id FROM crawldb.site WHERE domain= %s", (domain,))
+        if (id_of_original is None):
+            # get id of domain url
+            cur.execute("SELECT id FROM crawldb.site WHERE domain= %s", (domain,))
+            site_id_result = cur.fetchone()
 
-        site_id_result = cur.fetchone()
-        # check if there is no entry for this domain
-        if(site_id_result is None):
-            # print("No domain stored with this url. Inserting domain.")
-            site_id = db_insert_site_data(domain, '', 0, '')
+            # check if there is no entry for this domain
+            if(site_id_result is None):
+                print("No domain stored with this url: " + url)
+                return
+                # site_id = db_insert_site_data(domain, '', 0, '') # TODO fix this in code
+            else:
+                site_id = site_id_result[0]
+
+            cur.execute(
+                "INSERT into crawldb.page (site_id, url, page_type_code) VALUES (%s, %s, 'FRONTIER')", (site_id, url))
+            # print(cur.statusmessage)
         else:
-            site_id = site_id_result[0]
+            # print("\nExisting URL already in frontier/DB")
+            pass
+    except Exception as e:
+        print("Error while inserting page into frontier: ", e)
 
-        cur.execute(
-            "INSERT into crawldb.page (site_id, url, page_type_code) VALUES (%s, %s, 'FRONTIER')", (site_id, url))
-        # print(cur.statusmessage)
-
-    cur.close()
+    finally:
+        if cur is not None:
+            cur.close()
 
 # insert data into site table
 def db_insert_site_data(domain, robots_content, crawl_delay, sitemap_content):
-    cur = conn.cursor()
-    cur.execute("INSERT into crawldb.site (domain, robots_content, crawl_delay, sitemap_content) \
-                 VALUES (%s, %s, %s, %s) RETURNING id", (domain, robots_content, crawl_delay, sitemap_content))
-    # print(cur.statusmessage)
-    new_site_id = cur.fetchone()[0]
-    cur.close()
-    return new_site_id
+    cur = None
+    new_site_id = None
+    try:
+        cur = conn.cursor()
+
+        # TODO do we need this?
+        # cur.execute("SELECT FROM crawldb.site id where domain = %s", (domain,))
+        # existing_site_id = cur.fetchone()
+        # if existing_site_id is not None:
+        #     print("Site already in DB: " + domain);
+        #     return
+
+        cur.execute("INSERT into crawldb.site (domain, robots_content, crawl_delay, sitemap_content) \
+                    VALUES (%s, %s, %s, %s) RETURNING id", (domain, robots_content, crawl_delay, sitemap_content))
+        print(cur.statusmessage)
+        new_site_id = cur.fetchone()[0]
+        cur.close()
+        return new_site_id
+    except Exception as e:
+        print("Error while inserting site data: ", e)
+    finally:
+        if cur is not None:
+            cur.close()
 
 # when page is crawled, update table 'page' with obtained data
-def db_update_page_data(url, page_type_code, html_content, content_hash, http_status_code, accessed_time):
+def db_update_page_data(url, page_type_code, html_content, content_hash, http_status_code, accessed_time, data_type_code=None): # TODO get data_type_code
     print("updating {}".format(url))
-    cur = conn.cursor()
+    cur = None
+    try:
+        cur = conn.cursor()
 
-    # check if there is a duplicate of content_hash
-    cur.execute("SELECT id FROM crawldb.page WHERE content_hash = %s AND html_content IS NOT NULL",
-                (content_hash,))  # NOTE will we store the hash of duplicates or is there no need?
-    original_site = cur.fetchone()
+        # handles binary pages
+        if page_type_code == 'BINARY':
+            print("\nInserting values into page as BINARY")
+            cur.execute("UPDATE crawldb.page SET page_type_code= %s, http_status_code= %s, accessed_time= %s \
+                WHERE url= %s RETURNING id", (page_type_code, http_status_code, accessed_time, url))
+            print(cur.statusmessage)
+            
+            # NOTE - this can cause an error if the page hasn't been inserted yet
+            id_of_updated_row = cur.fetchone()[0]
 
-    # if duplicate exists
-    if original_site is not None:
-        page_type_code = 'DUPLICATE'
-        original_site_id = original_site[0]
+            cur.execute("INSERT INTO crawldb.page_data (page_id, data_type_code) VALUES (%s, %s)", (id_of_updated_row, data_type_code))
 
-        # duplicates should have empty html_content column
-        cur.execute("UPDATE crawldb.page SET page_type_code= %s, content_hash = %s, http_status_code= %s, accessed_time= %s \
-                     WHERE url= %s RETURNING id", ('DUPLICATE', content_hash, http_status_code, accessed_time, url))
-        print(cur.statusmessage)
+        # handles HTML pages
+        else:
+            # check if there is a duplicate of content_hash
+            cur.execute("SELECT id FROM crawldb.page WHERE content_hash = %s AND html_content IS NOT NULL",
+                        (content_hash,))  # NOTE will we store the hash of duplicates or is there no need?
+            original_site = cur.fetchone()
 
-        # NOTE - this can cause an error if the page hasn't been inserted yet
-        id_of_updated_row = cur.fetchone()[0]
+            # if duplicate exists
+            if original_site is not None:
+                page_type_code = 'DUPLICATE'
+                original_site_id = original_site[0]
 
-        # create link from duplicate pointing to 'original' page
-        # column names: from_page -> id of duplicate, to_page -> id of original
-        cur.execute("INSERT INTO crawldb.link (from_page, to_page) VALUES (%s, %s)",
-                    (id_of_updated_row, original_site_id))
-        # print(cur.statusmessage)
+                # duplicates should have empty html_content column
+                cur.execute("UPDATE crawldb.page SET page_type_code= %s, content_hash = %s, http_status_code= %s, accessed_time= %s \
+                            WHERE url= %s RETURNING id", ('DUPLICATE', content_hash, http_status_code, accessed_time, url))
+                print(cur.statusmessage)
 
-    # if there are no duplicates
-    else:
-        # print("\nInserting values into page as {}".format(page_type_code))
-        cur.execute("UPDATE crawldb.page SET page_type_code= %s, html_content= %s, content_hash = %s, http_status_code= %s, accessed_time= %s \
-                WHERE url= %s", (page_type_code, html_content, content_hash, http_status_code, accessed_time, url))
-        print(cur.statusmessage)
+                # NOTE - this can cause an error if the page hasn't been inserted yet
+                id_of_updated_row = cur.fetchone()[0]
 
-    cur.close()
+                # create link from duplicate pointing to 'original' page
+                # column names: from_page -> id of duplicate, to_page -> id of original
+                cur.execute("INSERT INTO crawldb.link (from_page, to_page) VALUES (%s, %s)",
+                            (id_of_updated_row, original_site_id))
+                # print(cur.statusmessage)
+
+            # if there are no duplicates
+            else:
+                # print("\nInserting values into page as {}".format(page_type_code))
+                cur.execute("UPDATE crawldb.page SET page_type_code= %s, html_content= %s, content_hash = %s, http_status_code= %s, accessed_time= %s \
+                        WHERE url= %s", (page_type_code, html_content, content_hash, http_status_code, accessed_time, url))
+                print(cur.statusmessage)
+
+    except Exception as e:
+        print("Error while updating page: ", e)
+
+    finally:
+        if cur is not None:
+            cur.close()
 
 # get url of the first page in frontier
+# TODO handle error if it is None
 def db_get_first_page_from_frontier():
-    cur = conn.cursor()
-
-    cur.execute(
-        "SELECT url FROM crawldb.page WHERE page_type_code = 'FRONTIER' ORDER BY id ASC LIMIT 1")
-    page_url = cur.fetchone()[0]
-
-    print("FROM FRONTIER: " + page_url)
-
-    page = Page(page_url, get_domain(page_url))
-    cur.close()
-
+    cur = None
+    page = None
+    
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT url FROM crawldb.page WHERE page_type_code = 'FRONTIER' ORDER BY id ASC LIMIT 1")
+        result = cur.fetchone()
+        
+        if result is not None:
+            page_url = result[0]
+            print("FROM FRONTIER: " + page_url)
+            page = Page(page_url, get_domain(page_url))
+    
+    except Exception as e:
+        print("Error while getting first page from frontier: ", e)
+    
+    finally:
+            if cur is not None:
+                cur.close()
     return page
 
 
@@ -357,6 +411,21 @@ def page_allowed(url):
 def insert_pages_into_frontier(pages):
     for page in pages:
         page_entry = Page(page, get_domain(page))
+
+        if page_entry.domain not in DOMAINS:  # check if we have a new domain (Site)
+            print('NEW DOMAIN', page_entry.domain)
+            # robots_content, crawl_delay = get_robots_content_and_delay(
+            #     page_entry.url)
+            site = Site(page_entry.domain, "robots_content", '', 0)
+
+            # db_insert_site_data(site.domain, site.robots_content,
+            #                     site.crawl_delay, site.sitemap_content)
+
+            db_insert_site_data(site.domain, "site.robots_content",
+                                0, site.sitemap_content)
+            
+            DOMAINS.append(page_entry.domain)
+
         # FRONTIER.append(page_entry)
         db_insert_page_into_frontier(page_entry.domain, page_entry.url)
 
@@ -402,11 +471,13 @@ def get_robots_content_and_delay(page_url):  # TODO dodat za sitemape
     else:
         return '', 0
 
-
-# start DB connection
-conn = psycopg2.connect(host="localhost", user="user",
-                        password="SecretPassword")
-conn.autocommit = True
+try:
+    # start DB connection
+    conn = psycopg2.connect(host="localhost", user="user",
+                            password="SecretPassword")
+    conn.autocommit = True
+except Exception as e:
+    print("Unable to connect to database: ", e)
 
 i = 0
 frontier_index = 0
@@ -427,6 +498,8 @@ while True:
         else:
             site = Site(domain, '', '', 0)
 
+        print("insert site: " + site.domain)
+        # NOTE should we do this here?
         db_insert_site_data(site.domain, site.robots_content,
                             site.crawl_delay, site.sitemap_content)
 
@@ -439,15 +512,6 @@ while True:
         print(page.url)
 
         domain = get_domain(page.url)
-        if domain not in DOMAINS:  # check if we have a new domain (Site)
-            print('NEW DOMAIN', domain)
-            robots_content, crawl_delay = get_robots_content_and_delay(
-                page.url)
-            site = Site(domain, robots_content, '', crawl_delay)
-
-            db_insert_site_data(site.domain, site.robots_content,
-                                site.crawl_delay, site.sitemap_content)
-            DOMAINS.append(domain)
 
         if has_robots_file('https://' + domain + '/robots.txt'):
             if page_allowed(page.url):
