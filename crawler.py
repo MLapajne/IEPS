@@ -1,6 +1,9 @@
 import hashlib
+import threading
 import time
 import mimetypes
+from concurrent.futures import ThreadPoolExecutor
+
 import requests
 import socket
 import os
@@ -15,6 +18,7 @@ from playwright.sync_api import Playwright, sync_playwright, Error
 from urllib.parse import urlparse, urlunparse
 
 mimetypes.init()
+lock = threading.Lock()
 
 # TODO: Timeout error, threading, dodat domeno pri onclick
 
@@ -366,85 +370,100 @@ def get_robots_content_data(page_url, parse_sitemaps):  # TODO dodat za sitemape
 
 
 def wait_for_access(page_url):
-    domain = get_domain(page_url)
-    ip = socket.gethostbyname(domain)
-    last_crawl_time = LAST_CRAWL_TIMES_DOMAINS[domain]
-    time_since_last_crawl = time.time() - last_crawl_time
-    if time_since_last_crawl < 5:
-        time.sleep(5 - time_since_last_crawl)
-        return
-    else:
-        last_crawl_time = LAST_CRAWL_TIMES_IPS[ip]
+    with lock:
+        domain = get_domain(page_url)
+        ip = socket.gethostbyname(domain)
+        last_crawl_time = LAST_CRAWL_TIMES_DOMAINS[domain]
         time_since_last_crawl = time.time() - last_crawl_time
         if time_since_last_crawl < 5:
             time.sleep(5 - time_since_last_crawl)
-
-    LAST_CRAWL_TIMES_DOMAINS[domain] = time.time()
-    LAST_CRAWL_TIMES_IPS[ip] = time.time()
-
-
-i = 0
-frontier_index = 0
-while True:
-    if i < len(INITIAL_SEED):
-        curr_url = INITIAL_SEED[i]
-        print(curr_url)
-        robots_url = curr_url + '/robots.txt'
-        domain = get_domain(curr_url)
-        pages = get_urls(curr_url)
-
-        robots_content, crawl_delay, sitemaps = get_robots_content_data(curr_url,
-                                                                        False)  # dej to na False ce noces cakat na sitemape
-        # TODO save sitemaps to frontier
-
-        if robots_content != '':
-            site = Site(domain, robots_content, ' '.join(sitemaps), crawl_delay)
+            return
         else:
-            site = Site(domain, '', '', 0)
+            last_crawl_time = LAST_CRAWL_TIMES_IPS[ip]
+            time_since_last_crawl = time.time() - last_crawl_time
+            if time_since_last_crawl < 5:
+                time.sleep(5 - time_since_last_crawl)
 
-        insert_pages_into_frontier(pages)
+        LAST_CRAWL_TIMES_DOMAINS[domain] = time.time()
+        LAST_CRAWL_TIMES_IPS[ip] = time.time()
+
+
+def crawl_initial_seed(curr_url):
+    domain = get_domain(curr_url)
+    pages = get_urls(curr_url)
+
+    robots_content, crawl_delay, sitemaps = get_robots_content_data(curr_url, False)
+
+    if robots_content != '':
+        site = Site(domain, robots_content, ' '.join(sitemaps), crawl_delay)
     else:
-        print('Started crawling frontier')
-        page = FRONTIER[frontier_index]
-        domain = get_domain(page.url)
-        if domain not in DOMAINS:  # check if we have a new domain (Site)
-            robots_content, crawl_delay, sitemaps = get_robots_content_data(page.url,
-                                                                            False)  # dej to na False ce noces cakat na sitemape
-            site = Site(domain, robots_content, ' '.join(sitemaps), crawl_delay)
-            # TODO save sitemaps to frontier
-            # TODO tudi tukej treba insertat v db (to nism ziher ce si ze naredu)
-            DOMAINS.append(domain)
-            ip = socket.gethostbyname(domain)
-            IPS.append(socket.gethostbyname(domain))
-            LAST_CRAWL_TIMES_DOMAINS[domain] = 0
-            LAST_CRAWL_TIMES_IPS[ip] = 0
+        site = Site(domain, '', '', 0)
 
-        if has_robots_file('https://' + domain + '/robots.txt'):
-            if page_allowed(page.url):
-                _, crawl_delay, _ = get_robots_content_data(page.url, False)
-                if crawl_delay != 0:  # check if there is crawl_delay in robots.txt
-                    time.sleep(crawl_delay)
-                else:  # if there is no crawl_delay, check if we have to wait before accessing a domain or IP
-                    wait_for_access(page.url)
+    insert_pages_into_frontier(pages)
 
-                page_obj = get_page_metadata(page.url)
-                urls = get_urls(page.url)
-                insert_pages_into_frontier(urls)
 
-                images = get_image_sources(page.url)
-                insert_image_data(images)
+def crawl_page(page):
+    domain = get_domain(page.url)
+    if domain not in DOMAINS:  # check if we have a new domain (Site)
+        robots_content, crawl_delay, sitemaps = get_robots_content_data(page.url,
+                                                                        False)  # dej to na False ce noces cakat na sitemape
+        site = Site(domain, robots_content, ' '.join(sitemaps), crawl_delay)
+        # TODO save sitemaps to frontier
+        # TODO tudi tukej treba insertat v db (to nism ziher ce si ze naredu)
+        DOMAINS.append(domain)
+        ip = socket.gethostbyname(domain)
+        IPS.append(socket.gethostbyname(domain))
+        LAST_CRAWL_TIMES_DOMAINS[domain] = 0
+        LAST_CRAWL_TIMES_IPS[ip] = 0
 
-        else:
-            wait_for_access(page.url)
+    if has_robots_file('https://' + domain + '/robots.txt'):
+        if page_allowed(page.url):
+            _, crawl_delay, _ = get_robots_content_data(page.url, False)
+            if crawl_delay != 0:  # check if there is crawl_delay in robots.txt
+                time.sleep(crawl_delay)
+            else:  # if there is no crawl_delay, check if we have to wait before accessing a domain or IP
+                wait_for_access(page.url)
 
             page_obj = get_page_metadata(page.url)
-            if page_obj.http_status_code != 500:
-                urls = get_urls(page.url)
-                insert_pages_into_frontier(urls)
+            urls = get_urls(page.url)
+            insert_pages_into_frontier(urls)
 
-                images = get_image_sources(page.url)
-                insert_image_data(images)
+            images = get_image_sources(page.url)
+            insert_image_data(images)
 
-        frontier_index += 1
-    i += 1
+    else:
+        wait_for_access(page.url)
 
+        page_obj = get_page_metadata(page.url)
+        if page_obj.http_status_code != 500:
+            urls = get_urls(page.url)
+            insert_pages_into_frontier(urls)
+
+            images = get_image_sources(page.url)
+            insert_image_data(images)
+
+
+start = time.time()
+print('Started crawling initial seed: ')
+with ThreadPoolExecutor(8) as executor:
+    futures = [executor.submit(crawl_initial_seed, url) for url in INITIAL_SEED]
+
+    for future in futures:
+        future.result()
+
+    print('Over in: ', time.time() - start)
+
+print('Started crawling frontier: ')
+with ThreadPoolExecutor(8) as executor:  # choose the number of workers you want
+    frontier_index = 0
+    while True:
+        if frontier_index >= len(FRONTIER):
+            time.sleep(5)
+        else:
+            page = FRONTIER[frontier_index]
+            print(page.url)
+            executor.submit(crawl_page, page)
+            frontier_index += 1
+            if len(FRONTIER) >= 1000:
+                print(time.time() - start)
+                break
