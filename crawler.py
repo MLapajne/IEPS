@@ -185,13 +185,16 @@ def db_get_first_page_from_frontier():
     try:
         cur = conn.cursor()
         cur.execute(
-            "SELECT url FROM crawldb.page WHERE page_type_code = 'FRONTIER' ORDER BY id ASC LIMIT 1")
+            "SELECT id, url FROM crawldb.page WHERE page_type_code = 'FRONTIER' ORDER BY id ASC LIMIT 1")
         result = cur.fetchone()
         
         if result is not None:
-            page_url = result[0]
+            page_id = result[0]
+            page_url = result[1]
             print("FROM FRONTIER: " + page_url)
             page = Page(page_url, get_domain(page_url))
+
+            cur.execute("UPDATE crawldb.page SET page_type_code= 'CRAWLING' WHERE id= %s", (page_id,))
     
     except Exception as e:
         print("Error while getting first page from frontier: ", e)
