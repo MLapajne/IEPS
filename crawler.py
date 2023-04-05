@@ -32,8 +32,11 @@ import psycopg2
 GOV_DOMAIN = '.gov.si'
 GROUP_NAME = "fri-wier-SET_GROUP_NAME"
 INITIAL_SEED = ['https://gov.si', 'https://evem.gov.si', 'https://e-uprava.gov.si', 'https://e-prostor.gov.si']
-DOMAINS = ['gov.si', 'evem.gov.si', 'e-uprava.gov.si', 'e-prostor.gov.si']
-IPS = ['84.39.211.243', '84.39.222.27', '84.39.223.247', '84.39.211.222']
+# DOMAINS = ['gov.si', 'evem.gov.si', 'e-uprava.gov.si', 'e-prostor.gov.si']
+# IPS = ['84.39.211.243', '84.39.222.27', '84.39.223.247', '84.39.211.222']
+
+DOMAINS = []
+IPS = []
 
 IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg']
 LAST_CRAWL_TIMES_DOMAINS = {domain: 0 for domain in DOMAINS}
@@ -85,6 +88,34 @@ def db_insert_page_into_frontier(domain, url):
         else:
             # print("\nExisting URL already in frontier/DB")
             pass
+    except Exception as e:
+        print("Error while inserting page into frontier: ", e)
+
+    finally:
+        if cur is not None:
+            cur.close()
+
+def db_get_frontier_length():
+    cur = None
+    pages_length = 0
+    frontier_length = 0
+    try:
+        cur = conn.cursor()
+
+        cur.execute("SELECT COUNT(*) FROM crawldb.page")
+        result_pages = cur.fetchone()
+
+        if result_pages is not None:
+            pages_length = result_pages[0]
+
+        cur.execute("SELECT COUNT(*) FROM crawldb.page WHERE page_type_code = 'FRONTIER'")
+        result_frontier = cur.fetchone()
+
+        if result_frontier is not None:
+            frontier_length = result_frontier[0]
+
+        return pages_length, frontier_length
+       
     except Exception as e:
         print("Error while inserting page into frontier: ", e)
 
@@ -196,6 +227,7 @@ def db_get_first_page_from_frontier():
             page = Page(page_url, get_domain(page_url))
 
             cur.execute("UPDATE crawldb.page SET page_type_code= 'CRAWLING' WHERE id= %s", (page_id,))
+            return page
 
     except Exception as e:
         print("Error while getting first page from frontier: ", e)
@@ -203,7 +235,7 @@ def db_get_first_page_from_frontier():
     finally:
             if cur is not None:
                 cur.close()
-    return page
+    
 
 def db_insert_image_data(url, filename, content_type, accessed_time):
     cur = None
@@ -357,7 +389,7 @@ def parse_sitemap(url_sitemap):
 
     response = requests.get(url_sitemap)
     if response.status_code == 200:
-        soup = BeautifulSoup(response.content, 'xml')
+        soup = BeautifulSoup(response.content, 'lxml')
         site_maps = soup.select("sitemap")
         if site_maps:
             for sitemap in soup.select("loc"):
@@ -487,26 +519,27 @@ def insert_pages_into_frontier(pages):
             robots_content, crawl_delay, sitemaps = get_robots_content_data(page_entry.url,
                                                                             False)  # dej to na False ce noces cakat na sitemape
             site = Site(page_entry.domain, robots_content, ' '.join(sitemaps), crawl_delay)
+            with lock:
+                DOMAINS.append(page_entry.domain)
+                ip = socket.gethostbyname(page_entry.domain)
+                IPS.append(socket.gethostbyname(page_entry.domain))
+                LAST_CRAWL_TIMES_DOMAINS[page_entry.domain] = 0
+                LAST_CRAWL_TIMES_IPS[ip] = 0
 
-            DOMAINS.append(page_entry.domain)
-            ip = socket.gethostbyname(page_entry.domain)
-            IPS.append(socket.gethostbyname(page_entry.domain))
-            LAST_CRAWL_TIMES_DOMAINS[page_entry.domain] = 0
-            LAST_CRAWL_TIMES_IPS[ip] = 0
+                db_insert_site_data(site.domain, site.robots_content,
+                                    site.crawl_delay, site.sitemap_content, ip)
 
-            db_insert_site_data(site.domain, site.robots_content,
-                                site.crawl_delay, site.sitemap_content, ip)
-
-
-        # FRONTIER.append(page_entry)
-        db_insert_page_into_frontier(page_entry.domain, page_entry.url)
+        with lock:
+            # FRONTIER.append(page_entry)
+            db_insert_page_into_frontier(page_entry.domain, page_entry.url)
 
 
 def insert_image_data(images, url):
     for image in images:
         img_obj = get_image_metadata(image)
         # TODO save image to db
-        db_insert_image_data(url, img_obj.filename, img_obj.content_type, img_obj.accessed_time)
+        with lock:
+            db_insert_image_data(url, img_obj.filename, img_obj.content_type, img_obj.accessed_time)
 
 
 def get_page_metadata(page_url):
@@ -635,9 +668,7 @@ def db_seed_urls_in_frontier(seed_urls):
 
 # DOMAINS = db_get_stored_domains()
 
-# if seed urls are not in frontier, start by adding them
-if not db_seed_urls_in_frontier(INITIAL_SEED):
-    insert_pages_into_frontier(INITIAL_SEED)
+
 
 def crawl_initial_seed(curr_url):
     domain = get_domain(curr_url)
@@ -653,7 +684,14 @@ def crawl_initial_seed(curr_url):
     insert_pages_into_frontier(pages)
 
 
-def crawl_page(page):
+def crawl_page():
+    print("CRAWL PAGE, thread id: ", threading.get_ident()) 
+
+    with lock:
+        page = db_get_first_page_from_frontier()
+
+    print(page.url)   
+
     domain = get_domain(page.url)
     if domain not in DOMAINS:  # check if we have a new domain (Site)
         robots_content, crawl_delay, sitemaps = get_robots_content_data(page.url,
@@ -661,13 +699,15 @@ def crawl_page(page):
         site = Site(domain, robots_content, ' '.join(sitemaps), crawl_delay)
         # TODO save sitemaps to frontier
         # TODO tudi tukej treba insertat v db (to nism ziher ce si ze naredu)
-        DOMAINS.append(domain)
-        ip = socket.gethostbyname(domain)
-        IPS.append(socket.gethostbyname(domain))
-        LAST_CRAWL_TIMES_DOMAINS[domain] = 0
-        LAST_CRAWL_TIMES_IPS[ip] = 0
+        
+        with lock:
+            ip = socket.gethostbyname(domain)
+            DOMAINS.append(domain)
+            IPS.append(socket.gethostbyname(domain))
+            LAST_CRAWL_TIMES_DOMAINS[domain] = 0
+            LAST_CRAWL_TIMES_IPS[ip] = 0
 
-        db_insert_site_data(site.domain, site.robots_content,
+            db_insert_site_data(site.domain, site.robots_content,
                             site.crawl_delay, site.sitemap_content, ip)
 
 
@@ -680,15 +720,15 @@ def crawl_page(page):
                 wait_for_access(page.url)
 
             page_obj = get_page_metadata(page.url)
-
-            db_update_page_data(page_obj.url, page_obj.page_type_code, page_obj.html_content,
-                                page_obj.content_hash, page_obj.http_status_code, page_obj.accessed_time,
-                                page_obj.data_type_code)
-
             urls = get_urls(page.url)
-            insert_pages_into_frontier(urls)
-
             images = get_image_sources(page.url)
+
+            with lock:
+                db_update_page_data(page_obj.url, page_obj.page_type_code, page_obj.html_content,
+                            page_obj.content_hash, page_obj.http_status_code, page_obj.accessed_time,
+                            page_obj.data_type_code)
+            
+            insert_pages_into_frontier(urls)
             insert_image_data(images)
 
     else:
@@ -696,41 +736,55 @@ def crawl_page(page):
 
         page_obj = get_page_metadata(page.url)
         if page_obj.http_status_code != 500:
-            db_update_page_data(page_obj.url, page_obj.page_type_code, page_obj.html_content,
+            with lock:
+                db_update_page_data(page_obj.url, page_obj.page_type_code, page_obj.html_content,
                                 page_obj.content_hash, page_obj.http_status_code, page_obj.accessed_time,
                                 page_obj.data_type_code)
 
             urls = get_urls(page.url)
-            insert_pages_into_frontier(urls)
-
             images = get_image_sources(page.url)
+            # with lock:
+            insert_pages_into_frontier(urls)
             insert_image_data(images)
         else:
-            db_update_page_data(page_obj.url, page_obj.page_type_code, '',
+            with lock:
+                db_update_page_data(page_obj.url, page_obj.page_type_code, '',
                                 '', page_obj.http_status_code, page_obj.accessed_time, page_obj.data_type_code)
 
 
+# if seed urls are not in frontier, start by adding them
+if not db_seed_urls_in_frontier(INITIAL_SEED):
+    print("Inserting seed urls into frontier")
+    insert_pages_into_frontier(INITIAL_SEED)
+
 start = time.time()
-print('Started crawling initial seed: ')
-with ThreadPoolExecutor(8) as executor:
-    futures = [executor.submit(crawl_initial_seed, url) for url in INITIAL_SEED]
+# print('Started crawling initial seed: ')
+# with ThreadPoolExecutor(8) as executor:
+#     futures = [executor.submit(crawl_initial_seed, url) for url in INITIAL_SEED]
 
-    for future in futures:
-        future.result()
+#     for future in futures:
+#         future.result()
 
-    print('Over in: ', time.time() - start)
+#     print('Over in: ', time.time() - start)
 
 print('Started crawling frontier: ')
 with ThreadPoolExecutor(8) as executor:  # choose the number of workers you want
     frontier_index = 0
+    all_pages_length, frontier_length = db_get_frontier_length()
     while True:
-        if frontier_index >= len(FRONTIER):
+        # TODO get length of frontier from db
+        if frontier_index >= all_pages_length:
             time.sleep(5)
+            all_pages_length, frontier_length = db_get_frontier_length()
         else:
-            page = FRONTIER[frontier_index]
-            print(page.url)
-            executor.submit(crawl_page, page)
+            # page = db_get_first_page_from_frontier()           
+            # print("Crawling: " + page.url)
+            
+            # page = FRONTIER[frontier_index]
+            
+            executor.submit(crawl_page)
             frontier_index += 1
+            all_pages_length, frontier_length = db_get_frontier_length()
 
 # close DB connection - NOTE this is unreachable at the moment
 conn.close()
