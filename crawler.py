@@ -30,7 +30,9 @@ GROUP_NAME = "fri-wier-SET_GROUP_NAME"
 INITIAL_SEED = ['https://gov.si', 'https://evem.gov.si', 'https://e-uprava.gov.si', 'https://e-prostor.gov.si']
 # DOMAINS = ['gov.si', 'evem.gov.si', 'e-uprava.gov.si', 'e-prostor.gov.si']
 DOMAINS = []
-IPS = ['84.39.211.243', '84.39.222.27', '84.39.223.247', '84.39.211.222']
+# IPS = ['84.39.211.243', '84.39.222.27', '84.39.223.247', '84.39.211.222']
+
+IPS = []
 
 IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg']
 LAST_CRAWL_TIMES_DOMAINS = {domain: 0 for domain in DOMAINS}
@@ -90,7 +92,7 @@ def db_insert_page_into_frontier(domain, url):
             cur.close()
 
 # insert data into site table
-def db_insert_site_data(domain, robots_content, crawl_delay, sitemap_content):
+def db_insert_site_data(domain, robots_content, crawl_delay, sitemap_content, ip_address):
     cur = None
     new_site_id = None
     try:
@@ -103,8 +105,8 @@ def db_insert_site_data(domain, robots_content, crawl_delay, sitemap_content):
         #     print("Site already in DB: " + domain);
         #     return
 
-        cur.execute("INSERT into crawldb.site (domain, robots_content, crawl_delay, sitemap_content) \
-                    VALUES (%s, %s, %s, %s) RETURNING id", (domain, robots_content, crawl_delay, sitemap_content))
+        cur.execute("INSERT into crawldb.site (domain, robots_content, crawl_delay, sitemap_content, ip) \
+                    VALUES (%s, %s, %s, %s, %s) RETURNING id", (domain, robots_content, crawl_delay, sitemap_content, ip_address))
         print(cur.statusmessage)
         new_site_id = cur.fetchone()[0]
         cur.close()
@@ -423,6 +425,7 @@ def get_page_type_code(url):
     return 'BINARY' if url.endswith('.pdf') or url.endswith('.doc') or url.endswith('.docx') or url.endswith(
         '.ppt') or url.endswith('.pptx') else 'HTML'
 
+
 def get_data_type_code(url):
     if url.endswith('.pdf'):
         return 'PDF'
@@ -482,18 +485,18 @@ def insert_pages_into_frontier(pages):
                                                                             False)  # dej to na False ce noces cakat na sitemape
             site = Site(page_entry.domain, robots_content, ' '.join(sitemaps), crawl_delay)
 
-            db_insert_site_data(site.domain, site.robots_content,
-                                site.crawl_delay, site.sitemap_content)
-            
             DOMAINS.append(page_entry.domain)
             ip = socket.gethostbyname(page_entry.domain)
             IPS.append(socket.gethostbyname(page_entry.domain))
             LAST_CRAWL_TIMES_DOMAINS[page_entry.domain] = 0
             LAST_CRAWL_TIMES_IPS[ip] = 0
+            
+            db_insert_site_data(site.domain, site.robots_content,
+                                site.crawl_delay, site.sitemap_content, ip)
+            
 
         # FRONTIER.append(page_entry)
         db_insert_page_into_frontier(page_entry.domain, page_entry.url)
-
 
 
 def insert_image_data(images, url):
@@ -501,7 +504,6 @@ def insert_image_data(images, url):
         img_obj = get_image_metadata(image)
         # TODO save image to db
         db_insert_image_data(url, img_obj.filename, img_obj.content_type, img_obj.accessed_time)
-
 
 
 def get_page_metadata(page_url):
@@ -608,38 +610,62 @@ def wait_for_access(page_url):
     LAST_CRAWL_TIMES_DOMAINS[domain] = time.time()
     LAST_CRAWL_TIMES_IPS[ip] = time.time()
 
+def db_seed_urls_in_frontier(seed_urls):
+    cur = None
+    try:
+        cur = conn.cursor()
+
+        for url in seed_urls:
+            cur.execute("SELECT EXISTS(SELECT 1 FROM crawldb.page WHERE url = %s)", (url,))
+            result = cur.fetchone()[0]
+            if not result:
+                return False
+        return True
+    
+    except Exception as e:
+        print("Problem checking if seed urls are already in frontier: ", e)
+    
+    finally:
+        if cur is not None:
+            cur.close()
+
+# DOMAINS = db_get_stored_domains()
+
+# if seed urls are not in frontier, start by adding them
+if not db_seed_urls_in_frontier(INITIAL_SEED):
+    insert_pages_into_frontier(INITIAL_SEED)
 
 i = 0
 frontier_index = 0
 while True:
     if i < len(INITIAL_SEED):
         curr_url = INITIAL_SEED[i]
-        print(curr_url)
-        robots_url = curr_url + '/robots.txt'
-        domain = get_domain(curr_url)
-        pages = get_urls(curr_url)
+        # print(curr_url)
+        # robots_url = curr_url + '/robots.txt'
+        # domain = get_domain(curr_url)
+        # pages = get_urls(curr_url)
 
-        robots_content, crawl_delay, sitemaps = get_robots_content_data(curr_url,
-                                                                        False)  # dej to na False ce noces cakat na sitemape
-        # TODO save sitemaps to frontier
+        # robots_content, crawl_delay, sitemaps = get_robots_content_data(curr_url,
+        #                                                                 False)  # dej to na False ce noces cakat na sitemape
+        # # TODO save sitemaps to frontier
 
-        if robots_content != '':
-            site = Site(domain, robots_content, ' '.join(sitemaps), crawl_delay)
+        # if robots_content != '':
+        #     site = Site(domain, robots_content, ' '.join(sitemaps), crawl_delay)
             
-        else:
-            site = Site(domain, '', '', 0)
+        # else:
+        #     site = Site(domain, '', '', 0)
 
-        print("insert site: " + site.domain)
-        # NOTE should we do this here?
-        db_insert_site_data(site.domain, site.robots_content,
-                            site.crawl_delay, site.sitemap_content)
-        DOMAINS.append(site.domain)
-        ip = socket.gethostbyname(site.domain)
-        IPS.append(socket.gethostbyname(site.domain))
-        LAST_CRAWL_TIMES_DOMAINS[site.domain] = 0
-        LAST_CRAWL_TIMES_IPS[ip] = 0
+        # print("insert site: " + site.domain)
+        # # NOTE should we do this here?
+        # db_insert_site_data(site.domain, site.robots_content,
+        #                     site.crawl_delay, site.sitemap_content)
+        # DOMAINS.append(site.domain)
+        # ip = socket.gethostbyname(site.domain)
+        # IPS.append(socket.gethostbyname(site.domain))
+        # LAST_CRAWL_TIMES_DOMAINS[site.domain] = 0
+        # LAST_CRAWL_TIMES_IPS[ip] = 0
 
-        insert_pages_into_frontier(pages)
+        # insert_pages_into_frontier(pages)
     else:
         print('\nStarted crawling frontier')
         # page = FRONTIER[frontier_index]
@@ -655,15 +681,16 @@ while True:
             # TODO save sitemaps to frontier
             # TODO tudi tukej treba insertat v db (to nism ziher ce si ze naredu)
             # NOTE this is temporary
-            db_insert_site_data(site.domain, site.robots_content,
-                            site.crawl_delay, site.sitemap_content)
-
-
+            
             DOMAINS.append(domain)
             ip = socket.gethostbyname(domain)
             IPS.append(socket.gethostbyname(domain))
             LAST_CRAWL_TIMES_DOMAINS[domain] = 0
             LAST_CRAWL_TIMES_IPS[ip] = 0
+
+            db_insert_site_data(site.domain, site.robots_content,
+                            site.crawl_delay, site.sitemap_content, ip)
+
 
         if has_robots_file('https://' + domain + '/robots.txt'):
             if page_allowed(page.url):

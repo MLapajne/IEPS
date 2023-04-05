@@ -16,6 +16,7 @@ CREATE TABLE crawldb.site (
 	robots_content       text  ,
 	crawl_delay			real,
 	sitemap_content      text  ,
+	ip					varchar(39),
 	CONSTRAINT pk_site_id PRIMARY KEY ( id )
  );
 
@@ -25,7 +26,7 @@ CREATE TABLE crawldb.page (
 	page_type_code       varchar(20)  ,
 	url                  varchar(3000)  ,
 	html_content         text  ,
-	content_hash		 char(32), -- the length will depend on the hash function used
+	content_hash		 char(32),
 	http_status_code     integer  ,
 	accessed_time        timestamp  ,
 	CONSTRAINT pk_page_id PRIMARY KEY ( id ),
