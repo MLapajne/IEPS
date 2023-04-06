@@ -29,7 +29,7 @@ import random
 
 import psycopg2
 
-GOV_DOMAIN = '.gov.si'
+GOV_DOMAIN = 'gov.si'
 GROUP_NAME = "fri-wier-SET_GROUP_NAME"
 INITIAL_SEED = ['https://gov.si', 'https://evem.gov.si', 'https://e-uprava.gov.si', 'https://e-prostor.gov.si']
 # DOMAINS = ['gov.si', 'evem.gov.si', 'e-uprava.gov.si', 'e-prostor.gov.si']
