@@ -750,7 +750,7 @@ def crawl_page():
     print(page.url)   
 
     domain = get_domain(page.url)
-    if domain not in DOMAINS:  # check if we have a new domain (Site)
+    if domain not in DOMAINS and GOV_DOMAIN in domain:  # check if we have a new domain (Site)
         add_new_domain(domain)
 
 
