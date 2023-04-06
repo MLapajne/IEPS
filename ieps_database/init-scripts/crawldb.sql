@@ -98,3 +98,15 @@ INSERT INTO crawldb.page_type VALUES
 	('DUPLICATE'),
 	('FRONTIER'),
 	('CRAWLING');
+
+CREATE TABLE crawldb.crawl_links (
+    from_page            integer  NOT NULL,
+    to_page              integer  NOT NULL,
+    CONSTRAINT crawl_links_pk PRIMARY KEY ( from_page, to_page )
+);
+
+CREATE INDEX "idx_crawl_links_from_page" ON crawldb.crawl_links ( from_page );
+CREATE INDEX "idx_crawl_links_to_page" ON crawldb.crawl_links ( to_page );
+
+ALTER TABLE crawldb.crawl_links ADD CONSTRAINT fk_crawl_links_from_page FOREIGN KEY ( from_page ) REFERENCES crawldb.page( id ) ON DELETE RESTRICT;
+ALTER TABLE crawldb.crawl_links ADD CONSTRAINT fk_crawl_links_to_page FOREIGN KEY ( to_page ) REFERENCES crawldb.page( id ) ON DELETE RESTRICT;
