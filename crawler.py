@@ -446,7 +446,6 @@ def parse_sitemap(url_sitemap):
         site_maps = soup.select("sitemap")
         if site_maps:
             for sitemap in soup.select("loc"):
-                print("sitemap")
                 loc = sitemap.text
                 urlss.extend(parse_sitemap(loc))
 
@@ -454,7 +453,6 @@ def parse_sitemap(url_sitemap):
             urlset = soup.select('url')
             if urlset is not None:
                 for element in soup.select('loc'):
-                    print("sitemap")
                     if GOV_DOMAIN in element.text:
                         urlss.append(element.text)
 
