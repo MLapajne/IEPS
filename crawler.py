@@ -570,8 +570,12 @@ def add_new_domain(page_url):
     site = Site(domain_url, robots_content, ' '.join(sitemaps), crawl_delay)
     
     DOMAINS.append(domain_url)
-    ip = socket.gethostbyname(domain_url)
-    IPS.append(socket.gethostbyname(domain_url))
+    try:
+        ip = socket.gethostbyname(domain_url)
+    except Exception as e:
+        print("Error when getting domain ip: ", e)
+        ip = ''
+    IPS.append(ip)
     LAST_CRAWL_TIMES_DOMAINS[domain_url] = 0
     LAST_CRAWL_TIMES_IPS[ip] = 0
 
