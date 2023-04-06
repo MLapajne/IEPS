@@ -589,7 +589,7 @@ def insert_pages_into_frontier(pages, from_page=None):
     for page in pages:
         page_entry = Page(page, get_domain(page))
 
-        if page_entry.domain not in DOMAINS:  # check if we have a new domain (Site)
+        if page_entry.domain not in DOMAINS and GOV_DOMAIN in page_entry.domain:  # check if we have a new domain (Site)
             add_new_domain(page_entry.url)
 
         # FRONTIER.append(page_entry)
