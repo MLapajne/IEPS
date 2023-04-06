@@ -19,7 +19,7 @@ from playwright.sync_api import Playwright, sync_playwright, Error
 from urllib.parse import urlparse, urlunparse
 
 mimetypes.init()
-lock = threading.Lock()
+# lock = threading.Lock()
 
 # TODO: Timeout error, threading, dodat domeno pri onclick
 
@@ -57,6 +57,46 @@ FRONTIER = []
 #####
 # DB utility functions
 #####
+
+
+def db_get_domains_ips():
+    cur = None
+    domains = []
+    ips = []
+
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT domain, ip FROM crawldb.site")
+        result = cur.fetchall()
+
+        if result is not None:
+            for row in result:
+                domains.append(row[0])
+                ips.append(row[1])
+            
+        return domains, ips
+
+    except Exception as e:
+        print("Error while getting first page from frontier: ", e)
+
+    finally:
+            if cur is not None:
+                cur.close()
+
+def db_reset_crawling():
+    cur = None
+    new_site_id = None
+    try:
+        cur = conn.cursor()
+        cur.execute("UPDATE crawldb.page SET page_type_code='FRONTIER' WHERE page_type_code='CRAWLING'")
+        print(cur.statusmessage)
+        cur.close()
+    except Exception as e:
+        print("Error while reseting crawling status: ", e)
+    finally:
+        if cur is not None:
+            cur.close()
 
 # insert page into frontier
 def db_insert_page_into_frontier(domain, url):
@@ -519,27 +559,25 @@ def insert_pages_into_frontier(pages):
             robots_content, crawl_delay, sitemaps = get_robots_content_data(page_entry.url,
                                                                             False)  # dej to na False ce noces cakat na sitemape
             site = Site(page_entry.domain, robots_content, ' '.join(sitemaps), crawl_delay)
-            with lock:
-                DOMAINS.append(page_entry.domain)
-                ip = socket.gethostbyname(page_entry.domain)
-                IPS.append(socket.gethostbyname(page_entry.domain))
-                LAST_CRAWL_TIMES_DOMAINS[page_entry.domain] = 0
-                LAST_CRAWL_TIMES_IPS[ip] = 0
+            
+            DOMAINS.append(page_entry.domain)
+            ip = socket.gethostbyname(page_entry.domain)
+            IPS.append(socket.gethostbyname(page_entry.domain))
+            LAST_CRAWL_TIMES_DOMAINS[page_entry.domain] = 0
+            LAST_CRAWL_TIMES_IPS[ip] = 0
 
-                db_insert_site_data(site.domain, site.robots_content,
+            db_insert_site_data(site.domain, site.robots_content,
                                     site.crawl_delay, site.sitemap_content, ip)
 
-        with lock:
-            # FRONTIER.append(page_entry)
-            db_insert_page_into_frontier(page_entry.domain, page_entry.url)
+        # FRONTIER.append(page_entry)
+        db_insert_page_into_frontier(page_entry.domain, page_entry.url)
 
 
 def insert_image_data(images, url):
     for image in images:
         img_obj = get_image_metadata(image)
         # TODO save image to db
-        with lock:
-            db_insert_image_data(url, img_obj.filename, img_obj.content_type, img_obj.accessed_time)
+        db_insert_image_data(url, img_obj.filename, img_obj.content_type, img_obj.accessed_time)
 
 
 def get_page_metadata(page_url):
@@ -630,22 +668,21 @@ except Exception as e:
 
 
 def wait_for_access(page_url):
-    with lock:
-        domain = get_domain(page_url)
-        ip = socket.gethostbyname(domain)
-        last_crawl_time = LAST_CRAWL_TIMES_DOMAINS[domain]
+    domain = get_domain(page_url)
+    ip = socket.gethostbyname(domain)
+    last_crawl_time = LAST_CRAWL_TIMES_DOMAINS[domain]
+    time_since_last_crawl = time.time() - last_crawl_time
+    if time_since_last_crawl < 5:
+        time.sleep(5 - time_since_last_crawl)
+        return
+    else:
+        last_crawl_time = LAST_CRAWL_TIMES_IPS[ip]
         time_since_last_crawl = time.time() - last_crawl_time
         if time_since_last_crawl < 5:
             time.sleep(5 - time_since_last_crawl)
-            return
-        else:
-            last_crawl_time = LAST_CRAWL_TIMES_IPS[ip]
-            time_since_last_crawl = time.time() - last_crawl_time
-            if time_since_last_crawl < 5:
-                time.sleep(5 - time_since_last_crawl)
 
-        LAST_CRAWL_TIMES_DOMAINS[domain] = time.time()
-        LAST_CRAWL_TIMES_IPS[ip] = time.time()
+    LAST_CRAWL_TIMES_DOMAINS[domain] = time.time()
+    LAST_CRAWL_TIMES_IPS[ip] = time.time()
 
 def db_seed_urls_in_frontier(seed_urls):
     cur = None
@@ -685,10 +722,7 @@ def crawl_initial_seed(curr_url):
 
 
 def crawl_page():
-    print("CRAWL PAGE, thread id: ", threading.get_ident()) 
-
-    with lock:
-        page = db_get_first_page_from_frontier()
+    page = db_get_first_page_from_frontier()
 
     print(page.url)   
 
@@ -700,14 +734,14 @@ def crawl_page():
         # TODO save sitemaps to frontier
         # TODO tudi tukej treba insertat v db (to nism ziher ce si ze naredu)
         
-        with lock:
-            ip = socket.gethostbyname(domain)
-            DOMAINS.append(domain)
-            IPS.append(socket.gethostbyname(domain))
-            LAST_CRAWL_TIMES_DOMAINS[domain] = 0
-            LAST_CRAWL_TIMES_IPS[ip] = 0
 
-            db_insert_site_data(site.domain, site.robots_content,
+        ip = socket.gethostbyname(domain)
+        DOMAINS.append(domain)
+        IPS.append(socket.gethostbyname(domain))
+        LAST_CRAWL_TIMES_DOMAINS[domain] = 0
+        LAST_CRAWL_TIMES_IPS[ip] = 0
+
+        db_insert_site_data(site.domain, site.robots_content,
                             site.crawl_delay, site.sitemap_content, ip)
 
 
@@ -723,68 +757,47 @@ def crawl_page():
             urls = get_urls(page.url)
             images = get_image_sources(page.url)
 
-            with lock:
-                db_update_page_data(page_obj.url, page_obj.page_type_code, page_obj.html_content,
+
+            db_update_page_data(page_obj.url, page_obj.page_type_code, page_obj.html_content,
                             page_obj.content_hash, page_obj.http_status_code, page_obj.accessed_time,
                             page_obj.data_type_code)
             
             insert_pages_into_frontier(urls)
-            insert_image_data(images)
+            insert_image_data(images, page.url)
 
     else:
         wait_for_access(page.url)
 
         page_obj = get_page_metadata(page.url)
         if page_obj.http_status_code != 500:
-            with lock:
-                db_update_page_data(page_obj.url, page_obj.page_type_code, page_obj.html_content,
+            db_update_page_data(page_obj.url, page_obj.page_type_code, page_obj.html_content,
                                 page_obj.content_hash, page_obj.http_status_code, page_obj.accessed_time,
                                 page_obj.data_type_code)
 
             urls = get_urls(page.url)
             images = get_image_sources(page.url)
-            # with lock:
             insert_pages_into_frontier(urls)
-            insert_image_data(images)
+            insert_image_data(images, page.url)
         else:
-            with lock:
-                db_update_page_data(page_obj.url, page_obj.page_type_code, '',
+            db_update_page_data(page_obj.url, page_obj.page_type_code, '',
                                 '', page_obj.http_status_code, page_obj.accessed_time, page_obj.data_type_code)
 
+# get domains and ips from db
+DOMAINS, IPS = db_get_domains_ips()
+LAST_CRAWL_TIMES_DOMAINS = {domain: 0 for domain in DOMAINS}
+LAST_CRAWL_TIMES_IPS = {ip: 0 for ip in IPS}
 
-# if seed urls are not in frontier, start by adding them
+# resets all pages with status CRAWLING back to FRONTIER
+print("Resetting crawling status")
+db_reset_crawling()
+
+# if seed urls were not yet added to frontier, start by adding them
 if not db_seed_urls_in_frontier(INITIAL_SEED):
     print("Inserting seed urls into frontier")
     insert_pages_into_frontier(INITIAL_SEED)
 
-start = time.time()
-# print('Started crawling initial seed: ')
-# with ThreadPoolExecutor(8) as executor:
-#     futures = [executor.submit(crawl_initial_seed, url) for url in INITIAL_SEED]
-
-#     for future in futures:
-#         future.result()
-
-#     print('Over in: ', time.time() - start)
-
-print('Started crawling frontier: ')
-with ThreadPoolExecutor(8) as executor:  # choose the number of workers you want
-    frontier_index = 0
-    all_pages_length, frontier_length = db_get_frontier_length()
-    while True:
-        # TODO get length of frontier from db
-        if frontier_index >= all_pages_length:
-            time.sleep(5)
-            all_pages_length, frontier_length = db_get_frontier_length()
-        else:
-            # page = db_get_first_page_from_frontier()           
-            # print("Crawling: " + page.url)
-            
-            # page = FRONTIER[frontier_index]
-            
-            executor.submit(crawl_page)
-            frontier_index += 1
-            all_pages_length, frontier_length = db_get_frontier_length()
+while True:
+    crawl_page()
 
 # close DB connection - NOTE this is unreachable at the moment
 conn.close()
