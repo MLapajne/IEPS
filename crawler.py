@@ -482,7 +482,7 @@ def get_data_type_code(url):
         return 'PPT'
     elif url.endswith('.pptx'):
         return 'PPTX'
-    return None # TODO error handling?
+    return None
 
 # Returns http response status code, here we are also checking for SSLError
 def get_http_status_code(url):
@@ -619,7 +619,7 @@ def get_image_metadata(image_url):
 
 # Extracts crawl_delay, content of robots file and sitemaps (using parse_sitemaps()),
 # here we also have to check if a page has sitemaps
-def get_robots_content_data(page_url, parse_sitemaps):  # TODO dodat za sitemape
+def get_robots_content_data(page_url, parse_sitemaps):
     try:
         robots = 'https://' + get_domain(page_url) + '/robots.txt'
         if has_robots_file(robots):
