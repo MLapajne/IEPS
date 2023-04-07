@@ -419,18 +419,22 @@ def get_domain(url):
 
 
 def get_robots_content(robots):
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page()
-        response = page.goto(robots)
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch()
+            page = browser.new_page()
+            response = page.goto(robots)
 
-        if response.ok:
-            content = page.content()
-            soup = BeautifulSoup(content, 'html.parser')
-            pre = soup.find('pre')
-            if pre is None:
-                return ''
-            return pre.text
+            if response.ok:
+                content = page.content()
+                soup = BeautifulSoup(content, 'html.parser')
+                pre = soup.find('pre')
+                if pre is None:
+                    return ''
+                return pre.text
+            return ''
+    except Exception as e:
+        print("Error accessing robots content: ", e)
         return ''
 
 
@@ -654,31 +658,35 @@ def get_image_metadata(image_url):
 
 
 def get_robots_content_data(page_url, parse_sitemaps):  # TODO dodat za sitemape
-    robots = 'https://' + get_domain(page_url) + '/robots.txt'
-    if has_robots_file(robots):
-        rp = urllib.robotparser.RobotFileParser()
-        rp.set_url(robots)
-        rp.read()
-        robots_content1 = get_robots_content(robots)
-        crawl_delay1 = rp.crawl_delay(GROUP_NAME)
+    try:
+        robots = 'https://' + get_domain(page_url) + '/robots.txt'
+        if has_robots_file(robots):
+            rp = urllib.robotparser.RobotFileParser()
+            rp.set_url(robots)
+            rp.read()
+            robots_content1 = get_robots_content(robots)
+            crawl_delay1 = rp.crawl_delay(GROUP_NAME)
 
-        if crawl_delay1 is None:
-            crawl_delay1 = 0
+            if crawl_delay1 is None:
+                crawl_delay1 = 0
 
-        site_maps = rp.site_maps()
-        if parse_sitemaps:
-            sitemap_content = []
-            if site_maps is not None:
-                for sitemap_url in site_maps:
-                    if request_success(sitemap_url):
-                        parsed_site_maps = parse_sitemap(sitemap_url)
-                        sitemap_content.extend(parsed_site_maps)
+            site_maps = rp.site_maps()
+            if parse_sitemaps:
+                sitemap_content = []
+                if site_maps is not None:
+                    for sitemap_url in site_maps:
+                        if request_success(sitemap_url):
+                            parsed_site_maps = parse_sitemap(sitemap_url)
+                            sitemap_content.extend(parsed_site_maps)
 
-            return robots_content1, crawl_delay1, sitemap_content
+                return robots_content1, crawl_delay1, sitemap_content
 
-        return robots_content1, crawl_delay1, ''
+            return robots_content1, crawl_delay1, ''
 
-    else:
+        else:
+            return '', 0, ''
+    except Exception as e:
+        print("Error getting robots content: ", e)
         return '', 0, ''
 
 try:
@@ -692,7 +700,13 @@ except Exception as e:
 
 def wait_for_access(page_url):
     domain = get_domain(page_url)
-    ip = socket.gethostbyname(domain)
+    
+    try:
+        ip = socket.gethostbyname(domain)
+    except Exception as e:
+        print("Error getting host ip: ", e)
+        ip = ''
+
     last_crawl_time = LAST_CRAWL_TIMES_DOMAINS[domain]
     time_since_last_crawl = time.time() - last_crawl_time
     if time_since_last_crawl < 5:
