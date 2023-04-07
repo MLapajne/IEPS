@@ -44,16 +44,6 @@ LAST_CRAWL_TIMES_IPS = {ip: 0 for ip in IPS} # dictionary for storing wait times
 
 FRONTIER = []
 
-"""
-    sitemaps = rp.site_maps()
-    sitemap_content = []
-    if sitemaps is not None:
-        for sitemap_url in sitemaps:
-            if request_success(sitemap_url):
-                parsed_site_maps = parse_sitemap(sitemap_url)
-                sitemap_content.extend(parsed_site_maps)
-"""
-
 #####
 # DB utility functions
 #####
@@ -309,7 +299,7 @@ def db_insert_image_data(url, filename, content_type, accessed_time):
         if cur is not None:
             cur.close()
 
-# Calculate hash of html content in MD5
+# Calculate hash of html content using MD5
 def hash_html(html_content):
     return hashlib.md5(html_content.encode('utf-8')).hexdigest()
 
@@ -335,7 +325,7 @@ def has_robots_file(robots_url):
         return False
 
 
-# Get all urls from anchor tags, function also checks if url contains .gov.si
+# Get all urls from anchor tags, check if url contains .gov.si, canonalize url
 def get_urls(page_url):
     onclick_urls = []
     with sync_playwright() as p:
@@ -389,7 +379,7 @@ def get_onclick_links(text, page_url):
                             urls.append(canonicalized_url)
     return urls
 
-# Function for extracting all images from a page
+# Function for extracting all images (for html tag <img>) from a page
 def get_image_sources(url):
     with sync_playwright() as p:
         browser = p.chromium.launch()
@@ -506,17 +496,6 @@ def get_html_content(page_url):
             return "<html><head></head><body></body></html>"
 
 
-def get_base_url(url):
-    parsed_url = urlparse(url)
-
-    base_url = parsed_url.scheme + '://' + parsed_url.netloc
-
-    if base_url.endswith('/'):
-        base_url = base_url[:-1]
-
-    return base_url
-
-
 # Function returns page_type_code of a url - BINARY if the page is pdf, doc, docx, ppt, or pptx, or HTML otherwise
 def get_page_type_code(url):
     return 'BINARY' if url.endswith('.pdf') or url.endswith('.doc') or url.endswith('.docx') or url.endswith(
@@ -564,7 +543,8 @@ def request_success(url):
         except Error as e:
             return False
 
-# Checks if page is allowed depending on the robots.txt. We are using robotparser library for getting robots.txt data
+# Checks if page is allowed depending on the robots.txt. 
+# We are using robotparser library for getting robots.txt data 
 def page_allowed(url):
     domain_url = get_domain(url)
     rp = urllib.robotparser.RobotFileParser()
@@ -573,6 +553,7 @@ def page_allowed(url):
     return rp.can_fetch(GROUP_NAME, url)
 
 
+# Saves new domain (Site) to database
 def add_new_domain(page_url):
     domain_url = get_domain(page_url)
     print('NEW DOMAIN', domain_url)
@@ -614,6 +595,8 @@ def insert_image_data(images, url):
         db_insert_image_data(url, img_obj.filename, img_obj.content_type, img_obj.accessed_time)
 
 
+# Extracts data of a page: page type code, timestamp of access, html content, http status code
+# and returns a Page object
 def get_page_metadata(page_url):
     page_type_code = get_page_type_code(page_url)
 
@@ -638,11 +621,13 @@ def get_page_metadata(page_url):
                 time_stamp, data_type_code)
 
 
+# Returns filename from url
 def get_image_filename(url):
     filename = os.path.basename(url)
     return filename
 
 
+# Returns image extension
 def get_image_type(image_url):
     image_parse = image_url.split('.')
     if len(image_parse) == 1:
