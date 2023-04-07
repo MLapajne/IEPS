@@ -39,8 +39,8 @@ DOMAINS = []
 IPS = []
 
 IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg']
-LAST_CRAWL_TIMES_DOMAINS = {domain: 0 for domain in DOMAINS}
-LAST_CRAWL_TIMES_IPS = {ip: 0 for ip in IPS}
+LAST_CRAWL_TIMES_DOMAINS = {domain: 0 for domain in DOMAINS} # dictionary for storing wait times for domains
+LAST_CRAWL_TIMES_IPS = {ip: 0 for ip in IPS} # dictionary for storing wait times for ips
 
 FRONTIER = []
 
@@ -309,10 +309,12 @@ def db_insert_image_data(url, filename, content_type, accessed_time):
         if cur is not None:
             cur.close()
 
+# Calculate hash of html content in MD5
 def hash_html(html_content):
     return hashlib.md5(html_content.encode('utf-8')).hexdigest()
 
 
+# Check if page has robot.txt
 def has_robots_file(robots_url):
     try:
         with sync_playwright() as p:
@@ -333,6 +335,7 @@ def has_robots_file(robots_url):
         return False
 
 
+# Get all urls from anchor tags, function also checks if url contains .gov.si
 def get_urls(page_url):
     onclick_urls = []
     with sync_playwright() as p:
@@ -358,7 +361,7 @@ def get_urls(page_url):
 
         return onclick_urls
 
-
+# Function extracts all onclick event urls
 def get_onclick_links(text, page_url):
     urls = []
 
@@ -386,7 +389,7 @@ def get_onclick_links(text, page_url):
                             urls.append(canonicalized_url)
     return urls
 
-
+# Function for extracting all images from a page
 def get_image_sources(url):
     with sync_playwright() as p:
         browser = p.chromium.launch()
@@ -408,7 +411,7 @@ def get_image_sources(url):
 
         return image_sources
 
-
+# Function returns domain of a url, it also removes www. from the url
 def get_domain(url):
     parsed_url = urlparse(url)
     domain = parsed_url.netloc
@@ -417,7 +420,7 @@ def get_domain(url):
 
     return domain
 
-
+# Function returns all robots content
 def get_robots_content(robots):
     try:
         with sync_playwright() as p:
@@ -438,6 +441,7 @@ def get_robots_content(robots):
         return ''
 
 
+# Recursive function for getting all sitemap urls from a given url of a sitemap
 def parse_sitemap(url_sitemap):
     urlss = []
 
@@ -462,7 +466,7 @@ def parse_sitemap(url_sitemap):
 
     return urlss
 
-
+# Function canonicalizes url - removes all get parameters (/?id=12), removes trailing slash, removes www
 def canonicalize_url(url):
     if url.endswith('/'):
         url = url[:-1]
@@ -481,7 +485,7 @@ def canonicalize_url(url):
     fragment = ''
     return urlunsplit((scheme, netloc, path, query, fragment))
 
-
+# Function adds given urls to frontier
 def add_urls_to_frontier(links):
     for url in links:
         url = canonicalize_url(url)
@@ -489,7 +493,7 @@ def add_urls_to_frontier(links):
         if len(url) > 1 and url not in FRONTIER and url not in INITIAL_SEED:
             FRONTIER.append(url)
 
-
+# Function returns all html content of a given page url
 def get_html_content(page_url):
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch()
@@ -513,11 +517,12 @@ def get_base_url(url):
     return base_url
 
 
+# Function returns page_type_code of a url - BINARY if the page is pdf, doc, docx, ppt, or pptx, or HTML otherwise
 def get_page_type_code(url):
     return 'BINARY' if url.endswith('.pdf') or url.endswith('.doc') or url.endswith('.docx') or url.endswith(
         '.ppt') or url.endswith('.pptx') else 'HTML'
 
-
+# Returns page_type of given url
 def get_data_type_code(url):
     if url.endswith('.pdf'):
         return 'PDF'
@@ -531,7 +536,7 @@ def get_data_type_code(url):
         return 'PPTX'
     return None # TODO error handling?
 
-
+# Returns http response status code, here we are also checking for SSLError
 def get_http_status_code(url):
     with sync_playwright() as playwright:
         try:
@@ -547,6 +552,7 @@ def get_http_status_code(url):
             return 500
 
 
+# Checks if a request for a url is successful
 def request_success(url):
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch()
@@ -558,7 +564,7 @@ def request_success(url):
         except Error as e:
             return False
 
-
+# Checks if page is allowed depending on the robots.txt. We are using robotparser library for getting robots.txt data
 def page_allowed(url):
     domain_url = get_domain(url)
     rp = urllib.robotparser.RobotFileParser()
@@ -566,11 +572,12 @@ def page_allowed(url):
     rp.read()
     return rp.can_fetch(GROUP_NAME, url)
 
+
 def add_new_domain(page_url):
     domain_url = get_domain(page_url)
     print('NEW DOMAIN', domain_url)
     robots_content, crawl_delay, sitemaps = get_robots_content_data(page_url,
-                                                                    True)  # dej to na False ce noces cakat na sitemape
+                                                                    True)  
     site = Site(domain_url, robots_content, ' '.join(sitemaps), crawl_delay)
     
     DOMAINS.append(domain_url)
@@ -643,6 +650,7 @@ def get_image_type(image_url):
     return image_url.split('.')[len(image_parse) - 1]
 
 
+# Extracts filename, file extension, content type using mimetypes library and time_stamp
 def get_image_metadata(image_url):
     filename = get_image_filename(image_url)
     current_timestamp = time.time()
@@ -657,6 +665,8 @@ def get_image_metadata(image_url):
     return Image(filename, content_type, '', time_stamp)
 
 
+# Extracts crawl_delay, content of robots file and sitemaps (using parse_sitemaps()),
+# here we also have to check if a page has sitemaps
 def get_robots_content_data(page_url, parse_sitemaps):  # TODO dodat za sitemape
     try:
         robots = 'https://' + get_domain(page_url) + '/robots.txt'
@@ -698,6 +708,8 @@ except Exception as e:
     print("Unable to connect to database: ", e)
 
 
+# This function checks if we have to wait for a domain or IP, 
+# it checks a global dictionary that stores last access times
 def wait_for_access(page_url):
     domain = get_domain(page_url)
     
@@ -743,7 +755,7 @@ def db_seed_urls_in_frontier(seed_urls):
 # DOMAINS = db_get_stored_domains()
 
 
-
+# Function crawls initial seed urls and get robots content
 def crawl_initial_seed(curr_url):
     domain = get_domain(curr_url)
     pages = get_urls(curr_url)
@@ -758,6 +770,7 @@ def crawl_initial_seed(curr_url):
     insert_pages_into_frontier(pages, curr_url)
 
 
+# Function for crawling frontier pages
 def crawl_page():
     page = db_get_first_page_from_frontier()
 
@@ -768,7 +781,7 @@ def crawl_page():
         add_new_domain(domain)
 
 
-    if has_robots_file('https://' + domain + '/robots.txt'):
+    if has_robots_file('https://' + domain + '/robots.txt'): # if a page has robots file, we have to check it
         if page_allowed(page.url):
             _, crawl_delay, _ = get_robots_content_data(page.url, False)
             if crawl_delay != 0:  # check if there is crawl_delay in robots.txt
