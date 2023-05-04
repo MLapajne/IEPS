@@ -8,7 +8,8 @@ ALGORITHM = sys.argv[1]
 
 if ALGORITHM == "A":
     print('Running algorithm using regular expressions')
-    print(regex.page_audi(html_rtv_audi))
+    print(regex.page_rtv(html_rtv_audi))
+    print(regex.page_rtv(html_rtv_volvo))
 
 elif ALGORITHM == "B":
     print('Running algorithm using XPath')

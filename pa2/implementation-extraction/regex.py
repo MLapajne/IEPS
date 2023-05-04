@@ -1,7 +1,7 @@
 import re
 import json
 import html2text
-def page_audi(html):
+def page_rtv(html):
     title_reg = r"<h1>(.*)</h1>"
     title = re.compile(title_reg)
 
@@ -17,7 +17,6 @@ def page_audi(html):
     published_time_re = r'<div class="publish-meta">\n\t\t(.*)<br>'
     published_time = re.compile(published_time_re)
 
-    # r"<div class=\"article-body\">(.*?)<div class=\"gallery\">"
     content_re = r'<div *?class="article-body">(.*?)<div class="gallery">'
     content = re.compile(content_re, re.DOTALL)
 
