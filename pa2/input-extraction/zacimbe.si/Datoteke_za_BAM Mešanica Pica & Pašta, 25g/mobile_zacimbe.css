@@ -1,0 +1,1937 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 8, 2021, 9:21:26 AM
+    Author     : Gašper R.
+*/
+
+@media screen and (max-width: 1200px){
+    .container-fluid{
+        width: 100%;
+    }
+
+    .second_nav{
+        text-align: left;
+    }
+
+    .second_nav li{
+        margin-right: 30px;
+    }
+
+    .mega_dropdown .left{
+        width: 20%;
+        padding-left: 20px;
+    }
+
+    .mega_dropdown .left ul li a{
+        font-size: 14px;
+    }
+
+    .mega_dropdown .right{
+        width: 78.7%;
+    }
+
+}
+
+@media screen and (max-width: 1100px){
+    .second_nav li{
+        font-size: 14px;
+    }
+
+    .free_recipe input{
+        width: 100%;
+    }
+
+    .btn_primary.no_after{
+        float: none;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    footer .main input{
+        width: 100%;
+    }
+
+    .recipe_page .recipe_header .bg{
+        max-width: 100%;
+    }
+
+    .news{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+
+    .recipes{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+
+}
+
+@media screen and (max-width: 991px){
+    .reddot-logo {
+        height: 60px;
+    }
+    .questions .questions-box {
+        margin: 20px 15px;
+        margin-top: 60px;
+    }
+    .questions-boxes {
+        margin: 0px 15px;
+        margin-bottom: 20px;
+    }
+    .questions .your-question {
+        margin-top: 25px;
+        font-size: 12px;
+        margin-left: 5px;
+    }
+    .questions textarea {
+        margin-bottom: 5px;
+    }
+    .questions .input_wrapper input {
+        margin-bottom: 10px;
+    }
+    .questions .additional-info {
+        font-size: 14px;
+    }
+    .questions .write-question {
+        font-size: 14px;
+    }
+    .first_nav{
+        display: none;
+    }
+
+    .top_nav{
+        display: none;
+    }
+
+    .second_nav{
+        display: none;
+    }
+
+    .main_nav .nav_brand img {
+        max-width: 130px;
+    }
+
+    .search_preview .text{
+        display: none;
+    }
+
+    .whatsapp_mobile{
+        display: block;
+    }
+
+    .mobile_nav_btn{
+        display: block;
+        position: absolute;
+        margin-left: 10px;
+        margin-top: 9px;
+        z-index: 1;
+    }
+
+    .mobile_nav_btn img{
+        width: 30px;
+    }
+
+    .mobile_nav_btn:hover{
+        cursor: pointer;
+        opacity: 0.8;
+    }
+
+    #mobile-nav-sidebar {
+        position: fixed;
+        top: 0;
+        height: 100%;
+        width: 90%;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        z-index: 3;
+    }
+
+    #mobile-nav-sidebar {
+        left: -100%;
+        background: #ffffff;
+        -webkit-transition: right 0.3s;
+        -moz-transition: right 0.3s;
+        transition: right 0.3s;
+        z-index: 1060;
+    }
+
+    #mobile-nav-sidebar.speed-in {
+        left: 0;
+    }
+
+    #mobile-nav-shadow-layer {
+        position: fixed;
+        min-height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(67, 87, 121, 0.6);
+        cursor: pointer;
+        z-index: 1000;
+        display: none;
+    }
+    #mobile-nav-shadow-layer.is-visible {
+        display: block;
+        -webkit-animation: cd-fade-in 0.3s;
+        -moz-animation: cd-fade-in 0.3s;
+        animation: cd-fade-in 0.3s;
+    }
+
+    .mobile_nav_content ul{
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+        border-bottom: solid 1px rgba(41, 40, 40, 0.1);
+        padding-bottom: 13px;
+        margin-bottom: 10px;
+    }
+
+    .mobile_nav_content ul li a{
+        color: #292828;
+    }
+
+    .mobile_nav_content label{
+        font-size: 10px;
+        font-family: 'TT_Norms_Pro_Bold';
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+
+    #mobile-nav-sidebar .close{
+        opacity: 1;
+        margin-top: 20px;
+        margin-right: 20px;
+        width: 16px;
+    }
+
+    .mobile_nav_content .list2{
+        font-family: 'TT_Norms_Pro_Bold';
+    }
+
+    .mobile_nav_content .list3{
+        margin-bottom: 10px;
+        padding-bottom: 0;
+    }
+
+    .mobile_nav_content .list3 li{
+        display: inline-block;
+        border-right: 1px solid rgba(41, 40, 40, 0.1);
+        width: 49%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .mobile_nav_content .list3 li img{
+        width: 20px;
+        vertical-align: top;
+        margin-right: 5px;
+        margin-top: 2px;
+    }
+    .mobile_nav_content .list3 li:nth-child(2){
+        border: none;
+    }
+
+    .mobile_nav_content .list5{
+        font-family: 'TT_Norms_Pro_Bold';
+        text-transform: uppercase;
+    }
+
+    .mobile_nav_content .list7 li{
+        display: inline-block;
+        margin-right: 40px;
+    }
+
+    .mobile_nav_content .list7 img{
+        filter: invert(1);
+    }
+
+    .mobile_nav_content .list1 img{
+        margin-right: 5px;
+        vertical-align: top;
+        margin-top: 4px;
+    }
+
+    .mobile_nav_content .list6 img{
+        max-width: 16px;
+        vertical-align: top;
+        margin-top: 3px;
+        margin-right: 10px;
+        text-align: center;
+    }
+
+    .change_language{
+        display: none;
+    }
+
+    .mobile_nav_content .country_box img{
+        width: 20px;
+    }
+
+    .mobile_nav_content .country_box a{
+        font-size: 12px;
+        color: #cab180;
+    }
+
+    .main_nav{
+        padding: 10px;
+
+    }
+
+    .main_nav .cart_box{
+        margin-top: 0px;
+        float: right;
+        background: none;
+    }
+
+    .search_preview{
+        position: absolute;
+        right: 50px;
+        margin: 0px;
+        top: 20px;
+    }
+
+    .main_nav .nav_brand{
+        margin-top: 10px;
+    }
+
+    .main_nav .nav_brand img{
+        max-width: 120px;
+    }
+
+    header h1{
+        font-size: 30px;
+    }
+
+    header h2{
+        font-size: 14px;
+    }
+
+    header .left {
+        height: 575px;
+        width: 45%;
+        float: left;
+    }
+
+    header .right{
+        height: 575px;
+        width: 53%;
+    }
+
+    header a.cta{
+        font-size: 10px;
+        width: 100%;
+        text-align: center;
+        /*    padding-right: 50px;*/
+        overflow: hidden;
+    }
+
+    #mobile-nav-sidebar{
+        display: block;
+    }
+
+    .mobile_nav_content{
+        display: block;
+        padding: 25px;
+    }
+
+    .recipe_page .main_box .buttons_wrap button{
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 13px;
+    }
+
+    .filter_content .close{
+        top: 30px;
+    }
+
+    .filter_content button{
+        width: 100%;
+    }
+
+    .no_order_wrap{
+        width: 70%;
+        margin: 0 auto;
+    }
+
+    .no_order_wrap h3{
+        text-align: center;
+        margin-bottom: 20px;
+        font-family: 'TT_Norms_Pro_Bold';
+        text-transform: uppercase;
+        font-size: 20px;
+    }
+
+    .no_order_wrap .text{
+        text-align: justify;
+        margin-bottom: 20px;
+    }
+
+
+    .profile_single_order{
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        background-color: #fff;
+        padding: 25px;
+    }
+
+    .profile_single_order:hover{
+        opacity: 0.8;
+        cursor: pointer;
+    }
+
+    .profile_single_order li{
+        font-size: 12px;
+    }
+
+    .profile_single_order li .title{
+        display: inline-block;
+        width: 45%;
+    }
+
+    .profile_single_order li .text{
+        display: inline-block;
+        width: 53%;
+        text-align: right;
+        margin-bottom: 10px;
+    }
+
+    .profile_subpage .user_data{
+        margin-bottom: 50px;
+    }
+
+    .orders_products_mobile{
+        background-color: #ffffff;
+        padding: 20px;
+    }
+
+    .orders_profile_mobile_title{
+        font-family: 'TT_Norms_Pro_Bold';
+        text-transform: uppercase;
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+
+    .orders_profile_mobile_title a{
+        text-align: right;
+        display: block;
+        color: #292828;
+        width: max-content;
+        margin-right: 0px;
+        margin-left: auto;
+    }
+
+    .orders_products_mobile .single_product_mobile{
+        border-bottom: solid 0.5px #888;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+    .orders_products_mobile .single_product_mobile h4{
+        font-size: 12px;
+    }
+
+    .orders_products_mobile .single_product_mobile .price{
+        font-size: 14px;
+    }
+
+    .orders_products_mobile .single_product_mobile .total_price{
+        font-size: 14px;
+        font-family: 'TT_Norms_Pro_Bold';
+        text-align: right;
+    }
+
+    .orders_products_mobile .single_product_mobile .total_price span{
+        letter-spacing: 1px;
+        font-family: 'TT_Norms_Pro_Regular';
+        text-transform: uppercase;
+        font-size: 12px;
+        margin-right: 5px;
+    }
+
+    .orders_products_mobile .single_product_mobile .quantity{
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    #cd-cart{
+        width: 100%;
+    }
+
+    .other_products{
+        padding: 20px;
+    }
+
+    .add_in_cart_wrapper a.close_cta{
+        font-size: 12px;
+    }
+
+    .add_in_cart_wrapper .help_box{
+        font-size: 12px;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .add_in_cart_wrapper .help_box img{
+        margin-right: 10px;
+        width: 24px;
+        margin-top: -8px;
+    }
+
+    .add_in_cart_wrapper .header .close_cta{
+        margin-top: 0px;
+    }
+
+    .add_in_cart_wrapper .header .help_box{
+        margin-top: 0px;
+        font-size: 12px;
+    }
+
+    .add_in_cart_wrapper .header .top{
+        padding: 15px;
+    }
+
+    /* NEW */
+
+
+
+    header .left {
+        height: 300px;
+        width: 100%;
+        float: none;
+    }
+
+    header .right{
+        float: none;
+        width: 100%;
+        height: auto;
+    }
+
+    header .right .content{
+        position: relative;
+        width: 100%;
+        top: unset;
+        left: unset;
+        transform: unset;
+        padding: 20px;
+        padding-top: 30px;
+    }
+
+    header h1{
+        font-size: 25px;
+    }
+
+    header h2{
+        font-size: 14px;
+    }
+
+    header .product{
+        margin-bottom: 20px;
+    }
+
+    header .product img {
+        max-height: 170px;
+    }
+
+    .ticker-wrap .ticker_item{
+        font-size: 100px;
+    }
+
+    h1.main{
+        font-size: 26px;
+        margin-bottom: 57px;
+        margin-top: 12px;
+    }
+
+    h1.main span{
+        margin-top: 0px;
+    }
+
+    h2.sub_main{
+        font-size: 26px;
+        margin-bottom: 57px;
+        margin-top: 12px;
+    }
+
+    h2.sub_main span{
+        margin-top: 0px;
+    }
+
+    .products {
+        padding: 55px 0;
+    }
+
+    .tabs_wrapp .nav-tabs li a{
+        font-size: 16px;
+    }
+
+    .tabs_wrapp .nav-tabs li{
+        padding: 0px;
+        margin-right: 20px;
+        padding-top: 10px;
+    }
+
+    .tabs_wrapp .nav-tabs{
+        margin: 0px;
+        margin-left: 20px;
+        margin-bottom: 40px;
+    }
+
+    .product_card .top{
+        width: 40%;
+        display: inline-block;
+        height: 190px;
+    }
+
+    .product_card .top .img_box{
+        max-height: 130px;
+        margin-top: 50px;
+    }
+
+    .product_card .top .img_box img{
+        max-height: 100%;
+    }
+
+    .product_card{
+        margin: 7px;
+        margin-bottom: 40px;
+        margin-right: 0px;
+    }
+
+    .product_card .top .attribute{
+        margin: 5px;
+    }
+
+    .product_card .content{
+        width: 55%;
+        display: inline-block;
+        position: relative;
+        vertical-align: top;
+        margin: 10px;
+        margin-top: 15px;
+        margin-right: 4px;
+    }
+
+    .product_card .content h2{
+        font-size: 12px;
+    }
+
+    .product_card button{
+        display: block;
+        position: relative;
+        width: 100%;
+        opacity: 1;
+        visibility: visible;
+        height: 34px;
+        background-color: #d1e5a1;
+        margin-top: 40px;
+    }
+
+    .product_card .content .price_box{
+        text-align: left;
+    }
+
+    .product_card .content .price{
+        color: #292828;
+        font-size: 16px;
+    }
+
+    .product_card button img{
+        float: right;
+        width: 14px;
+        margin-top: 1px;
+        margin-right: 13px;
+    }
+
+    .product_card .content .old_price{
+        display: block;
+    }
+
+    .product_card .top .discount{
+        display: none;
+    }
+
+    .product_card .stock_mobile{
+        display: block;
+        margin-top: 20px;
+    }
+
+    .product_card .discount_mobile{
+        display: block;
+        height: 31px;
+        background-color: #cab180;
+        font-family: 'TT_Norms_Pro_Bold';
+        font-size: 12px;
+        text-align: center;
+        line-height: 31px;
+        padding: 0 4px;
+        border-radius: 6px;
+        color: #292828;
+        width: fit-content;
+        margin-right: 22px;
+        margin-top: 10px;
+    }
+
+    .product_card .top .stock_status{
+        display: none;
+    }
+
+    .academy_wrapper{
+        text-align: center;
+        margin-bottom: 25px;
+        padding: 20px;
+        margin-bottom: 50px;
+    }
+
+    .academy_wrapper .btn{
+        max-width: 100%;
+    }
+
+    .free_recipe{
+        padding: 75px 15px;
+    }
+
+    .free_recipe h3{
+        font-size: 20px;
+    }
+
+
+
+    .news{
+        padding-top: 46px;
+        padding-bottom: 50px;
+    }
+
+    footer .top{
+        padding: 30px 40px;
+    }
+
+    footer .top .content{
+        margin-bottom: 25px;
+    }
+
+    footer .main{
+        padding-left: 45px;
+        padding-right: 45px;
+        padding-top: 40px;
+        padding-bottom: 100px;
+    }
+
+    footer .main .footer_logo{
+        text-align: center;
+    }
+
+
+
+    footer .main h3{
+        margin-top: 30px;
+        font-size: 16px;
+    }
+
+    footer .main .info_box{
+        margin-top: 30px;
+    }
+
+    footer .main h5{
+        margin-top: 20px;
+    }
+
+    .news_card .bg{
+        height: 370px;
+    }
+
+    .news_card .bg_wrapper{
+        height: 370px;
+    }
+
+    .news_card.news_center{
+        margin-top: 0px;
+    }
+
+    .other_products .product_card .content{
+        width: 68%;
+        padding: 0px;
+        margin: 0;
+    }
+
+    .add_in_cart_wrapper .products .product_card .content{
+        width: 70%;
+    }
+
+    .news_arrows{
+        display: block;
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+    }
+
+
+    .news_arrows .prev_gallery{
+        width: 45px;
+        height: 45px;
+        background-color: #292828;
+        border-radius: 50%;
+        position: absolute;
+        left: 20px;
+        margin-top: -300px;
+    }
+
+    .news_arrows .next_gallery{
+        width: 45px;
+        height: 45px;
+        background-color: #292828;
+        border-radius: 50%;
+        position: absolute;
+        right: 20px;
+        margin-top: -300px;
+    }
+
+    .news_arrows img{
+        filter: invert(1);
+        width: 16px;
+        margin: 0 auto;
+        display: block;
+        margin-top: 15px;
+    }
+
+    .news_arrows .prev_gallery img{
+        transform: rotate(-180deg);
+    }
+
+
+
+    .breadcrumbs{
+        padding: 0 15px;
+        font-size: 10px;
+    }
+
+    .product_page .main_img{
+        max-height: 320px;
+    }
+
+    .product_page .main_bg{
+        height: 400px;
+        position: relative;
+    }
+
+    .product_page .others_images{
+        display: none;
+    }
+
+    .more_images_button{
+        display: none;
+    }
+
+    .product_content_box{
+        padding: 20px;
+    }
+
+    .product_page .right_price_box{
+        text-align: center;
+    }
+
+    .product_page .right_price_btn{
+        border-radius: 4px;
+        width: 32%;
+        font-size: 14px;
+        padding: 0 0px;
+        font-family: 'TT_Norms_Pro_Regular';
+    }
+    .product_page .right_price_btn .numProducts{
+        font-family: 'TT_Norms_Pro_Bold';
+    }
+    .product_page .right_price_btn .pieces{
+        display: block;
+        font-size: 10px;
+    }
+    .product_page .right_price_box .best_buy{
+        font-size: 11px;
+    }
+
+    .add_to_cart{
+        width: 100%;
+        padding: 0px;
+    }
+
+    .product_page .short{
+        font-size: 14px;
+    }
+
+    .accordion .card .card-header .btn-header-link{
+        font-size: 12px;
+    }
+
+    .accordion .card-body{
+        font-size: 14px;
+    }
+
+    .product_page .company_data img{
+        margin-top: -74px;
+        margin-bottom: 20px;
+    }
+
+    .product_page .company_data{
+        padding: 30px;
+        font-size: 14px;
+        padding-bottom: 40px;
+    }
+
+    .products_gallery{
+        display: block;
+    }
+
+    .products_gallery img{
+
+    }
+
+    .product_page .main_bg .main_mobile_img{
+        max-height: 100%;
+        margin: 0 auto;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .product_page .main_bg .attribute li{
+        background-color: #ffffff;
+        padding: 7px;
+        border-radius: 4px;
+    }
+
+    .slick-dots li button:before{
+        font-size: 10px;
+        border: 1px solid #404040;
+        border-radius: 50%;
+        color: #ffffff;
+    }
+
+    .slick-dots{
+        text-align: left;
+        margin-left: 14px;
+        bottom: 15px;
+
+    }
+
+
+
+    .subpage h2.main{
+        width: 100%;
+        padding: 0 20px;
+    }
+
+
+
+
+    .mega_dropdown .left{
+        width: 100%;
+        padding: 20px;
+    }
+
+    .mega_dropdown .right{
+        width: 100%;
+        padding: 10px;
+    }
+
+    .search .close_img{
+        right: 15px;
+        bottom: 15px;
+    }
+
+    .mega_dropdown .right h3{
+        margin-bottom: 16px;
+        margin-top: 11px;
+    }
+
+    .mega_dropdown .left ul li a{
+        font-size: 13px;
+    }
+
+    .recipe_page .recipe_header .bg{
+        max-width: 100%;
+        height: 250px;
+        margin-top: 30px;
+    }
+
+    .subpage h2.main{
+        font-size: 14px;
+    }
+
+    .filter{
+        padding: 0px 10px;
+    }
+
+    .login_page .left_side{
+        width: 100%;
+        flex: none;
+        position: relative;
+        flex-basis: unset;
+    }
+
+    .login_page .left_side .content{
+        width: 100%;
+        margin: 0 auto;
+        margin-top: 0px;
+        margin-bottom: 20px;
+        padding: 20px;
+    }
+
+    .login_page .right_side{
+        width: 100%;
+        flex: none;
+        position: relative;
+        flex-basis: unset;
+    }
+
+    .login_page .data_box{
+        display: block;
+        min-height: auto;
+    }
+
+    .login_page{
+        padding-top: 60px;
+    }
+
+    .subpage h1.main{
+        padding-top: 34px;
+        font-size: 34px;
+    }
+
+    .subpage h2.sub_main{
+        padding-top: 34px;
+        font-size: 34px;
+    }
+
+    .login_page .right_side .content{
+        width: 100%;
+        padding: 20px;
+    }
+
+    .products_subpage{
+        padding-top: 50px;
+    }
+
+    .search_box_recipes{
+        width: 90%;
+    }
+
+    .single_news_card .bg {
+        height: 100%;
+        width: 44%;
+        display: inline-block;
+    }
+
+    .single_news_card .content{
+        display: inline-block;
+        width: 55%;
+        vertical-align: top;
+    }
+
+
+
+    .subpage{
+        padding-top: 50px;
+    }
+
+    .subpage .main_text{
+        padding: 0 20px;
+        font-size: 14px;
+    }
+
+    h1.main span.single_word{
+        margin-top: 18px;
+    }
+
+    h2.sub_main span.single_word{
+        margin-top: 18px;
+    }
+
+    .gift_card_box{
+        padding: 0 15px;
+        width: 100%;
+    }
+
+    .bussiness_present_box iframe{
+        height: 230px;
+    }
+
+    .bussiness_present_box .others_images{
+        padding: 20px;
+        margin-top: 0px;
+    }
+
+    .bussiness_present_box .single_image{
+        height: 150px;
+    }
+
+    .bussiness_present_box .countries{
+        margin-top: 30px;
+    }
+
+    .bussiness_present_box .countries ul{
+        text-align: center;
+
+    }
+
+    .bussiness_present_box ul.basic_data{
+        padding: 0 30px;
+        text-align: center;
+        margin-top: 40px;
+        font-size: 14px;
+    }
+
+    .bussiness_present_box ul.basic_data li h3{
+        margin-top: 10px;
+    }
+
+    .bussiness_present_box form{
+        width: 100%;
+        padding: 20px;
+        padding-top: 60px;
+        padding-bottom: 35px;
+    }
+
+    .about_us_page img.main{
+        max-width: 100%;
+    }
+
+    .timeline-item h2{
+        font-size: 23px;
+        left: -53px;
+        margin-top: -3px;
+    }
+
+    .timeline {
+        width: 92%;
+        margin-left: 15%;
+        margin-top: 90px;
+    }
+
+    .timeline-item .text{
+        font-size: 14px;
+    }
+
+    .about_us_page{
+        padding: 0 15px;
+    }
+
+    .profile_subpage{
+        padding: 0 15px;
+        padding-top: 50px;
+    }
+
+    .profile_subpage .orders{
+        font-size: 10px;
+        overflow: scroll;
+    }
+
+    .profile_subpage .orders .table td, .table th{
+        padding: 0px;
+    }
+
+    .profile_subpage .btn_primary {
+        margin-top: 30px;
+        margin-bottom: 30px;
+        width: 100%;
+    }
+
+    .recipe_book_img{
+        margin: 0px;
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .chocolate_date .date{
+        width: 30%;
+        font-size: 20px;
+        margin-right: 10px;
+    }
+
+    .chocolate_date .date .day{
+        font-size: 30px;
+    }
+
+    .chocolate_date h4{
+        font-size: 30px;
+    }
+
+    .chocolate_video_box{
+        padding: 15px 0px;
+    }
+
+    .chocolate_video_box iframe{
+        width: 100%;
+        height: 240px;
+    }
+
+    .chocolate_video_box h4{
+        margin-bottom: 30px;
+    }
+
+
+    .images-multiboxes {
+        -webkit-flex-wrap: wrap;
+        -moz-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        padding: 0 15px;
+    }
+
+    .images-multiboxes {
+        margin-top: 0 !important;
+        padding: 0 !important;
+        min-height: 240px;
+    }
+
+    .images-multiboxes>div.image-box-left:first-child {
+        margin: 0;
+        height: 220px !important;
+        margin-bottom: 20px;
+    }
+
+    .images-multiboxes>div:last-child {
+        padding: 0;
+    }
+
+    .images-multiboxes .image-row {
+        margin: 0 !important;
+    }
+
+    .image-item {
+        margin: 5px !important;
+        min-height: 100px !important;
+    }
+
+    .images-multiboxes>div:last-child .image-row .image-item {
+        height: 120px;
+        margin-bottom: 20px;
+    }
+
+    .images-multiboxes .col-sm-6 {
+        padding: 0 !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    .sponsor_wrap{
+        padding: 0 15px;
+    }
+
+    .sponsor_card{
+        height: 150px;
+    }
+
+    .chocolate_map{
+        height: 230px;
+    }
+
+    .recipes_card{
+        margin: 15px;
+    }
+
+
+    .recipes_card .bg {
+        height: 170px;
+        width: 45%;
+        display: inline-block;
+    }
+
+    .recipes_card h3{
+        font-size: 14px;
+    }
+
+
+    .recipes_card .content{
+        padding: 12px;
+        padding-top: 15px;
+        width: 54%;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .recipes_card ul li{
+        font-size: 12px;
+    }
+
+    ul.difficulty_list li img {
+        margin-left: 3px;
+        width: 12px;
+    }
+
+    .recipes_card .bg.no_bg {
+        background-size: 130px;
+    }
+
+    .recipe_page .recipe_header ul li{
+        font-size: 10px;
+    }
+
+    .recipe_page .recipe_header h1{
+        font-size: 24px;
+    }
+
+    .recipe_page .recipe_header ul li{
+        font-size: 14px;
+    }
+
+    .recipe_page .recipe_header ul.breadcrumbs li{
+        font-size: 10px;
+    }
+
+    /*    .recipe_page .recipe_body{
+            font-size: 10px;
+        }*/
+
+    .recipe_page .main_box{
+        padding: 20px;
+    }
+
+    .recipe_page .main_box h2{
+        font-size: 24px;
+        margin-top: 30px;
+    }
+
+
+
+    .recipe_page .main_box .content ul li{
+        font-size: 12px;
+    }
+
+    .recipe_page .main_box .content label{
+        font-size: 12px;
+    }
+
+    .recipe_page .main_box .content h3{
+        font-size: 16px;
+    }
+
+    .author {
+        padding: 30px 25px;
+    }
+
+    .product_card .top .attribute li{
+        font-size: 9px;
+    }
+
+    .pagination_box #Pagination{
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .pagination{
+        margin: 0 auto;
+        margin-top: 15px;
+        margin-bottom: 50px;
+    }
+
+    .single_news_card h3{
+        font-size: 14px;
+        margin-top: 20px;
+    }
+
+    .single_news_card .reading_time_box {
+        font-size: 10px;
+        margin-top: 20px;
+        display: none;
+    }
+
+    .recipe_page .short h3{
+        font-size: 14px !Important;
+    }
+
+    .laboratory_box_waiting {
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .laboratory_box_waiting h3, .laboratory_box_waiting h4, .laboratory_box_waiting .text{
+        font-size: 12px;
+    }
+
+    .response_text{
+        font-size: 12px;
+    }
+
+
+    .laboratory_box .single_day_card .active_card ul li:first-child{
+        font-size: 14px;
+    }
+
+    .submit_recipe_box h2{
+        font-size: 24px;
+    }
+
+    .submit_recipe_box h3{
+        width: 100%;
+        font-size: 12px;
+    }
+
+    .submit_recipe_box form {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .submit_recipe_list li .title_box{
+        width: 35%;
+    }
+
+    .submit_recipe_box form.recipe_step4_form{
+        width: 100%;
+    }
+
+
+    .chocolate_reservation_box .single_row{
+        width: 20%;
+        display: inline-block;
+        vertical-align: top;
+        margin-top: 0px;
+    }
+
+    .chocolate_reservation_box .single_row .left{
+        display: inline-block;
+        width: 50%;
+        vertical-align: top;
+    }
+
+    .chocolate_reservation_box .single_row .right{
+        display: inline-block;
+        width: 46%;
+        vertical-align: bottom;
+    }
+
+    .chocolate_reservation_box .single_row .single_spot{
+        transition: .3s;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        border-radius: 4px;
+        background-color: #cec7bc;
+        font-family: 'TT_Norms_Pro_Bold';
+        font-size: 14px;
+        line-height: 50px;
+        margin-bottom: 15px;
+        margin-left: auto;
+    }
+
+    .chocolate_reservation_box .single_row .single_spot.reserved{
+        background-color: #615a47;
+        color: #ffffff;
+    }
+
+    .chocolate_reservation_box .single_row .single_spot.finished{
+        background-color: #c8e28d;
+    }
+
+
+    .chocolate_reservation_box .single_row img{
+        margin: 0 auto;
+        display: block;
+    }
+
+    .chocolate_reservation_box .single_row img.first_part{
+        margin-top: 70px;
+    }
+
+    .chocolate_reservation_box .single_row h4{
+        font-family: 'TT_Norms_Pro_Bold';
+        font-size: 14px;
+        transform: rotate(89deg);
+        position: relative;
+        background: #fafafa;
+        height: 90px;
+        line-height: 90px;
+        text-align: center;
+        margin-top: 56px;
+        margin-bottom: 42px;
+    }
+
+    .chocolate_reservation_box .single_row .left.second{
+        margin-top: 100px;
+    }
+
+    .chocolate_reservation_box .single_row .right.second{
+        margin-top: 100px;
+    }
+
+    .chocolate_reservation_box .single_row .single_spot.spot_center_left{
+        margin-left: 23px;
+        margin-top: 0;
+        position: relative;
+    }
+
+    .chocolate_reservation_box .single_row .single_spot.spot_center_right{
+        margin-left: -4px;
+        position: relative;
+        top: auto;
+    }
+
+    .chocolate_reservation_box .single_row .single_spot{
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        margin: 0px;
+        margin-bottom: 13px;
+    }
+
+    .chocolate_reservation_box .single_row.row_1 {
+        margin-right: 10px;
+        width: 14%;
+    }
+
+    .chocolate_reservation_box .single_row.row_2{
+        margin-right: 23px;
+    }
+
+    .chocolate_reservation_box .single_row{
+        width: 23%;
+    }
+
+    .chocolate_reservation_box .single_row .left.second{
+        margin-top: 60px;
+    }
+
+    .chocolate_reservation_box .single_row .right.second{
+        margin-top: 60px;
+    }
+
+    .chocolate_reservation_box .single_row .right{
+        width: 45%;
+    }
+
+    .chocolate_reservation_box .single_row img.first_part{
+        margin-top: 54px;
+    }
+
+    .chocolate_reservation_box .single_row img{
+        width: 67%;
+        text-align: right;
+        margin-right: 0px;
+    }
+
+    .chocolate_reservation_box .single_row h4{
+        height: 90px;
+        line-height: 62px;
+        text-align: center;
+        margin-top: 24px;
+        margin-bottom: 32px;
+    }
+
+    .chocolate_reservation_box .single_row.row_1{
+        margin-top: 0px;
+    }
+
+    .chocolate_reservation_box .legend{
+        margin-left: 30px;
+        margin-bottom: 70px;
+    }
+
+    .chocolate_reservation_box{
+        margin-top: 60px;
+    }
+
+    .chocolate_reservation_box .companies li{
+        width: 100%;
+        margin: 0px;
+        margin-bottom: 10px;
+    }
+
+    .modal h4{
+        margin-right: 20px;
+        font-size: 14px;
+    }
+
+    .modal-body {
+        padding: 19px;
+        font-size: 12px;
+    }
+
+    .laboratory_box_waiting form{
+        margin-bottom: 40px;
+    }
+
+
+    header a.cta{
+        font-size: 10px;
+    }
+
+    .search input{
+        font-size: 14px;
+    }
+
+    .main_nav .cart_box {
+        margin-top: -45px;
+        float: right;
+        background: none;
+    }
+
+    .bussiness_present_box{
+        padding: 10px;
+    }
+
+    .bussiness_present_box .countries h3{
+        text-align: center;
+    }
+
+    .no_order_wrap{
+        width: 100%;
+    }
+
+
+    .profile_subpage .payment_title{
+        text-align: left;
+        margin-top: 10px;
+    }
+
+    .recipe_page .recipe_add_to_cart .content{
+        padding-left: 0px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .recipe_page .recipe_add_to_cart .products_box h2, .recipe_page .recipe_add_to_cart .products_box .price{
+        text-align: left;
+    }
+
+    .recipe_page .main_box .details_list li{
+        display: block;
+        margin-right: 0px;
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .recipe_page .main_box .details_list .difficulty_list li{
+        display: inline-block;
+        margin-bottom: 0px;
+    }
+
+    .recipe_page .main_box .details_list{
+        font-size: 12px;
+    }
+
+    .recipes{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+
+    .flip .team_card{
+        height: 500px;
+    }
+
+    .flip .team_card .front{
+        text-align: center;
+    }
+
+    .flip .content{
+        margin-left: 0px;
+    }
+
+
+    .flip .img{
+        margin: 0 auto;
+        display: block;
+    }
+
+
+    .product_page .attribute_main{
+        padding-top: 15px;
+        padding-left: 10px;
+    }
+
+
+    .product_page .package .single_product .content{
+        width: 80%;
+    }
+
+    .product_page .package .single_product .quantity{
+
+    }
+
+    .opinions .total_ratings .skillbar{
+        width: 69%;
+    }
+
+    .opinions{
+        padding: 0px 15px;
+    }
+
+    .single_opinion h3{
+        font-size: 16px;
+    }
+
+    .opinions .opinions_box{
+        padding: 28px;
+    }
+    .slick-dots li button:before{
+        line-height: 13px;
+        width: 14px;
+        height: 14px;
+    }
+    .breadcrumbs{
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .about_us_page .video_frame{
+        height: 230px;
+    }
+    .about_us_page .single_image{
+        height: 230px;
+    }
+    .about_us_page .others_images img{
+        height: auto;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .recipe_page .video_frame{
+        height: 230px;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .recipes_card ul li {
+        font-size: 11px;
+    }
+    .tabs_wrapp .nav-tabs {
+        margin: 0 auto;
+        margin-bottom: 40px;
+    }
+    .product_card .top {
+        width: 40%;
+        display: inline-block;
+        height: 220px;
+    }
+    .product_card .top .img_box img {
+        max-width: 100%;
+        max-height: 130px;
+        position: absolute;
+        left: 50%;
+        top: 65%;
+        transform: translate(-50%, -50%);
+    }
+    .sort_by_text {
+        text-align: left;
+    }
+    .product_card .top {
+        height: 210px;
+    }
+    .product_card .top .img_box img {
+        top: 60%;
+    }
+    .submit_recipe_list li {
+        display: flex;
+    }
+    .submit_recipe_step2_list li {
+        display: flex;
+    }
+    .submit_recipe_step2_list li img {
+        position: relative;
+        left: 5px;
+    }
+    .submit_recipe_step2_list li img.trash {
+        margin-top: 0px;
+        position: relative;
+        left: 5px;
+    }
+    .input_wrapper label {
+        font-size: 12px;
+    }
+
+    .chocolate_reservation_box .single_row h4 {
+        background: none;
+    }
+    footer .main input {
+        width: 100%;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+    }
+    footer .main button {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+    }
+
+    .product_page .video_frame {
+/*        width: 85%;
+        border: none;
+        height: 180px;
+        margin: 0 auto;
+        display: block;*/
+        display: none;
+    }
+
+    .video_frame_mobile{
+        display: block;
+        width: 100%;
+        border: none;
+        height: 200px;
+        margin-top: 20px;
+    }
+    
+    .products_news_box{
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 40px;
+    }
+
+    .recipes_subpage .tabs_wrapp .nav-tabs.nav_news{
+        margin: 0 20px;
+        display: flex;
+    }
+
+    .tabs_wrapp .nav-tabs.nav_news li a{
+        font-size: 14px;
+    }
+
+    .tabs_wrapp .nav-tabs.nav_news li {
+        margin-right: 15px;
+        margin-bottom: 11px;
+    }
+
+    .single_news_card .content .tag{
+        font-size: 10px;
+        text-transform: uppercase;
+    }
+
+    .single_news_card .content .tag img{
+        vertical-align: top;
+        margin-top: -1px;
+        margin-right: 5px;
+    }
+
+    .single_news_card{
+        background-color: #ffffff;
+    }
+
+    .similar_taste_arrows{
+        display: block;
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+    }
+
+
+    .similar_taste_arrows .next_gallery{
+        width: 45px;
+        height: 45px;
+        background-color: #292828;
+        border-radius: 50%;
+        position: absolute;
+        right: -26px;
+        margin-top: -108px;
+    }
+
+    .similar_taste_arrows img{
+        filter: invert(1);
+        width: 16px;
+        margin: 0 auto;
+        display: block;
+        margin-top: 15px;
+    }
+
+    .product_page .similar_taste{
+        position: relative;
+    }
+
+    .add_to_cart_mobile{
+        width: 100%;
+        position: fixed;
+        bottom: 0px;
+        z-index: 100000;
+        background: #ffffff;
+        border: 1px solid #292828;
+        color: #292828;
+        height: 54px;
+        line-height: 54px;
+        display: none;
+    }
+
+    .add_to_cart_mobile a{
+        font-size: 12px;
+        font-family: 'TT_Norms_Pro_Bold';
+        text-transform: uppercase;
+        color: #292828;
+        display: block;
+        text-align: center;
+    }
+
+    .add_to_cart_mobile button{
+        width: 100%;
+        border: none;
+        background-color: #292828;
+        color: #ffffff;
+        text-transform: uppercase;
+        font-size: 14px;
+    }
+
+    .add_to_cart_mobile button img{
+        filter: invert(1);
+        width: 14px;
+        vertical-align: top;
+        margin-top: 17px;
+        margin-right: 10px;
+    }
+
+    .recipe_page .recipe_header .bg.no_image {
+        background-size: 200px;
+    }
+
+    .ticker-wrap img {
+        display: none;
+    }
+
+
+    .academy_wrapper h3{
+        font-size: 26px;
+    }
+    
+    .submit_recipe_list li .f-group{
+        margin-left: 0px;
+            width: 90%;
+    }
+    
+    .submit_recipe_list li .title_box{
+        width: 100%;
+    }
+    
+    
+    .product_diagram .mobile{
+        display: block;
+    }
+    
+    .product_diagram .desktop{
+        display: none;
+    }
+}
+@media screen and (max-width: 400px) {
+    #filter-sidebar {
+        width: 375px;
+    }
+    .single_news_card .bg .tag {
+        padding: 0;
+        display: block;
+        margin: 7px;
+    }
+    .single_news_card .bg .tag img {
+        margin-left: 5px;
+    }
+
+    header a.cta {
+        padding: 0px 10px;
+        font-size: 10px;
+        text-align: center;
+    }
+}
