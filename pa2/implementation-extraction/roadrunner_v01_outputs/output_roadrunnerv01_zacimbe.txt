@@ -1,0 +1,615 @@
+<html><head><meta></meta><title>#PCDATA</title><meta></meta><meta></meta><meta></meta><meta></meta><meta></meta><meta></meta><meta></meta><meta></meta><meta></meta><meta></meta><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><meta></meta><meta></meta><meta></meta><meta></meta><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><script></script><script></script><script></script><script></script><script></script><script></script><script></script><script></script><script></script><script></script><script>(function (a, g, b, c) {
+                a[c] = a[c] || function () {
+                "undefined" !== typeof a.ipromNS && a.ipromNS.execute ? a.ipromNS.execute(arguments) : (a[c].q = a[c].q || []).push(arguments)
+                };
+                var k = function () {
+                var b = g.getElementsByTagName("script")[0];
+                return function h(f) {
+                var e = f.shift();
+                a[c]("setConfig", {server: e});
+                var d = document.createElement("script");
+                0 < f.length && (d.onerror = function () {
+                a[c]("setConfig", {blocked: !0});
+                h(f)
+                });
+                d.src = "https://cdn." + e + "/ipromNS.js";
+                d.async = !0;
+                d.defer = !0;
+                b.parentNode.insertBefore(d, b)
+                }
+                }(), e = b;
+                "string" === typeof b && (e = [b]);
+                k(e)
+                })(window, document, ["ad.server.iprom.net"], "_ipromNS");
+                _ipromNS('init', {
+                'sitePath': ['mojacokolada', 'index']
+                });</script><script>!function (f, b, e, v, n, t, s)
+                    {
+                    if (f.fbq)
+                            return;
+                    n = f.fbq = function () {
+                    n.callMethod ?
+                            n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                    };
+                    if (!f._fbq)
+                            f._fbq = n;
+                    n.push = n;
+                    n.loaded = !0;
+                    n.version = '2.0';
+                    n.queue = [];
+                    t = b.createElement(e);
+                    t.async = !0;
+                    t.src = v;
+                    s = b.getElementsByTagName(e)[0];
+                    s.parentNode.insertBefore(t, s)
+                    }(window, document, 'script',
+                            'https://connect.facebook.net/en_US/fbevents.js');</script><script>fbq('init', '1836012883300768');</script><script></script><script></script><script></script><link></link><script></script><style>.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://connect.facebook.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://connect.facebook.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://connect.facebook.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://connect.facebook.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}
+.fb_mpn_mobile_landing_page_slide_out{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_out_from_left{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out_from_left;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_up{animation-duration:500ms;animation-name:fb_mpn_landing_page_slide_up;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_in{animation-duration:300ms;animation-name:fb_mpn_bounce_in;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out{animation-duration:300ms;animation-name:fb_mpn_bounce_out;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out_v2{animation-duration:300ms;animation-name:fb_mpn_fade_out;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_v2{animation-duration:300ms;animation-name:fb_bounce_in_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_from_left{animation-duration:300ms;animation-name:fb_bounce_in_from_left;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_v2{animation-duration:300ms;animation-name:fb_bounce_out_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_from_left{animation-duration:300ms;animation-name:fb_bounce_out_from_left;transition-timing-function:ease-in}.fb_invisible_flow{display:inherit;height:0;overflow-x:hidden;width:0}@keyframes fb_mpn_landing_page_slide_out{0%{margin:0 12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;margin:0 24px;width:60px}}@keyframes fb_mpn_landing_page_slide_out_from_left{0%{left:12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;left:12px;width:60px}}@keyframes fb_mpn_landing_page_slide_up{0%{bottom:0;opacity:0}100%{bottom:24px;opacity:1}}@keyframes fb_mpn_bounce_in{0%{opacity:.5;top:100%}100%{opacity:1;top:0}}@keyframes fb_mpn_fade_out{0%{bottom:30px;opacity:1}100%{bottom:0;opacity:0}}@keyframes fb_mpn_bounce_out{0%{opacity:1;top:0}100%{opacity:.5;top:100%}}@keyframes fb_bounce_in_v2{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}50%{transform:scale(1.03, 1.03);transform-origin:bottom right}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}}@keyframes fb_bounce_in_from_left{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}50%{transform:scale(1.03, 1.03);transform-origin:bottom left}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}}@keyframes fb_bounce_out_v2{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}}@keyframes fb_bounce_out_from_left{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}}@keyframes slideInFromBottom{0%{opacity:.1;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}@keyframes slideInFromBottomDelay{0%{opacity:0;transform:translateY(100%)}97%{opacity:0;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}</style>(<script></script>)?</head><body><input></input><script>#PCDATA</script><script></script><script>window.dataLayer = window.dataLayer || [];
+                        function gtag() {
+                        dataLayer.push(arguments);
+                        }
+                        gtag('js', new Date());
+                        gtag('config', 'UA-69178617-1');</script><script>(function (w, d, s, l, i) {
+                        w[l] = w[l] || [];
+                        w[l].push({'gtm.start':
+                                new Date().getTime(), event: 'gtm.js'});
+                        var f = d.getElementsByTagName(s)[0],
+                                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+                        j.async = true;
+                        j.src =
+                                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                        f.parentNode.insertBefore(j, f);
+                        })(window, document, 'script', 'dataLayer', 'GTM-TSSSWLX');</script><noscript><iframe></iframe></noscript><script>(function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "gkrw8xjmxr");</script><input></input><input></input><div><div><div><ul><li><a><img></img>070 222 555</a></li><li><a><img></img>info@bamspices.com</a></li><li><a><img></img>WhatsApp</a></li></ul></div><div><ul><li><a>Registracija</a></li><li><a><img></img>Prijava</a></li></ul></div></div></div><div><div><img></img></div><div><div><div><ul><li><a>O nas</a></li><li><a>Prodajna mesta</a></li><li><a>FAQ</a></li></ul></div><div><a><img></img></a></div><div><div><img></img><div></div></div></div></div><div><div><ul><li><a>Kategorije<img></img></a></li><li><a>Novo</a></li><li><a>Priporočamo</a></li><li><a>% Znižano</a></li><li><a>Za gurmane<img></img></a></li></ul></div><div><div>Išči po celotni trgovini . . .</div><img></img></div><div><a><img></img></a></div></div><div><input></input><img></img><img></img></div></div></div><div></div><div><div><svg><circle></circle></svg></div></div><div></div><div><img></img><div><ul><li><a><img></img>Novo</a></li><li><a><img></img>Priporočamo</a></li><li><a><img></img>Znižano</a></li></ul><label>Kategorije</label><ul><li><a>Za sladkosnede</a></li><li><a>FIT kuhinja</a></li><li><a>Za gurmane</a></li><li><a>Za ljubitelje mesa</a></li><li><a>Svetovna kuhinja</a></li><li><a>Vse začimbe</a></li><li><a>Na zalogi</a></li><li><a>Darilni boni</a></li><li><a>Paketi začimb</a></li><li><a>Osnovne začimbe</a></li></ul><ul><li><a><img></img>Prijava</a></li><li><a>Registracija</a></li></ul><label>Za gurmane</label><ul><li><a>Recepti</a></li><li><a>Gurmanske novice</a></li><li><a>Oddaj recept</a></li></ul><ul><li><a>O nas</a></li><li><a>Prodajna mesta</a></li></ul><ul><li><a><img></img>Dostava</a></li><li><a><img></img>Postopek vračila</a></li></ul><label>Spremljajte nas</label><ul><li><a><img></img></a></li><li><a><img></img></a></li><li><a><img></img></a></li></ul></div></div><div></div><div><div><h3>Kategorije</h3><ul><li><a>Za sladkosnede</a></li><li><a>FIT kuhinja</a></li><li><a>Za gurmane</a></li><li><a>Za ljubitelje mesa</a></li><li><a>Svetovna kuhinja</a></li><li><a>Vse začimbe</a></li><li><a>Na zalogi</a></li><li><a>Darilni boni</a></li><li><a>Paketi začimb</a></li><li><a>Osnovne začimbe</a></li></ul></div><div><div><div><div><a><ul>(<li><img></img>#PCDATA</li>)+(<li><img></img>#PCDATA</li>)+<div>(-12%</div><div>)?<img></img></div></a><div><a><h2>#PCDATA</h2><div><div>(</div><div><span>112,90 €</span><span>99,90 €</span></div></div></a><button><img></img>Dodaj v košarico</button></div></div></div><div><div><a>)?<ul><li><img></img>(#PCDATA)?</li>(<li><img></img></li>)+(<li><img></img></li>)+(<li><img></img></li>)+(<li><img></img></li>)+</ul>(<span>(7 Ocen)</span></div>)?<div>(<span>4,90 €</span></div></div></a><button><img></img>Dodaj v košarico</button></div></div></div><div><div><a><ul><li><img></img>)?Najbolj prodajano(</li></ul><div><img></img></div></a><div><a><h2>#PCDATA</h2><div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span></div><div><span>#PCDATA</span></div></div></a><button><img></img>Dodaj v košarico</button></div></div></div><div><div><a><ul><li><img></img>#PCDATA)+(</li></ul><div><img></img>)?</div>(</a>)?<div>(<img></img></div></a><div>)?<a><h2>Mešanica BBQ: Über Alles, 80g</h2><div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span></div><div>(<span>#PCDATA</span>)+</div></div></a><button><img></img>Dodaj v košarico</button></div>(</div></div>)+(</div>)?<div>(</div><div>)+<div>(<h3>Za gurmane</h3><ul><li>)?<a>(#PCDATA</a></li><li><a>#PCDATA</a></li><li><a>#PCDATA</a></li></ul></div><div><div><div><div><a><ul><li><img></img>#PCDATA</li></ul><div><img></img></div></a><div><a><h2>#PCDATA</h2><div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span></div><div><span>#PCDATA</span></div></div></a><button><img></img>Dodaj v košarico</button></div></div></div><div><div><a><ul><li><img></img>#PCDATA</li></ul><div><img></img></div></a><div><a><h2>#PCDATA</h2><div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span></div><div><span>#PCDATA</span></div></div></a><button><img></img>Dodaj v košarico</button></div></div></div><div><div><a><ul><li><img></img>#PCDATA</li></ul><div><img></img></div></a><div><a><h2>#PCDATA</h2><div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span></div><div><span>#PCDATA</span></div></div></a><button><img></img>Dodaj v košarico</button></div></div></div></div></div></div><div></div><div><div><h3>#PCDATA</h3><ul><li><a>)+(<ul><li><img></img>#PCDATA</li><li><img></img>#PCDATA</li><li><img></img>#PCDATA</li></ul><div><img></img></div>)?</a>(<div><a><h2>#PCDATA</h2><div><div><ul><li><img></img>)?</li><li>(<a>poper</a></li><li><a>sumac</a></li><li><a>česen</a></li><li><a>cimet</a></li></ul><div><svg><circle></circle></svg></div></div><div><div><div><div><a><ul><li>)?<img></img>(#PCDATA)?</li></ul>(<span>(10 Ocen)</span></div>)?<div>(<span>#PCDATA</span></div></div></a><button>)?<img></img>(Dodaj v košarico</button>)?</div>(</div></div></div></div></div><div></div><div><div><h3>Za gurmane</h3><ul><li><a>#PCDATA)?</a>(<div><a><h2>#PCDATA</h2><div><div><ul><li><img></img>)?</li><li>(<img></img></li><li>)+(<img></img></li><li>)+(<img></img></li><li>)+(<a>#PCDATA</a></li></ul></div><div><div><div><div><a><ul><li>)?(<a>#PCDATA</a></li><li>)+</img>(#PCDATA)?</li>(<li><img></img>#PCDATA</li>)+(<span>#PCDATA</span></div>)?<div>(<div><span>)?4,90 €(</span>)?</div>(<div><img></img>)?</div>(</div>)?</a>(<button><img></img>Dodaj v košarico</button></div></div></div>)?<div>(<div><a><ul><li><img></img>#PCDATA</li></ul><div><img></img></div></a><div><a><h2>#PCDATA</h2><div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span></div><div><div><span>#PCDATA</span></div></div></div></a><button><img></img>Dodaj v košarico</button></div></div></div><div>)+(<div>)?<a>(<ul><li><img></img>#PCDATA</li></ul><div><img></img></div></a><div><a>)?<h2>Mešanica BBQ: Über Alles, 80g</h2><div><div>(</div><div><span>#PCDATA</span><span>#PCDATA</span></div></div></a><button><img></img>Dodaj v košarico</button></div></div></div><div><div><a>)?<ul><li><img></img>(#PCDATA)?</li>(<li><img></img></li>)+(<li><img></img></li>)+(<li><img></img></li>)+(<li><img></img></li>)+</ul>(<span>#PCDATA</span></div>)?<div>(<div><span>)?3,90 €(</span>)?</div>(<div><img></img>)?</div>(</div>)?</a>(<button><img></img>Dodaj v košarico</button></div></div></div></div>)?<div>(<svg><circle></circle></svg></div></div></div><div><div><div><ul><li>)?<a>(Domov /</a></li><li><a>Za sladkosnede /</a></li><li>#PCDATA</li></ul><div><div><ul><li><img></img>#PCDATA</li><li><img></img>#PCDATA</li></ul><a><img></img><img></img></a><div><div><div><a><div><img></img></div></a></div><div><a><div><img></img></div></a></div><div><a><div><img></img></div></a></div></div></div><iframe></iframe><div><div><div><div><a><img></img></a></div><div><a><img></img></a></div><div><a><img></img></a></div><div><a><img></img></a></div><div><a><img></img></a></div></div></div></div><button><div>Prikaži več fotografij</div><div>Skrij več fotografij</div></button><div><div><div><img></img></div><div><div>BAM spices smo ustvarili z željo po 
+tem, da vam ponudimo začimbne mešanice vrhunske kvalitete. Vaše slane in
+ sladke jedi naj od zdaj naprej dišijo po prefinjenih okusih začimb. 
+Postanite mojster ali mojstrica ustvarjanja vrhunskih obrokov!</div></div></div></div></div><div><div><h1>Mešanica Sladkorna ljubezen, 110g</h1><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span><div><div></div><div>Na zalogi</div></div><div><button><span>#PCDATA</span>5,90 €<span>#PCDATA</span></button><button><div>Top izbira</div><span>#PCDATA</span>5,31 €<span>#PCDATA</span></button><button><span>#PCDATA</span>4,72 €<span>#PCDATA</span></button></div><label>Količina</label><div><div><div><span>#PCDATA</span><input></input><span>#PCDATA</span></div></div></div><div>Izbrana količina ni na zalogi</div><input></input><input></input><input></input><div><div>5,90 €</div><div>z DDV</div></div><button><img></img>Dodaj v košarico</button><div><p>Sladka mešanica Sladkorna Ljubezen, je 
+primerna kot dodatek vsem sladkim dobrotam. Odlična vanilja doda 
+mešanici pravo noto okusa vanilje. Kombinacija sladkorjev v mešanici 
+poskrbi, da ta karamelizira in razvije svoj očarljiv okus. Cimet in med 
+pa končni rezultat še dodatno dopolnita. Uporabite jo lahko kjerkoli bi 
+drugače uporabili sladkor za sladkanje in s tem izboljšate okus vsaki 
+sladki jedi.</p><p>Poreklo: Slovenija.</p></div><iframe></iframe><div><div><div><img></img><h3>Ponovna uporaba embalaže</h3></div><div><img></img><h3>Premium kvaliteta</h3></div><div><img></img><h3>Enostavna uporaba</h3></div><div><img></img><h3>Primerno za darilo</h3></div></div></div><div><div><div><a>Opis izdelka</a></div><div><div>Sladka mešanica Sladkorna ljubezen bo postala ljubezen vsakega 
+sladkosneda. Uporabite jo lahko za sladkanje vsake sladke jedi. Mešanica
+ sladkorjev in limonine lupinice da mešanici edinstven okus, ki da vsaki 
+sladici popolnoma novo noto. Uporabite jo lahko tudi kot posip za šmoren
+ ali cesarski praženec. Lahko pa jo uporabite kar pri pripravi mase za 
+šmoren ali palačinke in druge sladke dobrote.</div></div></div><div><div><a>Deklaracija</a></div><div><div><div>Sestavine</div><div><p>Sladkor, rjavi trsni sladkor, med v prahu, vanilija, limonina lupina.</p><p>Lahko vsebuje sledi glutena.</p></div><div>Shranjevanje</div><div>Začimbe
+ shranjujemo pri sobni temperaturi med 15 in 25°C, v suhem in temnem 
+prostoru. Temperatura prostora naj nikoli ne preseže 25°C , prav tako 
+začimb ne izpostavljamo direktni sončni svetlobi.</div></div></div></div></div><div><h4>Predvidena dostava:</h4>09. 05. 2023 - 10. 05. 2023</div><div><ul><li><span>#PCDATA</span>#PCDATA</li><li><span>#PCDATA</span>#PCDATA</li><li><span>#PCDATA</span>#PCDATA</li></ul></div><ul><li>#PCDATA</li><li>#PCDATA</li><li>#PCDATA</li><li>#PCDATA</li></ul><div><img></img><img></img></div><div><div><div><img></img></div><div><div>BAM spices smo ustvarili z željo
+ po tem, da vam ponudimo začimbne mešanice vrhunske kvalitete. Vaše 
+slane in sladke jedi naj od zdaj naprej dišijo po prefinjenih okusih 
+začimb. Postanite mojster ali mojstrica ustvarjanja vrhunskih obrokov!</div></div></div></div></div></div></div><div><label>Novice in recepti z izdelkom</label><a>)?<h2>#PCDATA</h2>(<h3>Pečen rižev narastek z jabolki je 
+okusna sladica, ki združuje kremast kuhan riž z nežnimi 
+notami sočnih jabolk. Ta sladica je kot nalašč za prijeten 
+večer, družinsko srečanje ali postrežemo pa ga lahko tudi 
+kot posebno poslastico med prazniki.</h3></a><a><h2>#PCDATA</h2><h3>Prejeli smo poetičen recept za pripravo božanske jagodne marmelade "v 
+dvoje". Kadar nam pomaga oseba, ki jo imamo radi, je vedno lažje in bolj 
+veselo, kajne?</h3></a><a><h2>#PCDATA</h2><h3>Običajno za žar pripravljamo izbrani kos
+ mesa ali zelenjave, pred vami pa je recept za pripravo sočnih, sladkih 
+banana čolničkov na žaru!</h3></a>)?<div>(</div>)?<div>(<div>Prikazi več receptov</div><div>Skrij več receptov</div></div></div><div><div><div><label>Mnenja</label><div><div><div><div><div>5,00</div>)?<ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul>(<span>#PCDATA</span></div>)?<div>((
+                                            15 Ocen)</div></div><div><ul><li><div>)?(<span>#PCDATA</span>)+(</div></div></a><button>)?(<img></img>)+(<img></img>)+(<img></img>)+(<img></img>)+(Dodaj v košarico</button>)?</div>(<div><div>)?</div></div>(</li><li>)?<div>(<span>#PCDATA</span><img></img><img></img><img></img><img></img><img></img></div><div><div></div></div></li><li><div>)+(<span>#PCDATA</span><img></img><img></img><img></img><img></img><img></img></div><div><div></div></div></li><li><div>)+(<span>#PCDATA</span><img></img><img></img><img></img><img></img><img></img></div><div><div></div></div></li><li><div>)+(<span>#PCDATA</span><img></img><img></img><img></img><img></img><img></img></div>)?<div>(<a><ul><li><img></img>#PCDATA</li><li><img></img>#PCDATA</li><li><img></img>#PCDATA</li></ul>)?<div>(<img></img>)?</div>(</a><div><a><h2>#PCDATA</h2><div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span>)?</div>(</li></ul></div></div></div>)?<div>(<span>#PCDATA</span></div></div></a><button><img></img>#PCDATA</button></div></div></div></div></div></div><div></div><div><div><h3>Predlogi iskanja</h3>)?<ul><li>(<a></a></li><li><a>#PCDATA</a></li><li><a>#PCDATA</a></li><li><a>#PCDATA</a></li><li><a>#PCDATA</a></li></ul><div><svg><circle></circle></svg></div></div><div><div><div><div><a><ul><li>)?<img></img>(#PCDATA)?(</li><li><img></img>)+(</li><li><img></img>)+(</li><li><img></img>)+(#PCDATA)?(#PCDATA</li><li><img></img>)+</ul><div>(#PCDATA</div><div>)?<img></img>(Dolores M., 14.12.2022)?</div>(</div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div>)+(</div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div>)+(</a><div><a><h2>#PCDATA</h2><div><div>)?</div><div><div>(<span>#PCDATA</span><span>#PCDATA</span></div></div></div></a><button><img></img>#PCDATA</button></div></div></div><div><div><a>)?<ul><li><img></img>(#PCDATA)?</li>(<li><img></img></li>)+(<li><img></img></li>)+(<li><img></img></li>)+(<li><img></img></li>)+</ul><div>(<img></img>)?Pavlina Z., 28.10.2022</div>(</div>)?<div>(<ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div>)+(<ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div>)+(<ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div>)+(<ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div>)+(<ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div>)+(<ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div>)+(<ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div>)+(<ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div>)+(<ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div>)+(<ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div>)+(<ul><li>)?<img></img>(</div></a><div><a><h2>#PCDATA</h2><div><div><ul><li><img></img>)?</li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul>(<span>#PCDATA</span></div>)?<div>(<img></img>#PCDATA</div></div></div>)?<div>(<span>#PCDATA</span><span>#PCDATA</span></div></div></div></a><button><img></img>#PCDATA</button></div></div></div>)?<div>(#PCDATA</div>)?<div>(<a><ul><li><img></img>)?Skrij več mnenj(</li><li><img></img>#PCDATA</li><li><img></img>#PCDATA</li></ul><div><img></img>)?</div>(</a><div><a><h2>#PCDATA</h2><div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span>)?</div>(</div></div>)+(</div></div>)+(<div><div>)+(<span>#PCDATA</span></div></div></div></a><button><img></img>#PCDATA</button></div></div></div></div>)?<div>(<svg><circle></circle></svg></div></div></div><div><div><div><ul><li><a>)?Iščeš določeno informacijo o izdelku?(</a></li><li><a>#PCDATA</a></li><li>#PCDATA</li></ul><div><div><ul><li><img></img>#PCDATA</li><li><img></img>#PCDATA</li><li><img></img>#PCDATA</li></ul><a><img></img><img></img></a><div><div><div><a><div><img></img>)?</div>(<div>#PCDATA</div>)+(</a></div>)?<div>(<a>)?(<a><div><img></img></div></a></div><div>)+(<img></img></div></a></div></div></div><iframe></iframe>)?<div>(<label>Tvoje vprašanje</label>)?<div><div><div>(<textarea></textarea></div></div></div><div><div><div><input></input><label>Ime</label></div></div><div><div><input></input><label>Email</label></div></div></div><div><div><div><iframe></iframe></div><textarea></textarea></div><iframe></iframe></div><div>#PCDATA</div><button>Pošlji vprašanje</button><div>#PCDATA</div></div></div></div></div></div></div></div></div><div><div><div>#PCDATA</div><div>#PCDATA</div><div>#PCDATA</div><div>#PCDATA</div><div>#PCDATA</div><div>#PCDATA</div></div></div><div><div><h2>Podobni<span>#PCDATA</span></h2><div><div><div>)?<a>(<ul><li>)?<img></img>(#PCDATA</li><li><img></img>#PCDATA</li><li><img></img>#PCDATA</li></ul><div><img></img></div>)?</a>(</div>)?<div><a>(<h2>#PCDATA</h2><div><div><ul><li>)?<img></img>(</li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span></div><div><div><span>#PCDATA</span></div></div><div></div></div>)?</a>(</div></div></div></div>)?<button>(<img></img>Dodaj v košarico</button></div></div></div>)?<div>(#PCDATA</div>)?<div>(<a><ul><li><img></img>)?Priporočamo(</li></ul><div><img></img></div></a><div><a><h2>#PCDATA</h2><div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span></div><div><div><span>#PCDATA</span></div></div><div></div></div></a><button><img></img>Dodaj v košarico</button></div></div></div><div><div><a><ul><li><img></img>#PCDATA)+(</li></ul><div><img></img></div></a><div><a><h2>#PCDATA</h2><div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span></div><div><div><span>#PCDATA</span></div></div><div></div></div></a><button><img></img>Dodaj v košarico</button></div></div></div><div><div><a><ul><li><img></img>#PCDATA)+(</li></ul><div><img></img>)?</div>(</a><div><a><h2>#PCDATA</h2><div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span></div><div><div><span>#PCDATA</span></div></div><div></div></div></a><button><img></img>Dodaj v košarico)?</button>(<div><div><div><img></img>)?</div>(<div><div>#PCDATA)?</div></div></div></div></div>(<div><div>)+(<h1>Mešanica Pica & Pašta, 25g</h1><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span><div><div></div><div>#PCDATA</div></div><div><button><span>#PCDATA</span>3,32 €<span>#PCDATA</span></button><button><span>#PCDATA</span>3,12 €<span>#PCDATA</span></button></div><label>Količina</label><div><div><div><span>#PCDATA</span><input></input><span>#PCDATA</span></div></div></div><div>#PCDATA</div><input></input><input></input><input></input><div><div>#PCDATA</div><div>#PCDATA</div><div>#PCDATA</div></div><button><img></img>Dodaj v košarico</button><div><p>Pica & 
+Pašta je mešanica različnih začimb, ki se med seboj prepletajo in 
+odlično dopolnjujejo številne jedi. Uporabite jo lahko pri pripravi pic,
+ omak za testenine, brusket, toastov, toplih kruhkov ... Lahko jo dodate
+ v paradižnikovo omako za pico, posujete po vrhu ali pa jo kar vmešate v
+ testo. Ker se izbrane začimbe zelo dobro ujamejo s paradižnikom, jih 
+lahko dodajate tudi v raznovrstne omake za testenine.</p><p>Poreklo: Slovenija.</p><p></p></div><iframe></iframe><div><div><div><img></img>)?<h3>#PCDATA</h3></div><div>(<img></img><h3>Primerno za darilo</h3></div></div></div><div><div><div>)?(<img></img><h3>#PCDATA</h3></div><div>)+#PCDATA</a></div>(</div></div></div>)?<div><div>(<p>Začimbe za pico in pašto se uporablja pri pripravi omak za pice in testenine.
+Pica je bila včasih preprosta jed revnih Napolijancev; vzhajano testo
+ so obložili z začinjenimi paradižniki, ga potisnili v peč in počakali, 
+da se testo speče. Dandanes so obloge in sestavine, ki sestavljajo pico,
+ bogatejše. Pri kreiranju obloge imamo neskončne možnosti za različne 
+kombinacije.</p><p>Uporabimo lahko različne vrste zelenjave, sirov, meso – skratka vse, 
+kar nam srce poželi. Seveda za izvrsten in klasičen »pica« okus dodamo 
+še pravo ter okusno mešanico Pica & Pašta začimb. Lahko jih dodamo v
+ paradižnikovo omako za pico, jih posujemo po vrhu ali pa jih vmešamo že
+ kar v testo. Ker se izbrane začimbe zelo dobro ujamejo s paradižnikom, 
+jih lahko dodajamo tudi v raznovrstne omake za testenine. Poleg pice in 
+testenin pa lahko mešanico uporabimo tudi pri pripravi brusket, toastov,
+ toplih kruhkov in majhnih predjedi.</p></div></div></div>)?<div>(#PCDATA</div>)?<div>(#PCDATA</div><div>)+(#PCDATA</div><div>)+(#PCDATA</div><div>)+(#PCDATA</div><div>)+(<a>)?Aktualno(</a>)?</div>(</div></div>)?<div><div>(<h2>Zadnje novice in<span>#PCDATA</span></h2>)?<div>(#PCDATA</div>)?<div>(<p>Origano, kosmiči rdeče paprike, korenje, čebula, česen, bazilika, majaron, črni poper, por, peteršilj.</p><p>Lahko vsebuje sledi glutena.</p></div><div>#PCDATA</div><div>#PCDATA</div></div></div></div></div><div><h4>Predvidena dostava:</h4>#PCDATA</div><div><ul><li><span>#PCDATA</span>+ 4,90 €</li><li><span>#PCDATA</span>25 g</li><li><span>#PCDATA</span>#PCDATA</li></ul></div><ul><li>100% varen nakup</li><li>100% garancija na zadovoljstvo</li><li>30-dnevna BREZPLAČNA možnost vračila</li><li>#PCDATA</li></ul><div><img></img><img></img></div><div><div><div><img></img></div><div><div>#PCDATA</div></div></div></div></div></div></div><div><label>Novice in recepti z izdelkom</label>)?<a>(<h2>#PCDATA</h2><h3>Lazanja z bučkami, znana tudi kot 
+lazanja z rezanci iz bučk, je okusna in zdrava različica klasične 
+italijanske jedi. Ta različica lazanje bo odlična izbira za 
+tiste, ki iščejo nizkokalorično, brezglutensko in zdravo alternativo 
+tradicionalni lazanji. Jed je pripravljena iz plasti na tanko narezanih 
+bučk, ki jih uporabimo kot nadomestek za testenine. Na testenine 
+naložimo še različne kombinacije sira in aromatične omake, 
+naša bo na osnovi paradižnika.</h3></a><a><h2>#PCDATA</h2><h3>Recept za testenine s tuno se 
+pojavi ravno takrat, ko na voljo ni veliko časa za pripravo obroka. 
+Testenine s tuno po tem receptu postrežejo z zdravim in prijetnim 
+obrokom, čeprav sama priprava vzame le pol ure.</h3></a><a><h2>#PCDATA</h2><h3>S tem preprostim receptom za Naan 
+kruh dobite popolnoma mehak in puhast kruh. Naan je tradicionalna 
+indijska pogača, ki je mehka in zračna, polna majhnih zračnih žepkov. 
+Lahko ga pojeste samega, ga kot prilogo ponudite k izbranemu kosu mesa 
+ali zelenjeve iz žara ali pa z njim nadomestite testo za pico, mu 
+dodajte BAM mešanico Pica & Pasta in navdušite z novim okusom 
+pice.</h3></a>)?<div>(<div><img></img></div><div><img></img>#PCDATA</div></div><div><img></img>#PCDATA</div><h3>Ajdova kaša z zelenjavo</h3></a></div><div>)?<a>(<div><div><img></img></div><div><img></img>#PCDATA</div></div><div><img></img>#PCDATA</div><h3>#PCDATA</h3></a></div><div><a>)+(<h2>#PCDATA</h2><h3>Tedna brez testenin si že skoraj ne 
+predstavljamo več. Prav tako kot si ne moremo predstavljati, da bi vsak 
+dan jedli enak okus testenin.</h3></a><a><h2>#PCDATA</h2><h3>Priprava domačega testa za pizzo se 
+lahko sliši kot zahtevno opravilo, vendar končni okus upraviči ves trud.
+ Okus lahko popestrite še z BBQ omako.</h3></a><a><h2>#PCDATA</h2><h3>Neapeljska pica ali napolitanska 
+pica je pica, narejena v slogu, ki izvira iz Neaplja v Italiji. Pred 
+vami je recept, kako jo pripraviti v domači pečici.</h3></a><a><h2>#PCDATA</h2><h3>Pripravite sveže testenine 
+polnjene z mešanico parmezana, riccote, pomešane s svežo baziliko, 
+limonino lupinico in muškatnim oreščkom.</h3></a><a><h2>#PCDATA</h2><h3>Peka pice v pečici je veliko enostavnejša kot si mislimo. Obstaja veliko različnih receptov, napisali smo najboljšega.</h3></a><a><h2>#PCDATA</h2><h3>Ko pomisliš na recept za odlično 
+pico, na katerega najprej pomisliš? Zame ni nič boljšega kot pica v 
+neapeljskem slogu s to tanko skorjo in tistim mehurčastim in napihnjenim
+ rožičem, vendar je tako pico malo težje pripraviti v pečici.</h3></a><a><h2>#PCDATA</h2><h3>Smetanova omaka se odlično prelije tudi čez sveže pripravljene raviole s parmezanom.</h3></a><a><h2>#PCDATA</h2><h3>Ta preprost recept za pico s suhim 
+kvasom je odličen za začetnike. Če sestavinam recepta in korakom 
+natančno sledite, bo recept za pico s suhim kvasom zagotovo uspel.</h3></a><a><h2>#PCDATA</h2><h3>V današnjem času, ko prevladuje 
+hitri način življenja, je za kuhanje vse manj časa. V ta namen vam 
+predstavljamo hitro smetanovo omako za njoke ali torteline, ki je 
+odlična jed za zaposlene dneve med tednom, ko časa za dolgo kuhanje ni.
+​</h3></a><a><h2>#PCDATA</h2><h3>Čufte v paradižnikovi omaki postrezite s pire krompirjem,
+kruhovimi cmoki, testeninami, rižem, rezino kruha ali
+pa kar samostojno, s skledo solate.</h3></a><a><h2>#PCDATA</h2><h3>Pesto genovese je zelo znana 
+italijanska začimbna omaka oziroma pasta, ki je ime dobil po mestu 
+Genova. V originalu je narejen iz mešanice bazilike, semen pinje – 
+pinjol, olivnega olja, parmezana, soli in česna.  Odlično se 
+prilega k testeninam, na pico, h kuhanemu krompirju, prikuham iz 
+paradižnika, lahko pa jo uporabimo tudi kot namaz za popečene kruhke.</h3></a></div>)?<div><div>(<img></img></div><div><img></img>)?Gurmanski nasveti</div>(</div><div><img></img>#PCDATA</div>)+(<h3>Kako zgostimo golaž?</h3></a>)?</div></div>(<div><div><div><label>Mnenja</label><div><div><div><div><div>#PCDATA</div>)?<ul>(<li><img></img></li>)+(<li><img></img></li>)+(<div>#PCDATA)?</div></div>(</div><input></input><script>dataLayer.push({
+                'ecommerce': {
+                    'currencyCode': 'EUR',
+                    'add': {// 'add' actionFieldObject measures.
+                        'products': [{//  adding a product to a shopping cart.
+                                'name': 'Mešanica Sladkorna ljubezen, 110g',
+                                'id': '22238',
+                                'price': '5.90',
+                                'category': 'products',
+                                'quantity': 1
+                            }]
+                    }
+                }
+            });</script><script>fbq('track', 'ViewContent', {
+        content_name: 'Mešanica Sladkorna ljubezen, 110g',
+        content_ids: ['22238'],
+        content_type: 'product',
+        value: 5.90,
+        currency: 'EUR'
+    }, {
+        eventID: '237485636'
+    });</script></div><footer>)?<div>(<ul><li>)?<div>(<div><div>)+(<span>#PCDATA</span>)?(<img></img>)+(</div>)?(<img></img>)+(<div>#PCDATA</div>)+</div>(</li><li><div><span>#PCDATA</span><img></img><img></img><img></img><img></img><img></img>)?</div><div>(<img></img><div><div>#PCDATA</div><div>#PCDATA</div></div></div><div>)+(<img></img><div><div>#PCDATA</div><div>#PCDATA</div></div></div><div>)+(<img></img>)?<div>(<div>#PCDATA)?</div>(<div>#PCDATA</div>)+</div>(</div></div>)+(</div></div>)+(</li></ul></div></div></div>)?<div>(<div><div><div><a><img></img></a><div><div>)?<ul><li>(<a>Dostava</a></li><li><a>Splošni pogoji poslovanja</a></li><li><a>Varnost nakupov</a></li><li><a>Postopek vračila</a></li><li><a>Zakaj kupovati pri nas?</a></li><li><a>Stanje darilnega bona</a></li></ul></div><div><ul><li><a>Naši izdelki</a></li><li><a>Prodajna mesta BAM izdelkov</a></li><li><a>Akcija</a></li></ul></div></div><div><div>#PCDATA</div><div>)?<img></img>(</li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA)?</div></div>(</div>)?<div>(<h3>Želiš, da bi v tvoji kuhinji zadišalo po prefinjenih začimbah?</h3><div>#PCDATA</div><form><div><div><input></input><button>#PCDATA</button><div></div><div></div></div><div></div></div></form><div><div><div><h5>Potrebujete pomoč?</h5><a>info@bamspices.com</a><a>070 222 555</a><a><img></img>#PCDATA</a></div><div><h5>Spremljajte nas</h5>)?<ul><li>(<a>)?<img></img>(</a>)?</li><li>(<a><img></img></a></li><li>)+(<a>)?<img></img>(</a>)?</li></ul>(<p>“Odličen okus”</p><p>“”</p><div><img></img>#PCDATA)?</div><div>(</div></div><div><div>)?(</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><p>#PCDATA</p><p>“”</p><div><img></img>#PCDATA</div><div>)+(<li><img></img></li>)+</ul>(<div><img></img>#PCDATA)?(</div></div>)+(</div>)?<div>(<div><div><div>#PCDATA</div><div><img></img></div></div></div></div></div></div></footer><div><div><div><div><h4>Izberi jezik</h4><button>#PCDATA</button></div><div>)?<ul><li>(<a>)?<img></img>(Slovenščina</a>)?</li><li>(<a><img></img>#PCDATA</a></li><li>)+(<a><img></img>#PCDATA</a></li><li>)+(<a><img></img>#PCDATA</a></li><li>)+(<a>)?<img></img>(Italiano</a>)?</li></ul>(<p>#PCDATA</p><p>“”</p><div><img></img>#PCDATA)?</div>(<div>)?</div></div>(<div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA)?(<div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><p>#PCDATA</p><p>#PCDATA</p><div><img></img>#PCDATA</div><div></div></div>)+(<input></input><script></script><script></script><script></script><script></script><script></script><script></script><script></script><script></script><script></script><script></script><script></script><link></link><script></script><script></script><script></script><script></script><script></script><script></script><script></script><script></script><script>AOS.init({
+                                        duration: 500,
+                                                easing: 'ease-out-quart',
+                                                once: true
+                                        });</script><script>$(".header").slick({
+        dots: false,
+                arrows: true,
+                infinite: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 3000,
+                prevArrow: $('.prev'),
+                nextArrow: $('.next'),
+        });
+        $(".spatula-1").slick({
+        dots: true,
+                arrows: true,
+                infinite: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: false,
+                autoplaySpeed: 3000,
+                prevArrow: $('.prev-1'),
+                nextArrow: $('.next-1'),
+                responsive: [
+                {
+                breakpoint: 991,
+                        settings: {
+                        slidesToShow: 1,
+                                slidesToScroll: 1,
+                                swipeToSlide: true,
+                                dots: false,
+                                arrows: true,
+                        }
+                }
+                ]
+        });
+        $(".spatula-2").slick({
+        arrows: false,
+                infinite: true,
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                autoplay: false,
+                autoplaySpeed: 3000,
+                dots: true,
+                appendDots: $(".custom-slick-dots"),
+                responsive: [
+                {
+                breakpoint: 991,
+                        settings: {
+                        slidesToShow: 1,
+                                slidesToScroll: 1,
+                                swipeToSlide: true,
+                                dots: true,
+                        }
+                }
+                ]
+        });
+        $(".spatula-3").slick({
+        dots: false,
+                arrows: true,
+                infinite: true,
+                slidesToShow: 3.5,
+                centerPadding: '90px',
+                slidesToScroll: 1,
+                centerMode: true,
+                autoplay: false,
+                autoplaySpeed: 3000,
+                prevArrow: $('.prev'),
+                nextArrow: $('.next'),
+                responsive: [
+                {
+                breakpoint: 991,
+                        settings: {
+                        slidesToShow: 1,
+                                slidesToScroll: 1,
+                                swipeToSlide: true,
+                                dots: true,
+                                centerPadding: '0px',
+                                centerMode: false
+                        }
+                }
+                ]
+        });
+        $(".spatula-4").slick({
+        arrows: true,
+                infinite: true,
+                centerMode: true,
+                centerPadding: '25%',
+                slidesToShow: 1,
+                autoplay: false,
+                autoplaySpeed: 3000,
+                dots: true,
+                prevArrow: $('.prev'),
+                nextArrow: $('.next'),
+                responsive: [
+                {
+                breakpoint: 991,
+                        settings: {
+                        slidesToShow: 1,
+                                slidesToScroll: 1,
+                                swipeToSlide: true,
+                                dots: true,
+                                arrows: false,
+                                centerPadding: '0',
+                        }
+                }
+                ]
+        });
+        $(".similar_products").slick({
+        dots: false,
+                arrows: true,
+                infinite: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 2000,
+                prevArrow: $('.prev'),
+                nextArrow: $('.next')
+        });
+        if ($(window).width() <= 991) {
+        $(".news_gallery").slick({
+        infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                prevArrow: $('.prev_gallery'),
+                nextArrow: $('.next_gallery'),
+                responsive: [
+                {
+                breakpoint: 991,
+                        settings: {
+                        slidesToShow: 1,
+                                slidesToScroll: 1,
+                                swipeToSlide: true,
+                                centerMode: true,
+                        }
+                }
+                ]
+
+        });
+        }
+
+
+
+        $(".products_gallery").slick({
+        infinite: true,
+                dots: true,
+                slidesToShow: 1,
+                slidesToScroll: 1
+
+        });
+        $(".similar_products_gallery").slick({
+        infinite: true,
+                slidesToShow: 5,
+                slidesToScroll: 1,
+                prevArrow: $('.prev_gallery'),
+                nextArrow: $('.next_gallery'),
+                responsive: [
+                {
+                breakpoint: 991,
+                        settings: {
+                        slidesToShow: 3,
+                                slidesToScroll: 1,
+                                swipeToSlide: true,
+                        }
+                }
+                ]
+
+        });</script><script>var shopID = "8bf64a4c-a758-40ee-22a9-08d88260d0fb";
+	var url = "https://wheelioapp.azureedge.net/app/index.min.js?v=" + new Date().getTime();
+	var wheelio_script = document.createElement("script");	
+	wheelio_script.setAttribute("src", url);	
+	document.body.appendChild(wheelio_script);</script><script></script><script>!function(e,t,n){function a(){var e=t.getElementsByTagName("script")[0],n=t.createElement("script");n.type="text/javascript",n.async=!0,n.src="https://beacon-v2.helpscout.net",e.parentNode.insertBefore(n,e)}if(e.Beacon=n=function(t,n,a){e.Beacon.readyQueue.push({method:t,options:n,data:a})},n.readyQueue=[],"complete"===t.readyState)return a();e.attachEvent?e.attachEvent("onload",a):e.addEventListener("load",a,!1)}(window,document,window.Beacon||function(){});</script><script>window.Beacon('init', 'c3c3e388-1c9f-4e1e-8801-3812e7ee4033')</script><div><div>)?(</div><div>)+(</div><div>)+(<ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><p>#PCDATA</p><p>#PCDATA</p><div><img></img>#PCDATA</div><div></div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><p>#PCDATA</p><p>#PCDATA</p><div><img></img>#PCDATA</div><div></div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><p>#PCDATA</p><p>#PCDATA</p><div><img></img>#PCDATA</div><div></div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><p>#PCDATA</p><p>#PCDATA</p><div><img></img>#PCDATA</div><div></div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><p>#PCDATA</p><p>#PCDATA</p><div><img></img>#PCDATA</div><div></div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><p>#PCDATA</p><p>#PCDATA</p><div><img></img>#PCDATA</div><div></div><div>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><div><img></img>#PCDATA</div></div></div><div><div>#PCDATA</div><div>#PCDATA</div></div></div></div></div></div><div><div><div><div><div>#PCDATA</div><div>#PCDATA</div><div><div><div><label>Tvoje vprašanje</label><div><div><div><textarea></textarea></div></div></div><div><div><div><input></input><label>Ime</label></div></div><div><div><input></input><label>Email</label></div></div></div><div><div><div>)?<iframe></iframe></div>(<textarea></textarea>)?</div>(<iframe></iframe></div>)?<div>(#PCDATA</div><button>Pošlji vprašanje</button>)?<div>(<div><input></input><div><div>)?Kopirano v odložišče!</div>(<div>)?</div>(</div>)?(</div></div>)+<div><div>(</div><div><div><div>)+(</div><div><div><div>)+(#PCDATA</div>)?<div>(#PCDATA)?(#PCDATA</div><div>)+(<div><div></div></div>)+<div></div></div>(<div><div></div></div>)+</div>(</div></div>)+<div><div>(<h2>Podobni<span>#PCDATA</span></h2><div><div><div><a><ul><li><img></img>#PCDATA</li><li><img></img>#PCDATA</li><li><img></img>#PCDATA</li></ul><div>#PCDATA</div><div><img></img></div></a><div><a><h2>#PCDATA</h2><div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span></div><div><div><span>#PCDATA</span><span>#PCDATA</span></div></div><div><div>#PCDATA</div></div></div></a><button><img></img>#PCDATA</button></div></div></div><div><div><a><ul><li><img></img>#PCDATA</li><li><img></img>#PCDATA</li><li><img></img>#PCDATA</li></ul><div><img></img></div></a><div><a><h2>#PCDATA</h2><div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span></div><div><div><span>#PCDATA</span></div></div><div></div></div></a><button><img></img>#PCDATA</button></div></div></div><div><div><a><ul><li><img></img>#PCDATA</li></ul><div><img></img></div></a><div><a><h2>#PCDATA</h2><div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span></div><div><div><span>#PCDATA</span></div></div><div></div></div></a><button><img></img>#PCDATA</button></div></div></div><div><div><a><ul><li><img></img>#PCDATA</li><li><img></img>#PCDATA</li></ul><div><img></img></div></a><div><a><h2>#PCDATA</h2><div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul><span>#PCDATA</span></div><div><div><span>#PCDATA</span></div></div><div></div></div></a><button><img></img>#PCDATA</button></div></div></div></div></div></div><div><div><div><div><h3>#PCDATA</h3></div><div><a>#PCDATA</a></div></div></div></div><div><div><div>#PCDATA</div><div>#PCDATA</div><div>#PCDATA</div><div>#PCDATA</div><div>#PCDATA</div><div>#PCDATA</div></div></div><div><div><h2>Zadnje novice in<span>#PCDATA</span></h2><div><div><a><div><div><img></img></div><div><img></img>#PCDATA</div></div><div><img></img>#PCDATA</div><h3>Ajdova kaša z zelenjavo</h3></a></div><div><a><div><div><img></img></div><div><img></img>#PCDATA</div></div><div><img></img>#PCDATA</div><h3>Bučkini polpeti s krompirjem</h3></a></div><div><a><div><div><img></img></div><div><img></img>#PCDATA</div></div><div><img></img>#PCDATA</div><h3>Kako zgostimo golaž?</h3></a></div></div><ul><li><img></img></li><li><img></img></li></ul></div></div></div><input></input><script>dataLayer.push({
+                'ecommerce': {
+                    'currencyCode': 'EUR',
+                    'add': {// 'add' actionFieldObject measures.
+                        'products': [{//  adding a product to a shopping cart.
+                                'name': 'Mešanica Pica & Pašta, 25g',
+                                'id': '22245',
+                                'price': '3.315',
+                                'category': 'products',
+                                'quantity': 1
+                            }]
+                    }
+                }
+            });</script><script>fbq('track', 'ViewContent', {
+        content_name: 'Mešanica Pica & Pašta, 25g',
+        content_ids: ['22245'],
+        content_type: 'product',
+        value: 3.315,
+        currency: 'EUR'
+    }, {
+        eventID: '535931527'
+    });</script></div><footer><div><div><div><div><img></img><div><div>#PCDATA</div><div>#PCDATA</div></div></div><div><img></img><div><div>#PCDATA</div><div>#PCDATA</div></div></div><div><img></img><div><div>#PCDATA</div><div>#PCDATA</div></div></div><div><img></img><div><div>#PCDATA</div><div>#PCDATA</div></div></div></div></div></div><div><div><div><div><a><img></img></a><div><div><ul><li><a>#PCDATA</a></li><li><a>#PCDATA</a></li><li><a>#PCDATA</a></li><li><a>#PCDATA</a></li><li><a>#PCDATA</a></li><li><a>#PCDATA</a></li></ul></div><div><ul><li><a>#PCDATA</a></li><li><a>#PCDATA</a></li><li><a>#PCDATA</a></li></ul></div></div><div><div>#PCDATA</div><div><img></img></div></div></div><div><h3>Želiš, da bi v tvoji kuhinji zadišalo po prefinjenih začimbah?</h3><div>#PCDATA</div><form><div><div><input></input><button>#PCDATA</button><div></div><div></div></div><div></div></div></form><div><div><div><h5>Potrebujete pomoč?</h5><a>#PCDATA</a><a>#PCDATA</a><a><img></img>#PCDATA</a></div><div><h5>Spremljajte nas</h5><ul><li><a><img></img></a></li><li><a><img></img></a></li><li><a><img></img></a></li></ul></div><div><ul><li><img></img></li><li><img></img></li><li><img></img></li><li><img></img></li></ul></div></div></div></div></div><div><div><div><div>#PCDATA</div><div><img></img></div></div></div></div></div></div></footer><div><div><div><div><h4>Izberi jezik</h4><button>#PCDATA</button></div><div><ul><li><a><img></img>#PCDATA</a></li><li><a><img></img>#PCDATA</a></li><li><a><img></img>#PCDATA</a></li><li><a><img></img>#PCDATA</a></li><li><a><img></img>#PCDATA</a></li></ul></div></div></div></div><input></input><script></script><script></script><script></script><script></script><script></script><script></script><script></script><script></script><script></script><script></script><script></script><link></link><script></script><script></script><script></script><script></script><script></script><script></script><script></script><script></script><script>AOS.init({
+                                        duration: 500,
+                                                easing: 'ease-out-quart',
+                                                once: true
+                                        });</script><script>$(".header").slick({
+        dots: false,
+                arrows: true,
+                infinite: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 3000,
+                prevArrow: $('.prev'),
+                nextArrow: $('.next'),
+        });
+        $(".spatula-1").slick({
+        dots: true,
+                arrows: true,
+                infinite: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: false,
+                autoplaySpeed: 3000,
+                prevArrow: $('.prev-1'),
+                nextArrow: $('.next-1'),
+                responsive: [
+                {
+                breakpoint: 991,
+                        settings: {
+                        slidesToShow: 1,
+                                slidesToScroll: 1,
+                                swipeToSlide: true,
+                                dots: false,
+                                arrows: true,
+                        }
+                }
+                ]
+        });
+        $(".spatula-2").slick({
+        arrows: false,
+                infinite: true,
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                autoplay: false,
+                autoplaySpeed: 3000,
+                dots: true,
+                appendDots: $(".custom-slick-dots"),
+                responsive: [
+                {
+                breakpoint: 991,
+                        settings: {
+                        slidesToShow: 1,
+                                slidesToScroll: 1,
+                                swipeToSlide: true,
+                                dots: true,
+                        }
+                }
+                ]
+        });
+        $(".spatula-3").slick({
+        dots: false,
+                arrows: true,
+                infinite: true,
+                slidesToShow: 3.5,
+                centerPadding: '90px',
+                slidesToScroll: 1,
+                centerMode: true,
+                autoplay: false,
+                autoplaySpeed: 3000,
+                prevArrow: $('.prev'),
+                nextArrow: $('.next'),
+                responsive: [
+                {
+                breakpoint: 991,
+                        settings: {
+                        slidesToShow: 1,
+                                slidesToScroll: 1,
+                                swipeToSlide: true,
+                                dots: true,
+                                centerPadding: '0px',
+                                centerMode: false
+                        }
+                }
+                ]
+        });
+        $(".spatula-4").slick({
+        arrows: true,
+                infinite: true,
+                centerMode: true,
+                centerPadding: '25%',
+                slidesToShow: 1,
+                autoplay: false,
+                autoplaySpeed: 3000,
+                dots: true,
+                prevArrow: $('.prev'),
+                nextArrow: $('.next'),
+                responsive: [
+                {
+                breakpoint: 991,
+                        settings: {
+                        slidesToShow: 1,
+                                slidesToScroll: 1,
+                                swipeToSlide: true,
+                                dots: true,
+                                arrows: false,
+                                centerPadding: '0',
+                        }
+                }
+                ]
+        });
+        $(".similar_products").slick({
+        dots: false,
+                arrows: true,
+                infinite: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 2000,
+                prevArrow: $('.prev'),
+                nextArrow: $('.next')
+        });
+        if ($(window).width() <= 991) {
+        $(".news_gallery").slick({
+        infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                prevArrow: $('.prev_gallery'),
+                nextArrow: $('.next_gallery'),
+                responsive: [
+                {
+                breakpoint: 991,
+                        settings: {
+                        slidesToShow: 1,
+                                slidesToScroll: 1,
+                                swipeToSlide: true,
+                                centerMode: true,
+                        }
+                }
+                ]
+
+        });
+        }
+
+
+
+        $(".products_gallery").slick({
+        infinite: true,
+                dots: true,
+                slidesToShow: 1,
+                slidesToScroll: 1
+
+        });
+        $(".similar_products_gallery").slick({
+        infinite: true,
+                slidesToShow: 5,
+                slidesToScroll: 1,
+                prevArrow: $('.prev_gallery'),
+                nextArrow: $('.next_gallery'),
+                responsive: [
+                {
+                breakpoint: 991,
+                        settings: {
+                        slidesToShow: 3,
+                                slidesToScroll: 1,
+                                swipeToSlide: true,
+                        }
+                }
+                ]
+
+        });</script><script>var shopID = "8bf64a4c-a758-40ee-22a9-08d88260d0fb";
+	var url = "https://wheelioapp.azureedge.net/app/index.min.js?v=" + new Date().getTime();
+	var wheelio_script = document.createElement("script");	
+	wheelio_script.setAttribute("src", url);	
+	document.body.appendChild(wheelio_script);</script><script></script><script>!function(e,t,n){function a(){var e=t.getElementsByTagName("script")[0],n=t.createElement("script");n.type="text/javascript",n.async=!0,n.src="https://beacon-v2.helpscout.net",e.parentNode.insertBefore(n,e)}if(e.Beacon=n=function(t,n,a){e.Beacon.readyQueue.push({method:t,options:n,data:a})},n.readyQueue=[],"complete"===t.readyState)return a();e.attachEvent?e.attachEvent("onload",a):e.addEventListener("load",a,!1)}(window,document,window.Beacon||function(){});</script><script>window.Beacon('init', 'c3c3e388-1c9f-4e1e-8801-3812e7ee4033')</script><div><div></div><div></div><div></div><div><iframe></iframe></div></div><div><div><div><input></input><div><div>#PCDATA</div><div></div><div><div><div></div><div><div><div></div><div><div><div><div></div></div><div><div></div></div><div><div></div></div></div></div></div><div><div>)?<p>Zavrti kolo sreče Začimbe.si!</p></div><div><p>Zdaj imaš priložnost, da osvojiš odlične praznične popuste!</p><p></p><p>Kolo lahko zavrtiš le enkrat, promokoda, ki jo prejemeš pa velja le 15 minut.</p></div><div><p>Si za? V polje za elektronski naslov</p><p>vpiši svoj naslov, zavrti kolo in pridobi svoj popust!</p></div><div>Subscribe to Push</div><div>~ OR ~</div><div>O-ow! Preveri, če je elektronski naslov pravilno vpisan.</div><div><div><div></div></div><div>Pohiti, na voljo še nekaj promokod! ⏳</div></div><div><input></input><div></div><input></input><input></input></div><div>Zavrti kolo!</div></div><div><div>Hurrah!<span>You've hit<b></b></span>. Lucky day!</div><div>Dont forget to use the discount code at checkout!</div><div>Tvoja koda za popust je:</div><div><input></input></div><div>Close</div><div>Nadaljuj na nakupovanje.</div><div></div><div>Take it!</div></div></div><div><span>Ah, ne, danes ni moj dan za srečo.</span><div></div></div><div><span>Reject Discount Code</span><div></div></div></div><div><div></div><div></div><div></div><div><div><div></div><svg><rect></rect><rect></rect><rect></rect><rect></rect><rect></rect><rect></rect><path></path><path></path><path></path><path></path><path></path><path></path><path></path><path></path><path></path><path></path><path></path><path></path><path></path><circle></circle><circle></circle><circle></circle><circle></circle><circle></circle><circle></circle><circle></circle><circle></circle><circle></circle><circle></circle><circle></circle><circle></circle><circle></circle></svg><div>You can get if for free!</div><div>5% popust 🎉</div><div>80% popust 😱</div><div>10% popust 😎</div><div>Brezplačni nakup! 🤩</div><div>Brezplačna dostava nad 20€ 🚚</div><div>Počakaj na naslednjo akcijo.</div><div>BREZPLAČNO darilce 🎁</div><div>Oprosti.</div><div>15% popust 😎</div><div>Na-a, danes ni sreče.</div><div>Skrivnostna ugodnost ♥️</div><div>Mogoče naslednjič.</div></div><div></div></div><div><div></div></div><svg><g><circle></circle><circle></circle><rect></rect><rect></rect><rect></rect><rect></rect><rect></rect><circle></circle></g></svg></div></div><div>Message</div></div><div><div><div><div><div></div><div></div></div></div></div></div><div></div></div></div></div><div><div><div>Koda za popust:</div><div></div><span></span><div><div>Na voljo še:</div><div><span></span>m</div><div><span></span>m</div><div><span></span>m</div><div><span></span>s</div></div><div><div></div></div><div></div></div></div><div><div><div></div></div></div><div><div><div><div><style>.BeaconFabButtonFrame {
+  border: none;
+  bottom: 40px;
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  right: 40px;
+  top: auto;
+  transition: box-shadow 250ms ease, opacity 0.4s ease, scale 1000ms ease-in-out,
+    transform 0.2s ease-in-out;
+}
+
+.BeaconFabButtonFrame:active {
+    box-shadow: none;
+  }
+
+.BeaconFabButtonFrame iframe {
+    border: none;
+    height: 100%;
+    width: 100%;
+    color-scheme: light !important;
+  }
+
+@media (max-height: 740px) {
+
+.BeaconFabButtonFrame {
+    bottom: 10px;
+    right: 20px;
+}
+  }
+
+@supports (--css: variables) {
+  .BeaconFabButtonFrame.has-pulse-animation::before {
+    animation: puff-out-center 2s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+    animation-delay: 0.2s;
+    background-color: var(--pulse-background);
+    border-radius: 250px;
+    bottom: var(--pulse-bottom-offset);
+    content: '';
+    height: 250px;
+    opacity: 1;
+    pointer-events: none;
+    position: absolute;
+    right: var(--pulse-right-offset);
+    width: 250px;
+    will-change: transform;
+    z-index: -1;
+  }
+
+  @keyframes puff-out-center {
+    0% {
+      transform: scale(0.2);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
+}
+
+.BeaconFabButtonFrame--left {
+  left: 40px;
+  right: initial;
+}
+
+@media (max-height: 740px) {
+
+.BeaconFabButtonFrame--left {
+    left: 20px;
+    right: initial;
+}
+  }</style><iframe></iframe></div></div></div></div></body></html>

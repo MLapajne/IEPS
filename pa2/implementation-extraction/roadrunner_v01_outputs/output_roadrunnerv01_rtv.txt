@@ -1,0 +1,333 @@
+<html><head><meta></meta><script></script><meta></meta><meta></meta><link></link><meta></meta><link></link><link></link><link></link><link></link><link></link><meta></meta><meta></meta><title>#PCDATA</title><meta></meta><meta></meta><meta></meta><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><link></link><meta></meta><meta></meta><meta></meta><meta></meta><link></link><meta></meta><meta></meta><meta></meta><meta></meta><meta></meta><meta></meta><meta></meta><meta></meta><meta></meta><meta></meta><meta></meta><link></link><link></link><link></link><link></link><link></link><script></script><script></script><script></script><script></script><script></script><script></script><script>(function(a,g,b,c){ a[c]=a[c]||function(){
+		"undefined"===typeof a.ipromNS?(a[c].q=a[c].q||[]).push(arguments):a.ipromNS.execute(arguments)};
+		var k=function(){ var b=g.getElementsByTagName("script")[0];return function h(f){ var e=f.shift();a[c]("setConfig",{ server:e});
+		var d=document.createElement("script");0<f.length&&(d.onerror=function(){ a[c]("setConfig",{ blocked:!0});h(f)});
+		d.src="//cdn."+e+"/ipromNS.js";d.async=!0;d.defer=!0;b.parentNode.insertBefore(d,b)}}(),e=b;"string"===typeof b&&(e=[b]);k(e)
+		})(window, document, ["ipromcloud.com"], "_ipromNS");
+
+	_ipromNS('init', {
+		sitePath: ['rtvslo','ziv_slog','avtomobilnost'],
+		cookieConsent: (document.cookie && document.cookie.indexOf("cc_advertising=yes")>-1)
+	});</script><style>.header-profile.user_loggend_out{
+			display:none;
+		}
+		.header-profile.user_loggend_in{
+			display:none;
+		}
+		body.user-logged-out .header-profile.user_loggend_out{
+			display:block;
+		}
+		body.user-logged-in .header-profile.user_loggend_in{
+			display:block;
+		}
+		#mobile-user-modal-mobile .tbbtn{
+			display: inline-block;
+			font-weight: 400;
+			text-align: center;
+			white-space: nowrap;
+			vertical-align: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			border: 1px solid transparent;
+			padding: .375rem .75rem;
+			font-size: 16px;
+			line-height: 1.5;
+			border-radius: 0;
+			transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+			color: #fff;
+			background-color: #466496;
+			border-color: #466496;
+		}</style><script></script><script></script><script></script><script></script><script></script><script></script><script></script><link></link><script></script><style>.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#1d3c78;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}</style>(<script></script>)+</head><body><script>if (document.cookie.indexOf('darkModeEnabled=true') != -1) document.body.classList.add('dark-mode');
+	    if (document.cookie.indexOf('showComments=true') != -1) document.body.classList.add('show-comments-enabled');
+			if (document.cookie.indexOf('APISESSION') != -1){
+				document.body.classList.add('user-logged-in');
+			}else{
+				document.body.classList.add('user-logged-out');
+			}</script><div><div><div><iframe></iframe></div><div></div></div></div><script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = 'https://connect.facebook.net/sl_SI/sdk.js#xfbml=1&autoLogAppEvents=1&version=v3.1&appId=142347525793254';
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script><div><div><div><div><div><a>RTV SLO</a></div><ul><li><a>Radio<span></span></a><div><div><a><img></img></a><a><img></img></a><a><img></img></a><a><img></img></a><a><img></img></a><a><img></img></a><a><img></img></a><a><img></img></a></div></div></li><li><a>Televizija</a></li><li><a>O RTV</a></li></ul></div><div><div><a>4D</a><ul><li><a>Spored</a></li><li><a>V živo</a><div><div><div><a><img></img></a></div><div><a><img></img></a></div><div><a><img></img></a></div><div><a><img></img></a></div><div><a><img></img></a></div><div><a><img></img></a></div><div><a><img></img></a></div><div><a><img></img></a></div><div><a><img></img></a></div><div><a><img></img></a></div><div><a><img></img></a></div><div><a><img></img></a></div><div><a><img></img></a></div><div><a><img></img></a></div></div></div></li><li><a>Arhiv</a></li></ul></div></div><div><ul><li><a><img></img><img></img></a></li><li><a><img></img><img></img></a></li><li><a><img></img><img></img></a></li><li><a><img></img><img></img></a></li><li><a><img></img><img></img></a></li></ul><form><input></input></form><div><a><span>Prijava</span></a><div><form><input></input><div><label>Uporabniško ime:</label><input></input></div><div><label>Geslo:</label><input></input></div><div><button>Prijavi</button><a>Registracija</a></div></form><a>Pozabljeno geslo?</a><div><div><span>Temni način<span>BETA</span></span><label><input></input><span></span></label></div></div></div></div><div><a></a><div><h2></h2><a>Odjava</a><a>Uporabniški račun</a><div><div><span>Temni način<span>BETA</span></span><label><input></input><span></span></label></div></div></div></div></div></div></div></div><div><div><div><div><div><div></div><div></div><div></div></div><div><a>RTVSLO.si</a></div><ul><li><a>Slovenija</a></li><li><a>Svet</a></li><li><a>Šport</a></li><li><a>Kultura</a></li><li><a>Življenjski slog</a></li><li><a>Svet zabave</a></li></ul><div><div>Iskanje</div><form><input></input><button></button><div></div></form></div><div><div><span></span></div><div><a></a></div><div><a></a></div><div><div><span></span><span></span><span></span><span></span></div><span>Kazalo</span></div></div></div></div></div><div><div><div><div><div></div><div><div><div><h3>Predlogi</h3><div><div>Odbojka</div><div>Hokej</div><div>Tenis</div></div></div><div><h3>Rezultati iskanja</h3><div></div></div></div><p>Zaradi testiranja je dodanih umetnih 2 sekunde delaya.</p></div></div></div></div></div><div><div><div><div><a><img></img></a></div><div><h5><span></span><span><a></a></span><a></a></h5><p></p></div></div></div></div></div>(<div><div>)+(<span></span><span></span><span></span><span></span>)?</div>(</div><div>)+<div>(<div><div>)+(<span><a>Ture avanture</a></span><span><a>Kulinarika</a></span><span><a>Lepota bivanja</a></span><span><a>Avtomobilnost</a></span><span><a>Moda</a></span><span><a>196x ljubezen</a></span><span>3. 4. 2019 | 15.25</span></div></div></div></div><div><div><span></span><span></span><span></span><span></span></div></div><div></div><div><div><div><div>)?(</div></div><div><div>)+<li><a>Slovenija</a><ul><li><a>Gospodarstvo</a></li><li><a>Lokalne novice</a></li><li><a>Črna kronika</a></li><li><a>Zdravje</a></li><li><a>Okolje</a></li><li><a>Znanost in tehnologija</a></li><li><a>Slovenci v sosednjih državah</a></li></ul></li><li><a>Svet</a><ul><li><a>Evropska unija</a></li><li><a>Evropa</a></li><li><a>S. in J. Amerika</a></li><li><a>Bližnji vzhod</a></li><li><a>Afrika</a></li><li><a>Azija z Oceanijo</a></li></ul></li><li><a>Šport</a><ul><li><a>Nogomet</a></li><li><a>Košarka</a></li><li><a>Rokomet</a></li><li><a>Odbojka</a></li><li><a>Hokej</a></li><li><a>Tenis</a></li><li><a>Atletika</a></li><li><a>Zimski športi</a></li><li><a>Motošporti</a></li><li><a>F1</a></li><li><a>Kolesarstvo</a></li><li><a>Preostali športi</a></li><li><a>Rekreacija</a></li><li><a>Športni SOS</a></li></ul></li><li><a>Kultura</a><ul><li><a>Film in TV</a></li><li><a>Glasba</a></li><li><a>Knjige</a></li><li><a>Oder</a></li><li><a>Vizualna umetnost</a></li><li><a>Arhitektura in oblikovanje</a></li><li><a>Dediščina</a></li><li><a>Recenzije</a></li><li><a>Drugo</a></li><li><a>Jezikovni spletovalec</a></li><li><a>1. svetovna vojna</a></li></ul></li><li><a>Življenjski slog</a><ul><li><a>Ture avanture</a></li><li><a>Kulinarika</a></li><li><a>Lepota bivanja</a></li><li><a>Avtomobilnost</a></li><li><a>Moda</a></li><li><a>196x ljubezen</a></li></ul></li><li><a>Svet zabave</a><ul><li><a>Evrovizija</a></li><li><a>Glasba</a></li><li><a>Film in TV</a></li><li><a>Svet znanih</a></li><li><a>Družabno</a></li><li><a>Zanimivosti</a></li></ul></li><li><a>Posebna izdaja</a><ul><li><a>MMC Podrobno</a></li><li><a>Klepet</a></li><li><a>Podkast Številke</a></li><li><a>1968</a></li><li><a>Kolumne</a></li><li><a>MMC Teden</a></li><li><a>MMC Analiza</a></li><li><a>Praznično leto RTV Slovenija</a></li></ul></li><li><a>Info</a><ul><li><a>Vreme</a></li><li><a>Snežne razmere</a></li><li><a>Stanje na cestah</a></li></ul></li><li></li><li><a>TV Slovenija</a><ul><li><a>Info</a></li><li><a>Kultura</a></li><li><a>Filmi/serije</a></li><li><a>Razvedrilo</a></li><li><a>Otroci</a></li><li><a>Izobraževanje</a></li><li><a>Dokumentarci</a></li><li><a>Duhovnost</a></li></ul></li><li><a>Radio Slovenija</a><ul><li><a>Prvi</a></li><li><a>Val 202</a></li><li><a>ARS</a></li><li><a>Radio Koper</a></li><li><a>Radio Capodistria</a></li><li><a>Radio Maribor</a></li><li><a>Radio Si</a></li><li><a>MMR</a></li></ul></li><li><a>RTV 4D</a><ul><li><a>V živo</a></li><li><a>Arhiv</a></li><li><a>Spored</a></li><li><a>Oddaje</a></li></ul></li><li><a>Tematski portali</a><ul><li><a>Otroški portal</a></li><li><a>Moja generacija</a></li><li><a>Moj splet</a></li><li><a>Teletext</a></li></ul></li><li></li><li><a>O RTV Slovenija</a><ul><li><a>Kdo smo</a></li><li><a>RTV-prispevek</a></li><li><a>Za medije</a></li><li><a>Kontakti in informacije</a></li></ul></li></ul></div></div></div></div><div><script>_ipromNS('zone',299); console.log("zone=299");</script><script>if(typeof  window.log9request != "undefined" ){log9request({m : 'rtvslo',sid : 'ziv_slog',ssid : 'avtomobilnost',z : '299'});}</script></div><div><div><h3><svg><g><circle></circle><circle></circle><circle></circle><circle></circle></g><g><circle></circle><circle></circle><circle></circle><circle></circle></g><circle></circle><circle></circle></svg><a>#PCDATA</a></h3></div><div><a>Uredi</a></div><div><div><header><div><h3><svg><g><circle></circle><circle></circle><circle></circle><circle></circle></g><g><circle></circle><circle></circle><circle></circle><circle></circle></g><circle></circle><circle></circle></svg><a>#PCDATA</a></h3><a></a></div><h1>#PCDATA</h1><div>#PCDATA</div><div><div>Miha Merljak#PCDATA</div><div>Ljubljana		 - 		MMC RTV SLO</div></div>(<div><div>)?<figure><a><img></img></a><figcaption><span></span>#PCDATA</figcaption></figure>(</div><div></div></div>)?<p>#PCDATA</p></header><div><div><div>Miha Merljak</div></div><div>#PCDATALjubljana		 - 		MMC RTV SLO</div><div><div></div><div></div><div></div><a></a></div><figure><h5>Poudarki</h5><ul><li>#PCDATA</li><li>#PCDATA</li><li>#PCDATA</li></ul></figure></div><div><div>(</div><article>)?<figure><a><img></img></a><figcaption><span></span>#PCDATA</figcaption></figure>(</div><article>)?<figure>(<div>Oglas</div><div>)?<script>_ipromNS('zone',32); console.log("zone=32");</script><script>#PCDATA</script><div><script>//<![CDATA[
+document.write('<scr'+'ipt src="//sigde.adocean.pl/_'+(new Date()).getTime()+'/ad.js?id=JB9Log0XmBptKujCnlzKWEzAwJBm5yL0O8fz.TKdlpX.17/nc=0/gdpr=0/gdpr_consent=/redir=" language="javascript"></scr'+'ipt>');
+//]]></script><script></script><script></script><a><img></img></a></div><div><img></img></div>(</div>)?</figure><p>(Volvo se je nižjih srednjih razredov v preteklosti izogibal ali pa je vanje vstopal z zelo nišnimi produkti, ki niso pustili večjega tržnega pečata. V primeru XC 40 ni težko napovedati, da bo ta tradicija prekinjena. Ponuja namreč visoko kakovost končne izdelave in v kabini odlično premišljeno funkcionalnost ter na dotik prijetne materiale.)?</p><p>#PCDATA</p>(<figure><a><img></img></a><figcaption><span></span>#PCDATA</figcaption></figure>)?<p>#PCDATA(#PCDATA</p><p>#PCDATA)+(#PCDATA</p><p>)+(Ključni tehnični podatki:#PCDATA</p><p>Mere:- dolžina: 4,4 m- medosna razdalja: 2,7 m- obračalni krog: 11,4 m- oddaljenost od tal: 21 cm- prtljažnik: 432 l- masa: 2.250 kgPogon:- 2-litrski 4-valjni bencinski motor- moč: 140 kW- navor: 400 Nm- 8-stopenjski samodejni menjalnik- pogon na vsa štiri kolesa- pnevmatike: 235/50 R19- poraba: 6,3 l/100 km = 8,2 EUR/100km- posoda za gorivo: 54 l- doseg: 857 km#PCDATA</p><p>Stroški pri 15.000 km in 5-letni uporabi:- nakupna cena: 43.619 EUR- stroški finančnega leasinga: 3.268 EUR/5 let- stroški registracije: 8.701 EUR/5 let- stroški vzdrževanja: 2.320 EUR/5 let- stroški goriva: 6.190 EUR/75.000 km- strošek 1 kompleta pnevmatik: 923 EUR- vrednosti po 5 letih po Eurotaxu: 18.886 EUR#PCDATA</p><figure><div>)?<iframe></iframe>(</p><p>#PCDATA</p><p>#PCDATA</p><p>Mere:- dolžina: 4,9 m- medosna razdalja: 2,9 m- obračalni krog: 12,1 m- prtljažnik: 530 l#PCDATA</p><p>Pogon:- trilitrski šestvaljni dizelski motor- moč: 210 kW- navor: 620 Nm- 8-stopenjski samodejni menjalnik- pogon na vsa štiri kolesa- pnevmatike: 225/60 R17- poraba: 6,6 l/100 km = 8,9 EUR/100 km- posoda za gorivo: 73 l- doseg: 1.106 km- izpusti CO<sub>2</sub>#PCDATA</p><p>Stroški pri 15.000 km in 5-letni uporabi:- nakupna cena: 69.080 EUR- stroški finančnega lizinga: 4.463 EUR/5 let- stroški registracije: 10.829 EUR/5 let- stroški vzdrževanja: 1.926 EUR/5 let- stroški goriva: 6.702 EUR/75.000 km- strošek 1 kompleta pnevmatik: 716 EUR#PCDATA</p><p>#PCDATA</p><p></p><div><div><div><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure>)?</div>(</figure>)?<div>(</div><div>)+(</div></div>)?<div>(<div>)?(<figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure>)+(<figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure>)+(<div>)?</div>(</article>)?</div><div>(<figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure><figure><a><img></img></a><figcaption>#PCDATA</figcaption></figure></div></div></article></div>)?<div><div><div>(<div>)?<script>_ipromNS('zone',31); console.log("zone=31");</script><script>if(typeof  window.log9request != "undefined" ){log9request({m : 'rtvslo',sid : 'ziv_slog',ssid : 'avtomobilnost',z : '31'});}</script></div></div><div><h4>Zadnje iz sekcije</h4><div><div><div><a><img></img></a></div><div><a>#PCDATA</a></div></div></div><div><div><div><a><img></img></a></div><div><a>#PCDATA</a></div></div></div><div><div><div><a><img></img></a></div><div><a>#PCDATA</a></div></div></div><div><div><div><a><img></img></a></div><div><a>#PCDATA</a></div></div></div><div><div><div><a><img></img></a></div><div><a>#PCDATA</a></div></div></div></div></div></div><div><div>(<a>#PCDATA</a>)+(<a>#PCDATA</a>)+</div><div><a>Prijavi napako</a><div></div><div></div><div></div></div><figure><div>Oglas</div><div><script>_ipromNS('zone',90); console.log("zone=90");</script><script>if(typeof  window.log9request != "undefined" ){log9request({m : 'rtvslo',sid : 'ziv_slog',ssid : 'avtomobilnost',z : '90'});}</script></div></figure></div></div>(</div><div>)+(<div><div><div><a><img></img></a>)?<h3>(<svg><g><circle></circle><circle></circle><circle></circle><circle></circle></g><g><circle></circle><circle></circle><circle></circle><circle></circle></g><circle></circle><circle></circle></svg><a>Avtomobilnost</a></h3></div><div><div><div><div><a><img></img></a><h3>)?<span>(<a>#PCDATA</a></span><a>#PCDATA</a></h3><p>#PCDATA</p></div></div><div><div><a><img></img></a><h3><span>)+(</span><span>)?<a>#PCDATA</a></span><a>#PCDATA</a></h3><p>Test nove generacije</p></div></div>(<div><div><a><img></img></a><h3><span></span><span><a>#PCDATA</a></span><a>#PCDATA</a></h3><p>#PCDATA</p></div></div>)+</div><a>Več novic</a></div><div><div><div><figure><div>Oglas</div><div><script>_ipromNS('zone',27); console.log("zone=27");</script><script>#PCDATA</script><div><iframe></iframe><script></script><script></script></div><div><img></img></div></div></figure><figure><div>Oglas</div><div><script>#PCDATA</script><script>#PCDATA</script></div></figure></div></div></div><div><div><h3><svg><g><circle></circle><circle></circle><circle></circle><circle></circle></g><g><circle></circle><circle></circle><circle></circle><circle></circle></g><circle></circle><circle></circle></svg><a>Komentarji<span>#PCDATA</span></a><div><div>Prikazuj komentarje<span></span></div><div></div></div></h3></div><div><a>Uredi</a></div><div><p>Komentarji so trenutno skriti.<a>Prikaži komentarje</a>.</p><div><div><div></div></div></div></div><link></link><link></link><script></script><script></script></div></div><footer><div><div><ul><li><a>Stari portal</a></li><li><a>Impresum</a></li><li><a>O RTV Slovenija</a></li><li><a>Varuhinja</a></li><li><a>Kontakti</a></li><li><a>RTV prispevek</a></li><li><a>DOSTOPNO</a></li><li><a>•</a></li><li><a>About RTV Slovenia</a></li></ul><div><a></a><a></a><a></a><a></a><a></a></div></div><div><div><a>Nastavitve zasebnosti</a>|<a>Spletni piškotki</a>|<a>Varstvo osebnih podatkov</a></div>© MMC RTV Slovenija (ISSN 1581-372X)  | 1995 - 2019 | Vse pravice pridržane</div></div></footer><div><div><div><div><h5>Prijava</h5><button><span>×</span></button></div><div><form><input></input><div><label>Uporabniško ime:</label><input></input></div><div><label>Geslo:</label><input></input></div><div><button>Prijava</button><a>Registracija</a></div></form><a>Pozabljeno geslo?</a><div><div><span>Temni način<span>BETA</span></span><label><input></input><span></span></label></div></div></div></div></div></div><div><div><div><div><h5>Prijavljen</h5><button><span>×</span></button></div><div><h2></h2><a>Odjava</a><a>Uporabniški račun</a><div><div><span>Temni način<span>BETA</span></span><label><input></input><span></span></label></div></div></div></div></div></div><div><div><div><div><h5>Časovno obdobje po meri</h5><button><span>×</span></button></div><div><div><label>Od</label><div><input></input></div></div><div><label>Do</label><div><input></input></div></div></div><div><button>Prikaži rezultate</button></div></div></div></div><script>function filterByDateDeko(){
+            var curentUrl = window.location.href;
+            var from = jQuery('#datepicker-from').val().split('.');
+            var to = jQuery('#datepicker-to').val().split('.');
+            //if(from.length < 3 || to.length < 3)return;
+            if(from.length != 0){
+               from = from.reverse().join('-');
+            }
+
+            if(to.length != 0){
+               to = to.reverse().join('-');
+            }
+           
+            
+
+            var parts_url = curentUrl.split('?');
+
+            var newSearchPath = [];
+            var next_url = '';
+            if(parts_url.length > 1){
+                var url_item = parts_url[1];                
+                var fragments = url_item.split('&') || [];
+
+                fragments.map(function(itm){
+                    if(from !== '' && itm.indexOf('from') != -1){
+                        var temp = 'from=' + from;
+                        newSearchPath.push(temp);
+                    }
+                    else if(from !== '' && itm.indexOf('to') != -1){
+                        var temp = 'to=' + to;
+                        newSearchPath.push(temp); 
+                    }
+                    else{
+                        newSearchPath.push(itm);    
+                    }
+                })
+           
+
+                var next_url = newSearchPath.join('&');
+                
+                if(next_url.indexOf('from=') === -1 && from !== ''){
+                    next_url = next_url + '&from=' + from;
+                }
+
+                if(next_url.indexOf('to=') === -1 && to !== ''){
+                    next_url = next_url + '&to=' + to;
+                }
+
+                
+                window.location = parts_url[0] + '?' + next_url + '&a=6';
+            }
+        }</script><div><div></div><div><div><div></div><div></div><div></div></div><div><div><div></div><button></button><button></button><button></button><button></button><div><div><div><div></div></div></div></div></div><div><div></div></div><button></button><button></button><div><div></div></div></div></div></div><script></script><script></script><script></script><script>var $j = jQuery;//No need for no-conflict mode</script><link></link><script></script><script></script><script></script><script></script><script>$(document).ready( function() {
+  $("#header-search-box-form").submit(function(e){
+      e.preventDefault();
+
+      var params = window.location.href;
+      var q = document.getElementById("full-header-search-input");
+
+      if(q == null || typeof q.value == 'undefined'){
+        return;
+      }
+
+      if(typeof q.value !== 'string'){
+        return
+      }
+
+      q = encodeURIComponent(q.value).replace(/%20/g,"+");
+      params = params.split('?');
+
+      var search_function = 'iskalnik';
+      if(typeof window.location.href === 'string' && window.location.href.indexOf('kljucne-besede') != -1){
+        search_function = 'kljucne-besede';
+      }
+
+      if(params.length == 1){
+          return window.location.href = 'https://www.rtvslo.si/' + search_function + '?q=' + q;
+      }else{
+        params = params[1].split('&');
+        var has_q = false;
+        params.map(function(item,i){
+            var atom = item.split('=');
+            if(atom.length == 2){
+              if(atom[0] == 'q'){
+                params[i] = 'q=' + q;
+                has_q = true;
+              }
+            }
+        });
+        if(has_q == false){
+            params.push('q=' + q)
+        }
+
+        params = params.join('&');
+        return window.location.href = 'https://www.rtvslo.si/' + search_function + '?' + params;
+      }
+  });
+});</script><script>function timeConverter(UNIX_timestamp){
+
+    try{
+        var a = new Date(UNIX_timestamp * 1000);
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var year = a.getFullYear();
+        var month = a.getMonth() + 1;//months[a.getMonth()];
+        var date = a.getDate();
+        var hour = a.getHours();
+        var min = a.getMinutes();
+        var sec = a.getSeconds();
+        min = (min < 10) ? '0' + min : min;
+        var time = date + '. ' + month + '. ' + year + ' | ' + hour + '.' + min;
+        console.log("server time", time)
+        $('#layout-last-update').html(time);
+    }catch(e){}
+  }
+
+  var link = "https://api.rtvslo.si/misc/time";
+
+  $.get(link).then(function(data) {
+				if ('response' in data) {
+            timeConverter(data.response);
+				}
+	});</script><script><!--//--><![CDATA[//><!--
+var ghmxy_align = 'center';
+var ghmxy_type = 'absolute';
+var ghmxy_identifier = 'cthA3c_qM8KyoQ2BLdAWjqQPLU7G3Jss8tN5ZbOjVHf.J7';
+//--><!]]></script><script></script><script><!--//--><![CDATA[//><!--
+var pp_gemius_identifier = '.c2Q1Ketf1oViXRCW_AUhbbtj51wo0NRDAGZr84YDkj.w7';
+// lines below shouldn't be edited
+function gemius_pending(i) { window[i] = window[i] || function() { var x = window[i+'_pdata'] = window[i+'_pdata'] || []; x[x.length]=arguments;};}; gemius_pending('gemius_hit'); gemius_pending('gemius_event'); gemius_pending('pp_gemius_hit'); gemius_pending('pp_gemius_event');
+(function(d,t) { try { var gt=d.createElement(t),s=d.getElementsByTagName(t)[0],l='http'+((location.protocol=='https:')?'s':''); gt.setAttribute('async','async'); gt.setAttribute('defer','defer'); gt.src=l+'://gasi.hit.gemius.pl/xgemius.js'; s.parentNode.insertBefore(gt,s);} catch (e) { } })(document,'script'); //--><!]]></script><script>#PCDATA</script><script>_ipromNS('load', {}, function (adverts) {
+    // Loop thru the adverts
+    adverts.map(function(item){
+      // Pick the right advert and check if it's served
+      console.log(item);
+      if (item.served == true) {
+        switch (true) {
+
+          // Dynamic adverts inside featured articles
+          case item.el.classList.contains('dynamic-advert-featured-articles'):
+            // Set the parent that advert is visible
+            item.el.parentElement.parentElement.classList.add('show-advert');
+            break;
+
+          // Under article - hide whole .news-block
+          case item.el.classList.contains('dynamic-advert-article-bottom'):
+            item.el.parentElement.parentElement.parentElement.parentElement.classList.remove('d-none');
+            break;
+
+          case item.el.classList.contains('dynamic-advert-article-inside'):
+            item.el.parentElement.classList.remove('d-none');
+            break;
+
+          // Other dynamic adverts
+          case item.el.classList.contains('dynamic-advert-item') && item.served == true:
+              item.el.parentElement.parentElement.classList.add('show-advert');
+              break;
+          default:
+            break;
+        }
+      }
+    });
+  });</script><script></script><script></script><script>#PCDATA</script><script></script><script>if ('serviceWorker' in navigator) {
+    //console.log("Will the service worker register?");
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(function(reg){
+       // console.log("Yes, it did.");
+      }).catch(function(err) {
+        console.log("No it didn't. This happened: ", err)
+      });
+  }</script><script>var classList = document.body.classList;
+  if(classList.contains('user-logged-in') !== -1){
+      var user_id = getCookie('APISESSION_USER_ID');
+      if($('#user_loggend_in_avatar').length){
+          var url = "url('//img.rtvslo.si/_up/avatars/"+user_id+".png')";
+          $('#user_loggend_in_avatar').css('background-image', url);    
+          $('#user_loggend_in_avatar_mobile').css('background-image', url);    
+          
+      }
+
+      var user_name = getCookie('APISESSION_USER_NAME');
+      if($('#user_loggend_in_name').length){
+          $('#user_loggend_in_name').text(user_name);
+          $('#user_loggend_in_name_mobile').text(user_name);
+      }
+  }
+
+  if($('#user_loggend_in_avatar').length){
+      $('#user_loggend_in_avatar').on('click', function(){
+          $(this).parent().toggleClass('tbshowdropdown');
+      });
+  }
+
+  function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+  }
+
+  function cookieExist(cookieName) {
+    if (document.cookie.split(';').filter(function(item) {
+        return item.includes(cookieName + '=')
+    }).length) {
+        //console.log('Cookie founded!');
+        return true;
+    }
+
+    return false;
+  }</script><style>.no-heading-block{
+			  margin-top:30px;
+		}
+		.hide_headers,
+		.hide_headers #main-container{
+			  padding-top:0;
+		}
+		.hide_headers #top-bar,
+		.hide_headers #main-bar,
+		.hide_headers #main-menu-drawer,
+    .hide_headers footer,
+    .hide_headers #mobile-menu-wrapper
+    {
+			  display:none;
+		}
+
+    .hide_headers #sub-menu{
+        top:0;
+    }
+
+    .news-container .comment .show-more{
+        display:none;
+    }
+
+    .news-container .comment .shown-less:before{
+        display:none;
+    }
+
+    .news-container .comment .shown-less {
+        max-height: inherit!important;
+    }
+    /* Lonza add to bundle */
+    .iAdserver.inArticle .holder:before,
+    .iAdserver.inArticle .ipromAP:before,
+    .rightColumnAd .iAdserver .holder:before,
+    .rightColumnAd .iAdserver .ipromAP:before{
+        content: "Oglas";
+        text-align: left;
+        /* float: left; */
+        font-size: 0.7rem;
+        color: #aaa;
+        display: block;
+        text-align: left;
+    }
+
+    .rightColumnAd .iAdserver .holder{
+        margin-bottom:40px!important;
+    }
+
+    .article .news-container .article .iAdserver.inArticle .holder{
+        margin-bottom:25px!important;
+    }
+
+    .article .news-container .article .iAdserver.inArticle .iprom-html5-player{
+        background-color:black!important;
+    }
+
+    .article .news-container .article .iAdserver.inArticle .ipromAP{
+        height: 266px!important;
+        margin-bottom: 10px!important;
+    }
+
+
+    /* IF FIRST IMAGE aside or left - force it to right - wanted by LZ 6.2.19 */
+    .article .news-container .article figure :first-child .c-figure-aside-lg,
+    .article .news-container .article figure :first-child .c-figure-left{
+        width: 50%;
+        margin-left: 0px;
+        float: right;
+    }</style><nav><a><span></span></a><button><span></span></button><div><ul><li><a>Preusmeritve / aliasi</a></li><li><a>Meniji</a></li><li><a>Uporabniki</a><div><a>Skupine</a><a>Iskalnik uporabnikov</a><a>Pravice uporabnikov</a><a>Moderirani uporabniki</a></div></li><li><a>Vsebine</a><div><a>Administracija novic</a><a>Administracija sekcij</a><a>Administracija slike & video dneva</a><a>Administracija anket</a><a>Administracija nujnih informacij</a><a>Administracija mailerja</a></div></li><li><a>File upload</a></li></ul></div></nav><nav><a><span></span></a><button><span></span></button><div><ul><li><a>NOVA novica</a></li><li><a>STARA novica</a></li><li><a>Uteži FP</a></li><li><a>Admin. novic NOVA</a></li><li><a>Admin. novic STARA</a></li><li><a>Neaktivne novice</a></li><li><a>Videonovice</a></li><li><a>Upload slik</a></li><li><a>Upload datotek</a></li></ul></div></nav><iframe></iframe><img></img><style>.ipromAP { text-align: center; } .ipromAP > * { margin: 0 auto; text-align: center; } .ipromAP > iframe { display: block; margin: 0 auto !important; }</style><iframe></iframe><img></img></body><iframe></iframe></html>
