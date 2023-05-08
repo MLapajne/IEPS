@@ -7,11 +7,13 @@ class Parser(HTMLParser):
         self.token_array = []
 
     def handle_starttag(self, tag, attrs):
-        self.token_array.append("<%s>" % tag)
+        if tag not in ["strong", "br", "em", "i"]:
+            self.token_array.append("<%s>" % tag)
 
     def handle_endtag(self, tag):
-        self.token_array.append("</%s>" % tag)
+        if tag not in ["strong", "br", "em", "i"]:
+            self.token_array.append("</%s>" % tag)
 
     def handle_data(self, data):
         if not data.isspace():
-            self.token_array.append(data.strip()) # IS USING STRIP HERE OK ?
+            self.token_array.append(data.strip())
