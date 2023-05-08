@@ -1,5 +1,6 @@
 import sys
 import regex
+import xPath
 
 html_rtv_audi = open('../input-extraction/rtvslo.si/Audi A6 50 TDI quattro_ nemir v premijskem razredu - RTVSLO.si.html').read()
 html_rtv_volvo = open('../input-extraction/rtvslo.si/Volvo XC 40 D4 AWD momentum_ suvereno med najboljše v razredu - RTVSLO.si.html').read()
@@ -23,7 +24,7 @@ if ALGORITHM == "A":
     #print(regex.page_overstock(html_jewlery_a))
     #print(regex.page_overstock(html_jewlery_b))
     print(regex.page_bitcoin(html_pepe))
-    print(regex.page_bitcoin(html_sec))
+    #print(regex.page_bitcoin(html_sec))
     #print(regex.page_zacimbe(html_ljubezen))
     #print(regex.page_zacimbe(html_pica))
 
@@ -32,5 +33,9 @@ if ALGORITHM == "A":
 
 elif ALGORITHM == "B":
     print('Running algorithm using XPath')
+    #print(xPath.page_rtv(html_rtv_audi))
+    #print(xPath.page_overstock(html_jewlery_a))
+    print(xPath.page_zacimbe(html_ljubezen))
+    print(xPath.page_zacimbe(html_pica))
 elif ALGORITHM == "C":
     print('Automatic Web extraction')
