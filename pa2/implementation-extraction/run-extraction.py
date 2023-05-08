@@ -2,6 +2,7 @@ import sys
 import regex
 import xPath
 import myroadrunner
+import roadrunner_v01
 
 html_rtv_audi = open('../input-extraction/rtvslo.si/Audi A6 50 TDI quattro_ nemir v premijskem razredu - RTVSLO.si.html').read()
 html_rtv_volvo = open('../input-extraction/rtvslo.si/Volvo XC 40 D4 AWD momentum_ suvereno med najboljše v razredu - RTVSLO.si.html').read()
@@ -29,9 +30,6 @@ if ALGORITHM == "A":
     print(regex.page_zacimbe(html_ljubezen))
     print(regex.page_zacimbe(html_pica))
 
-
-    # TODO custom page
-
 elif ALGORITHM == "B":
     print('Running algorithm using XPath')
     print(xPath.page_rtv(html_rtv_audi))
@@ -44,5 +42,13 @@ elif ALGORITHM == "C":
     print('Automatic Web extraction')
     print(myroadrunner.road_runner(html_rtv_audi, html_rtv_volvo))
     print(myroadrunner.road_runner(html_jewlery_a, html_jewlery_b))
+    print(myroadrunner.road_runner(html_ljubezen, html_pica))
+
+
+    # first version
+    # print(roadrunner_v01.roadrunner(html_rtv_audi, html_rtv_volvo))
+    # print(roadrunner_v01.roadrunner(html_jewlery_a, html_jewlery_b))
+    # print(roadrunner_v01.roadrunner(html_ljubezen, html_pica))
+
 
 
