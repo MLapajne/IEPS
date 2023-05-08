@@ -1,5 +1,6 @@
 import sys
 import regex
+import myroadrunner
 
 html_rtv_audi = open('../input-extraction/rtvslo.si/Audi A6 50 TDI quattro_ nemir v premijskem razredu - RTVSLO.si.html').read()
 html_rtv_volvo = open('../input-extraction/rtvslo.si/Volvo XC 40 D4 AWD momentum_ suvereno med najboljše v razredu - RTVSLO.si.html').read()
@@ -21,3 +22,7 @@ elif ALGORITHM == "B":
     print('Running algorithm using XPath')
 elif ALGORITHM == "C":
     print('Automatic Web extraction')
+    print(myroadrunner.road_runner(html_rtv_audi, html_rtv_volvo))
+    print(myroadrunner.road_runner(html_jewlery_a, html_jewlery_b))
+
+
