@@ -61,7 +61,7 @@ def create_index():
                         db_insert_word(word)
 
                         # Get indexes of word occurrences
-                        indexes = [str(index) for index, value in enumerate(filtered_tokens) if value == word]
+                        indexes = [str(index) for index, value in enumerate(page_tokenized) if re.sub(r'\W+', '', value.lower().strip()) == word]
                         preprocessed_document.words[word] = WordData(len(indexes), ','.join(indexes))
                         print("WORD: " + word + " OCCURS: " + str(len(indexes)) + " INDEXES: " + ','.join(indexes),
                               "FILE: " + file)
