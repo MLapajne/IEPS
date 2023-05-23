@@ -1,7 +1,7 @@
-import os
 import sqlite3
 import sys
 import time
+from classes import Result
 from bs4 import BeautifulSoup
 from nltk import word_tokenize
 
@@ -9,7 +9,7 @@ conn = sqlite3.connect('inverted-index.db')
 
 query_words = []
 for i in range(1, len(sys.argv)):
-    query_words.append(sys.argv[i])
+    query_words.append(sys.argv[i].lower())
 
 placeholders = ','.join(['?'] * len(query_words))
 
@@ -25,12 +25,8 @@ query = f'''
     ORDER BY freq DESC;
 '''
 cursor = c.execute(query, query_words)
-end = time.time()
 
-print("Results for a query:", "\""+" ".join(query_words)+"\"", "\n")
-print("  Results found in", end - start, "ms.\n")
-print("  Frequencies Document                                  Snippet")
-print("  ----------- ----------------------------------------- -----------------------------------------------------------")
+results = []
 
 for row in cursor:
     indexes = row[2].split(',')
@@ -50,19 +46,22 @@ for row in cursor:
     snippet = "..."
     for index_str in indexes:
         index = int(index_str)
-        query_word = page_tokenized[index]
-        if query_word[0].isupper():
-            for i in range(index, index+4):
-                snippet += page_tokenized[i] + ' '
 
-            snippet += '... '
-        else:
-            snippet += '...'
-            for i in range(index-4, index + 4):
-                snippet += page_tokenized[i] + ' '
+        for i in range(index-4, index + 4):
+            snippet += page_tokenized[i] + ' '
 
-            snippet += '... '
+        snippet += '... '
 
-    print(f"  {row[1]:<11} {row[0]:<41} {snippet}")
+    result = Result(row[1], row[0], snippet)
+    results.append(result)
 
+end = time.time()
+
+print("Results for a query:", "\""+" ".join(query_words)+"\"", "\n")
+print("  Results found in", end - start, "ms.\n")
+print("  Frequencies Document                                  Snippet")
+print("  ----------- ----------------------------------------- -----------------------------------------------------------")
+
+for result in results:
+    print(f"  {result.frequencies:<11} {result.document:<41} {result.snippet}")
 conn.close()
