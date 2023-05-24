@@ -7,7 +7,8 @@ import re
 import os
 import sqlite3
 
-
+# Filters tokens - converts to lowercase, strips spaces,
+# removes non-alphanumeric characters and removes stopwords
 def filter_tokens(tokens):
     filtered_tokens = []
     for token in tokens:
@@ -19,21 +20,21 @@ def filter_tokens(tokens):
 
     return filtered_tokens
 
-
+# inserts into table IndexWord
 def db_insert_word(word):
     c.execute('''
         INSERT OR IGNORE INTO IndexWord VALUES 
             (?);
     ''', (word,))
 
-
+# Inserts into table Posting
 def db_insert_posting(word, document_name, freq, indexes):
     c.execute('''
         INSERT INTO Posting VALUES 
             (?, ?, ?, ?);
     ''', (word, document_name, freq, indexes))
 
-
+# Creates inverted index
 def create_index():
     directory = '../PA3-data/'
     for root, dirs, files in os.walk(directory):
@@ -77,6 +78,3 @@ c = conn.cursor()
 create_index()
 conn.commit()
 conn.close()
-
-# db_insert_word('test1')
-# db_insert_posting('test1', 'test/test1', 5, '(1, 5, 7)')

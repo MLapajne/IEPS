@@ -39,7 +39,7 @@ for row in cursor:
 
     # Extract text from the HTML
     soup = BeautifulSoup(html_content, 'html.parser')
-    page_text = soup.get_text()
+    page_text = soup.body.get_text()
 
     page_tokenized = word_tokenize(page_text, language='slovene')
 
