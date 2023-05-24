@@ -12,7 +12,6 @@ for i in range(1, len(sys.argv)):
     query_words.append(sys.argv[i].lower())
 
 placeholders = ','.join(['?'] * len(query_words))
-
 c = conn.cursor()
 start = time.time()
 
@@ -22,7 +21,8 @@ query = f'''
     WHERE
         p.word IN ({placeholders})
     GROUP BY p.documentName
-    ORDER BY freq DESC;
+    ORDER BY freq DESC
+    LIMIT 10;
 '''
 cursor = c.execute(query, query_words)
 
@@ -64,4 +64,5 @@ print("  ----------- ----------------------------------------- -----------------
 
 for result in results:
     print(f"  {result.frequencies:<11} {result.document:<41} {result.snippet}")
+    a = 1
 conn.close()

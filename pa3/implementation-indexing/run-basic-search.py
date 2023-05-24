@@ -56,5 +56,9 @@ print("  Results found in", end - start, "ms.\n")
 print("  Frequencies Document                                  Snippet")
 print("  ----------- ----------------------------------------- -----------------------------------------------------------")
 
+i = 0
 for result in sorted:
     print(f"  {result.frequencies:<11} {result.document:<41} {result.snippet}")
+    i += 1
+    if i > 9:
+        break
